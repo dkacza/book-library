@@ -7,4 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Raleway', "Times New Roman", sans-serif;
   }
+  body {
+    background-color: ${({theme}) => theme.colors.primary1};
+  }
 `;

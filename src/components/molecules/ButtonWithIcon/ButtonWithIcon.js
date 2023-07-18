@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ButtonWrapper } from 'components/molecules/ButtonWithIcon/ButtonWrapper.styles';
+import { ButtonWrapper } from 'components/molecules/ButtonWithIcon/ButtonWithIcon.styles';
 import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
 
-const ButtonWithIcon = ({ name, id, type, Icon }) => {
+const ButtonWithIcon = ({ name, id, type, Icon, ...props }) => {
   const initialVisibility = !(id === "password")
   const [visible, setVisible] = useState(initialVisibility);
   const toggleVisibility = (e) => {
@@ -12,11 +12,11 @@ const ButtonWithIcon = ({ name, id, type, Icon }) => {
   }
 
   return (
-    <ButtonWrapper>
-      <Icon/>
+    <ButtonWrapper {...props}>
+      <div className="iconWrapper"><Icon/></div>
       <label htmlFor={id}></label>
-      <input type={visible ? "text" : "password"} name={name} placeholder={name === 'email' ? 'email' : 'password'}/>
-      {id === "password" ? <ToggleVisibilityButton onClick={toggleVisibility} visible={visible}/> : ''}
+      <input type={visible ? "text" : "password"} name={name} placeholder={name === 'email' ? 'email' : 'password'} autoComplete="off"/>
+      {id === "password" ? <ToggleVisibilityButton className="iconWrapper" onClick={toggleVisibility} visible={visible}/> : ''}
     </ButtonWrapper>
   );
 };
