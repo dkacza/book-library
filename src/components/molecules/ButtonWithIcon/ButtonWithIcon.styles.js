@@ -16,6 +16,8 @@ export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+
   
   .iconWrapper {
     display: flex;

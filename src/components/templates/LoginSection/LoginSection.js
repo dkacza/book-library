@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from 'components/atoms/Title';
 import LoginForm from 'components/organisms/LoginForm/LoginForm';
-import { Wrapper } from 'components/templates/LoginSection/LoginSection.styles';
+import { PositionedLanguageButton, StyledLink, Wrapper } from 'components/templates/LoginSection/LoginSection.styles';
 
 const LoginSection = () => {
   return (
@@ -9,8 +9,8 @@ const LoginSection = () => {
       <Title>Sign in</Title>
       <LoginForm></LoginForm>
       <p>First time in our library?</p>
-      <a href="#">Sign up</a>
-      <button className="language-change">polish</button>
+      <StyledLink to="/register">Sign up</StyledLink>
+      <PositionedLanguageButton></PositionedLanguageButton>
     </Wrapper>
   );
 };

@@ -3,13 +3,20 @@ import { theme } from 'assets/styles/theme';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import StartView from 'views/StartView/StartView';
 import "assets/styles/fonts.css";
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 const Root = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-        <StartView></StartView>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<StartView/>}></Route>
+          <Route path="/reset-password" element={<p>RESET PASSWORD</p>}></Route>
+        </Routes>
+      </ThemeProvider>
+    </Router>
+
   );
 };
 
