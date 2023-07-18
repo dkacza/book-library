@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from 'components/molecules/Logo';
+import Logo from 'components/molecules/Logo/Logo';
 
 export const PositionedLogo = styled(Logo)`
   margin-left: 4rem;

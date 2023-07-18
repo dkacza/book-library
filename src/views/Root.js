@@ -1,14 +1,14 @@
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'assets/styles/theme';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
-import StartTemplate from 'components/templates/StartTemplate';
+import StartView from 'views/StartView/StartView';
 import "assets/styles/fonts.css";
 
 const Root = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-        <StartTemplate></StartTemplate>
+        <StartView></StartView>
     </ThemeProvider>
   );
 };

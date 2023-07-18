@@ -1,6 +1,6 @@
 import React from 'react';
 import Title from 'components/atoms/Title';
-import { Wrapper } from 'components/molecules/Logo.styles';
+import { Wrapper } from 'components/molecules/Logo/Logo.styles';
 
 const Logo = ({ ...props }) => {
   return (

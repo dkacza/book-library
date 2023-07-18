@@ -1,5 +1,5 @@
 import React from 'react';
-import Wrapper, { PositionedLogo } from 'components/organisms/AsidePhoto.styles';
+import Wrapper, { PositionedLogo } from 'components/organisms/AsidePhoto/AsidePhoto.styles';
 import img from 'assets/images/aside-background.jpg';
 
 const AsidePhoto = () => {
