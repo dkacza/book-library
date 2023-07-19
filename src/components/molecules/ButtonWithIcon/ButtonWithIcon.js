@@ -3,20 +3,22 @@ import { ButtonWrapper } from 'components/molecules/ButtonWithIcon/ButtonWithIco
 import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
 
 const ButtonWithIcon = ({ name, id, type, Icon, ...props }) => {
-  const initialVisibility = !(id === "password")
+  const initialVisibility = !(id === 'password');
   const [visible, setVisible] = useState(initialVisibility);
   const toggleVisibility = (e) => {
     e.preventDefault();
     const newVisibleState = !visible;
     setVisible(newVisibleState);
-  }
+  };
 
   return (
     <ButtonWrapper {...props}>
-      <div className="iconWrapper"><Icon/></div>
+      <div className="iconWrapper">
+        <Icon />
+      </div>
       <label htmlFor={id}></label>
-      <input type={visible ? "text" : "password"} name={name} placeholder={name === 'email' ? 'email' : 'password'} autoComplete="off"/>
-      {id === "password" ? <ToggleVisibilityButton className="iconWrapper" onClick={toggleVisibility} visible={visible}/> : ''}
+      <input type={visible ? 'text' : 'password'} id={id} name={name} placeholder={name === 'email' ? 'email' : 'password'} required />
+      {id === 'password' ? <ToggleVisibilityButton className="iconWrapper" onClick={toggleVisibility} visible={visible} /> : ''}
     </ButtonWrapper>
   );
 };
