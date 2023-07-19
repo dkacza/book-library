@@ -16,6 +16,7 @@ const Wrapper = styled.div`
     height: 1.5rem;
     border: 0.15em solid ${({theme}) => theme.colors.primary3};
     /* ...existing styles */
+    
     display: grid;
     place-content: center;
     border-radius: 0.25rem;
@@ -25,6 +26,7 @@ const Wrapper = styled.div`
     content: "";
     width: 0.8rem;
     height: 0.8rem;
+    border-radius: 0.15rem;
     transform: scale(0);
     transition: 80ms transform ease-in-out;
     box-shadow: inset 1em 1em ${({theme}) => theme.colors.secondary1};
@@ -34,7 +36,7 @@ const Wrapper = styled.div`
     transform: scale(1);
   }
   label {
-    margin-left: 1rem;
+    padding-left: 1rem;
     font-family: 'Roboto Slab', monospace;
     color: ${({theme}) => theme.colors.secondary2};
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonWithIcon from 'components/molecules/ButtonWithIcon/ButtonWithIcon';
+import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 
 import { ReactComponent as EmailIcon } from 'assets/icons/alternate_email_FILL0_wght600_GRAD0_opsz48.svg'
 import {ReactComponent as PhoneIcon} from 'assets/icons/call_FILL0_wght600_GRAD0_opsz48.svg';
@@ -8,23 +8,24 @@ import {ReactComponent as PersonIcon} from 'assets/icons/person_FILL0_wght600_GR
 import {ReactComponent as PasswordConfirmIcon} from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
 import SubmitButton from 'components/atoms/SubmitButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
+import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 
 const RegisterForm = () => {
   return (
-    <form>
-      <ButtonWithIcon type={'text'} id={'first-name'} name={'first name'} Icon={PersonIcon}></ButtonWithIcon>
-      <ButtonWithIcon type={'text'} id={'last-name'} name={'last name'} Icon={PersonIcon}></ButtonWithIcon>
+    <StyledForm>
+      <InputWithIcon type={'text'} id={'first-name'} name={'first name'} Icon={PersonIcon}></InputWithIcon>
+      <InputWithIcon type={'text'} id={'last-name'} name={'last name'} Icon={PersonIcon}></InputWithIcon>
 
-      <ButtonWithIcon type={'text'} id={'email'} name={'email'} Icon={EmailIcon}></ButtonWithIcon>
-      <ButtonWithIcon type={'text'} id={'phone'} name={'phone'} Icon={PhoneIcon}></ButtonWithIcon>
+      <InputWithIcon type={'text'} id={'email'} name={'email'} Icon={EmailIcon}></InputWithIcon>
+      <InputWithIcon type={'text'} id={'phone'} name={'phone'} Icon={PhoneIcon}></InputWithIcon>
 
-      <ButtonWithIcon type={'password'} id={'password'} name={'password'} Icon={PasswordIcon}></ButtonWithIcon>
-      <ButtonWithIcon type={'password'} id={'password-confirm'} name={'password confirm'} Icon={PasswordConfirmIcon}></ButtonWithIcon>
+      <InputWithIcon type={'password'} id={'password'} name={'password'} Icon={PasswordIcon}></InputWithIcon>
+      <InputWithIcon type={'password'} id={'password-confirm'} name={'password confirm'} Icon={PasswordConfirmIcon}></InputWithIcon>
 
-      <LabeledCheckbox id="agreement" label={"I agree with terms of service of the municipal library in Skoczów"}/>
+      <LabeledCheckbox id="agreement" label={"I agree with the terms of service."}/>
 
-      <SubmitButton>Register</SubmitButton>
-    </form>
+      <SubmitButton className="submit-button">Register</SubmitButton>
+    </StyledForm>
   );
 }
 export default RegisterForm;

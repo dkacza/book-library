@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // eslint-disable-next-line no-mixed-operators
-export const ButtonWrapper = styled.div`
+export const InputWrapper = styled.div`
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -20,7 +20,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  .iconWrapper {
+  .icon-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;

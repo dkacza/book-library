@@ -4,6 +4,7 @@ import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
 import StartingMainSection from 'components/templates/StartingMainSection/StartingMainSection';
 import LanguageButton from 'components/atoms/LanguageButton';
 import { StyledLink } from 'components/atoms/StyledLink';
+import ResetPasswordForm from 'components/organisms/ResetPasswordForm/ResetPasswordForm';
 
 const ResetPasswordView = () => {
   return (
@@ -13,7 +14,7 @@ const ResetPasswordView = () => {
         heading="Reset password"
         children={
           <>
-            <div>RESET PASSWORD FORM HERE</div>
+            <ResetPasswordForm/>
             <StyledLink to={"/"}>Return to main page</StyledLink>
           </>
         }
