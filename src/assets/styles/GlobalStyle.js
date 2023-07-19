@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: ${({theme}) => theme.colors.primary1};
+    color: ${({theme}) => theme.colors.secondary2};
   }
   @media (max-width: 720px){
     html {

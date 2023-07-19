@@ -17,7 +17,7 @@ const ButtonWithIcon = ({ name, id, type, Icon, ...props }) => {
         <Icon />
       </div>
       <label htmlFor={id}></label>
-      <input type={visible ? 'text' : 'password'} id={id} name={name} placeholder={name === 'email' ? 'email' : 'password'} required />
+      <input type={visible ? 'text' : 'password'} id={id} name={name} placeholder={name} required />
       {id === 'password' ? <ToggleVisibilityButton className="iconWrapper" onClick={toggleVisibility} visible={visible} /> : ''}
     </ButtonWrapper>
   );
