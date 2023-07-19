@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Logo from 'components/molecules/Logo/Logo';
+import img from 'assets/images/aside-photo.jpg';
 
 export const PositionedLogo = styled(Logo)`
   margin-left: 4rem;
@@ -13,13 +14,15 @@ const Wrapper = styled.aside`
   justify-content: flex-end;
   position: relative;
   overflow: hidden;
+  background-image: url(${img});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   img {
-    overflow: hidden;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: -1;
+    width: 100%;
+    height: 100%;
   }
 `;
 
