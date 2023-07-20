@@ -15,6 +15,18 @@ export const InputWrapper = styled.div`
   border-radius: 0.75rem;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  transition: 0.2s;
+  
+  &.error {
+    border: 3px solid ${({ theme }) => theme.colors.error1};
+    border-bottom: 6px solid ${({ theme }) => theme.colors.error1};
+    .icon-wrapper {
+      border-right: 4px solid ${({ theme }) => theme.colors.error1};
+      svg {
+        color: ${({ theme }) => theme.colors.error1};
+      }
+    }
+  }
 
   height: 4rem;
   display: flex;

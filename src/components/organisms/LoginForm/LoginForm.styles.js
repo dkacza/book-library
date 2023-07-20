@@ -4,11 +4,11 @@ export const StyledForm = styled.form`
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
-  .icon-button {
+  .icon-input {
     margin-bottom: 2.5rem;
   }
   
-  .icon-button:nth-child(2) {
+  .icon-input:nth-child(2) {
     margin-bottom: 1rem;
   }
   

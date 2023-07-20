@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InputWrapper } from 'components/molecules/InputWithIcon/InputWithIcon.styles';
 import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
 
-const InputWithIcon = ({ name, id, type, Icon, ...props }) => {
+const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, ...props }, ref) => {
   const initialVisibility = !(id === 'password');
   const [visible, setVisible] = useState(initialVisibility);
   const toggleVisibility = (e) => {
@@ -12,14 +12,14 @@ const InputWithIcon = ({ name, id, type, Icon, ...props }) => {
   };
 
   return (
-    <InputWrapper {...props} className="icon-button">
+    <InputWrapper {...props} className={`icon-input ${error ? 'error' : ''}`}>
       <div className="icon-wrapper">
         <Icon />
       </div>
       <label htmlFor={id}></label>
-      <input type={visible ? 'text' : 'password'} id={id} name={name} placeholder={name} required />
+      <input  type={visible ? 'text' : 'password'} id={id} name={name} placeholder={name} ref={ref} />
       {id === 'password' ? <ToggleVisibilityButton className="icon-wrapper" onClick={toggleVisibility} visible={visible} /> : ''}
     </InputWrapper>
   );
-};
+});
 export default InputWithIcon;
