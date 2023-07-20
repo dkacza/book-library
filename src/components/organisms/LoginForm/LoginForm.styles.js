@@ -13,6 +13,13 @@ export const StyledForm = styled.form`
   }
   
   .submit-button {
-    margin: 3rem 0;
-  }  
+    margin-top: 3rem;
+  }
+  p.error-message {
+    color: ${({theme}) => theme.colors.error1};
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 `;

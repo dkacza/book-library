@@ -8,6 +8,7 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
 import { set, useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const {
@@ -17,11 +18,18 @@ const LoginForm = () => {
   } = useForm();
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [navigate, setNavigate] = useState(false);
 
   const onSubmit = (data) => {
-    console.log('submit')
-    console.log(data);
-    setErrorMessage('');
+    // FAKE LOGIN
+    try {
+      if (data.email !== 'abc' || data.password !== 'def' ) throw new Error('Wrong email or password');
+      setErrorMessage('');
+      setNavigate(true);
+
+    } catch (err) {
+      setErrorMessage(err.message)
+    }
   };
   const onError = (err) => {
     console.log('errors');
@@ -38,7 +46,8 @@ const LoginForm = () => {
         sign in
       </SubmitButton>
 
-      {errorMessage ? <p>{errorMessage}</p> : ''}
+      {errorMessage ? <p className="error-message">{errorMessage}</p> : ''}
+      {navigate ? <Navigate to="/dashboard" /> : ''}
 
     </StyledForm>
   );
