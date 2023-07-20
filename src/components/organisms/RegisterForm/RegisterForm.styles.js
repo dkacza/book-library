@@ -1,19 +1,27 @@
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
-  margin-top: 5rem;
+  margin-top: 3rem;
   .icon-input {
     height: 3rem;
     margin-bottom: 1.5rem;
+  }
+  .icon-input:nth-last-child(1) {
+    margin-bottom: 0.5rem;
   }
   .submit-button {
     width: 100%;
     margin: 2.5rem 0;
   }
+  p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
   input#agreement {
     height: 24px;
     width: 24px;
   }
+  
   
   @media(max-width: 1300px) {
     margin-top: 2rem;
