@@ -3,7 +3,7 @@ import { InputWrapper } from 'components/molecules/InputWithIcon/InputWithIcon.s
 import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
 
 const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, ...props }, ref) => {
-  const initialVisibility = !(id === 'password');
+  const initialVisibility = !(id === 'password' || id === 'password-confirm');
   const [visible, setVisible] = useState(initialVisibility);
   const toggleVisibility = (e) => {
     e.preventDefault();

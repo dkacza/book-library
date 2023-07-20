@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledForm = styled.form`
   margin-top: 5rem;
-  .icon-button {
+  .icon-input {
     height: 3rem;
     margin-bottom: 1.5rem;
   }
@@ -17,8 +17,11 @@ const StyledForm = styled.form`
   
   @media(max-width: 1300px) {
     margin-top: 2rem;
-    .icon-button {
+    .icon-input {
       margin-bottom: 0.5rem;
+      input {
+        font-size: 1rem;
+      }
     }
     .submit-button {
       width: 100%;
