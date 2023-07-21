@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 
 import { ReactComponent as EmailIcon } from 'assets/icons/alternate_email_FILL0_wght600_GRAD0_opsz48.svg';
@@ -15,12 +15,18 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
+import AuthContext from 'providers/AuthProvider';
+
 const NAME_REGEX = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PHONE_REGEX = /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż])(?=.*\d).{8,}$/;
 
+
+
 const RegisterForm = () => {
+  const {setAuth} = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -50,8 +56,8 @@ const RegisterForm = () => {
         { withCredentials: true },
       )
       .then((res) => {
-        console.log('Successfully signed up!');
-        console.log(res);
+        const userData = res.data.data.user;
+        setAuth(userData);
         setErrorMessage('');
         setNavigate(true);
       })

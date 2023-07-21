@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import AuthContext from 'providers/AuthProvider';
 import { StyledForm } from 'components/organisms/LoginForm/LoginForm.styles';
 
 import { ReactComponent as EmailIcon } from 'assets/icons/alternate_email_FILL0_wght600_GRAD0_opsz48.svg';
@@ -12,6 +13,8 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LoginForm = () => {
+  const { setAuth } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -23,11 +26,10 @@ const LoginForm = () => {
   const [navigate, setNavigate] = useState(false);
 
   useEffect(() => {
-    setFocus("email");
-  }, [setFocus])
+    setFocus('email');
+  }, [setFocus]);
 
   const onSubmit = (data) => {
-    // FAKE LOGIN
     axios
       .post(
         'http://localhost:8000/api/v1/users/login',
@@ -38,8 +40,9 @@ const LoginForm = () => {
         { withCredentials: true },
       )
       .then((res) => {
-        console.log('Successfully logged in!');
-        console.log(res);
+        const userData = res.data.data.user;
+        console.log(res)
+        setAuth(userData)
         setErrorMessage('');
         setNavigate(true);
       })
@@ -49,13 +52,11 @@ const LoginForm = () => {
       });
   };
   const onError = (err) => {
-    console.log('errors');
-    console.log(err);
     setErrorMessage('Email and password are required to sign in');
   };
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
-      <InputWithIcon {...register('email', { required: true })} type={'text'} id={'email'} name={'email'} Icon={EmailIcon} error={errors.email}/>
+      <InputWithIcon {...register('email', { required: true })} type={'text'} id={'email'} name={'email'} Icon={EmailIcon} error={errors.email} />
       <InputWithIcon
         {...register('password', { required: true })}
         type={'password'}
