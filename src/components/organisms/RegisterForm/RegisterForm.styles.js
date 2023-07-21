@@ -11,7 +11,7 @@ const StyledForm = styled.form`
   }
   .submit-button {
     width: 100%;
-    margin: 2.5rem 0;
+    margin: 1rem 0;
   }
   p {
     font-size: 0.8rem;
@@ -20,6 +20,12 @@ const StyledForm = styled.form`
   input#agreement {
     height: 24px;
     width: 24px;
+  }
+  p.error-message {
+    color: #F26C6C;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
   
   

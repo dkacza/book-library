@@ -14,9 +14,9 @@ import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 import { useForm } from 'react-hook-form';
 
 const NAME_REGEX = /^[A-Z][a-zA-Z'-]+(?:\s[A-Z][a-zA-Z'-]+)?$/;
-const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PHONE_REGEX = /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
 const RegisterForm = () => {
   const {
@@ -33,19 +33,26 @@ const RegisterForm = () => {
   }, [setFocus]);
 
   const onSubmit = (data) => {
+    setErrorMessage('');
     console.log('submit register');
     console.log(data);
     setErrorMessage('');
   };
   const onError = (err) => {
+    setErrorMessage('');
+    if (err?.agreement) {
+      setErrorMessage('You have to accept the terms of service in order to register');
+      return;
+    }
     console.log('register errors');
     console.log(err);
-    for (const [key, value] of Object.entries(err)) {
+    for (const [, value] of Object.entries(err)) {
       if (value.type === 'required') {
         setErrorMessage('Please fill all the fields in the form');
         return;
       }
     }
+    setErrorMessage('Make sure, that values you have passed are in correct form.');
   };
 
   return (
@@ -53,7 +60,7 @@ const RegisterForm = () => {
       <InputWithIcon
         {...register('first-name', {
           required: true,
-          validate: (val) => NAME_REGEX.test(val)
+          validate: (val) => NAME_REGEX.test(val),
         })}
         type={'text'}
         id={'first-name'}
@@ -110,13 +117,20 @@ const RegisterForm = () => {
         error={errors['password-confirm']}
       ></InputWithIcon>
 
-      <p className="password-info">Password should contain at least 8 characters, including letters, digits and at least one special character.</p>
+      <p className="password-info">Password should contain at least 8 characters, including letters and digits.</p>
 
-      <LabeledCheckbox id="agreement" label={'I agree with the terms of service.'} />
+      <LabeledCheckbox
+        name={'agreement'}
+        id="agreement"
+        label={'I agree with the terms of service.'}
+        {...register('agreement', {required: true})}
+      />
 
       <SubmitButton className="submit-button" type="submit">
         Register
       </SubmitButton>
+
+      <p className={`error-message ${errorMessage ? '' : 'hidden'}`}>{errorMessage}</p>
     </StyledForm>
   );
 };

@@ -42,13 +42,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const LabeledCheckbox = ({ id, label }) => {
+const LabeledCheckbox = React.forwardRef(({ id, name, label, ...props }, ref) => {
   return (
     <Wrapper>
-      <input type="checkbox" id={id} />
+      <input type="checkbox" name={name} id={id} ref={ref} {...props}/>
       <label htmlFor={id}>{label}</label>
     </Wrapper>
   );
-};
+});
 
 export default LabeledCheckbox;
