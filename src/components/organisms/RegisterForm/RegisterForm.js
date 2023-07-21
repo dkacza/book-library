@@ -12,11 +12,13 @@ import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
-const NAME_REGEX = /^[A-Z][a-zA-Z'-]+(?:\s[A-Z][a-zA-Z'-]+)?$/;
+const NAME_REGEX = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PHONE_REGEX = /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż])(?=.*\d).{8,}$/;
 
 const RegisterForm = () => {
   const {
@@ -27,6 +29,7 @@ const RegisterForm = () => {
   } = useForm();
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [navigate, setNavigate] = useState(false);
 
   useEffect(() => {
     setFocus('firstName');
@@ -34,9 +37,28 @@ const RegisterForm = () => {
 
   const onSubmit = (data) => {
     setErrorMessage('');
-    console.log('submit register');
-    console.log(data);
-    setErrorMessage('');
+    axios
+      .post(
+        'http://localhost:8000/api/v1/users/signup',
+        {
+          firstName: data['first-name'],
+          lastName: data['last-name'],
+          email: data['email'],
+          password: data['password'],
+          phoneNumber: data['phone']
+        },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        console.log('Successfully signed up!');
+        console.log(res);
+        setErrorMessage('');
+        setNavigate(true);
+      })
+      .catch((err) => {
+        const { message } = err?.response?.data;
+        setErrorMessage(message);
+      });
   };
   const onError = (err) => {
     setErrorMessage('');
@@ -44,8 +66,6 @@ const RegisterForm = () => {
       setErrorMessage('You have to accept the terms of service in order to register');
       return;
     }
-    console.log('register errors');
-    console.log(err);
     for (const [, value] of Object.entries(err)) {
       if (value.type === 'required') {
         setErrorMessage('Please fill all the fields in the form');
@@ -131,6 +151,8 @@ const RegisterForm = () => {
       </SubmitButton>
 
       <p className={`error-message ${errorMessage ? '' : 'hidden'}`}>{errorMessage}</p>
+
+      {navigate ? <Navigate to="/dashboard" /> : ''}
     </StyledForm>
   );
 };

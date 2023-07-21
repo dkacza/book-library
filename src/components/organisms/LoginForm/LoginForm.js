@@ -44,8 +44,8 @@ const LoginForm = () => {
         setNavigate(true);
       })
       .catch((err) => {
-        //console.log('catch')
-        setErrorMessage(err.message);
+        const { message } = err?.response?.data;
+        setErrorMessage(message);
       });
   };
   const onError = (err) => {
