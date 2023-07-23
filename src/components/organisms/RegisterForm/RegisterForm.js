@@ -16,6 +16,7 @@ import axios from 'api/axios'
 import { Navigate } from 'react-router-dom';
 
 import AuthContext from 'providers/AuthProvider';
+import { setCookie } from 'utils/cookies';
 
 const NAME_REGEX = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -57,6 +58,8 @@ const RegisterForm = () => {
       .then((res) => {
         const userData = res.data.data.user;
         setAuth(userData);
+        const cookieVal = userData._id;
+        setCookie('user', cookieVal, 1);
         setErrorMessage('');
         setNavigate(true);
       })

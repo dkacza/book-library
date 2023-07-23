@@ -10,7 +10,8 @@ import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
-import axios from 'api/axios'
+import axios from 'api/axios';
+import { setCookie } from 'utils/cookies';
 
 const LoginForm = () => {
   const { setAuth } = useContext(AuthContext);
@@ -31,17 +32,15 @@ const LoginForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post(
-        '/users/login',
-        {
-          email: data.email,
-          password: data.password,
-        },
-      )
+      .post('/users/login', {
+        email: data.email,
+        password: data.password,
+      })
       .then((res) => {
         const userData = res.data.data.user;
-        console.log(res)
-        setAuth(userData)
+        setAuth(userData);
+        const cookieVal = userData._id;
+        setCookie('user', cookieVal, 1);
         setErrorMessage('');
         setNavigate(true);
       })
