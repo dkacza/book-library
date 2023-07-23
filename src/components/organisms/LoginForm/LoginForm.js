@@ -10,7 +10,7 @@ import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from 'api/axios'
 
 const LoginForm = () => {
   const { setAuth } = useContext(AuthContext);
@@ -32,12 +32,11 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     axios
       .post(
-        'http://localhost:8000/api/v1/users/login',
+        '/users/login',
         {
           email: data.email,
           password: data.password,
         },
-        { withCredentials: true },
       )
       .then((res) => {
         const userData = res.data.data.user;

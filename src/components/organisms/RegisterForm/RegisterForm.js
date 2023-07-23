@@ -12,7 +12,7 @@ import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import axios from 'api/axios'
 import { Navigate } from 'react-router-dom';
 
 import AuthContext from 'providers/AuthProvider';
@@ -45,7 +45,7 @@ const RegisterForm = () => {
     setErrorMessage('');
     axios
       .post(
-        'http://localhost:8000/api/v1/users/signup',
+        '/users/signup',
         {
           firstName: data['first-name'],
           lastName: data['last-name'],
@@ -53,7 +53,6 @@ const RegisterForm = () => {
           password: data['password'],
           phoneNumber: data['phone']
         },
-        { withCredentials: true },
       )
       .then((res) => {
         const userData = res.data.data.user;
