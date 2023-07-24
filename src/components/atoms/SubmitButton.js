@@ -15,6 +15,10 @@ const SubmitButton = styled.button`
   line-height: normal;
   letter-spacing: 0.06rem;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default SubmitButton;

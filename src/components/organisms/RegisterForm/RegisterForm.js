@@ -1,20 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-
 import { ReactComponent as EmailIcon } from 'assets/icons/alternate_email_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/call_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PersonIcon } from 'assets/icons/person_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
-
 import SubmitButton from 'components/atoms/SubmitButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
-
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios'
+import axios from 'api/axios';
 import { Navigate } from 'react-router-dom';
-
 import AuthContext from 'providers/AuthProvider';
 import { setCookie } from 'utils/cookies';
 
@@ -23,10 +19,8 @@ const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PHONE_REGEX = /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż])(?=.*\d).{8,}$/;
 
-
-
 const RegisterForm = () => {
-  const {setAuth} = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   const {
     register,
@@ -45,16 +39,13 @@ const RegisterForm = () => {
   const onSubmit = (data) => {
     setErrorMessage('');
     axios
-      .post(
-        '/users/signup',
-        {
-          firstName: data['first-name'],
-          lastName: data['last-name'],
-          email: data['email'],
-          password: data['password'],
-          phoneNumber: data['phone']
-        },
-      )
+      .post('/users/signup', {
+        firstName: data['first-name'],
+        lastName: data['last-name'],
+        email: data['email'],
+        password: data['password'],
+        phoneNumber: data['phone'],
+      })
       .then((res) => {
         const userData = res.data.data.user;
         setAuth(userData);
@@ -68,6 +59,7 @@ const RegisterForm = () => {
         setErrorMessage(message);
       });
   };
+
   const onError = (err) => {
     setErrorMessage('');
     if (err?.agreement) {
@@ -151,7 +143,7 @@ const RegisterForm = () => {
         name={'agreement'}
         id="agreement"
         label={'I agree with the terms of service.'}
-        {...register('agreement', {required: true})}
+        {...register('agreement', { required: true })}
       />
 
       <SubmitButton className="submit-button" type="submit">

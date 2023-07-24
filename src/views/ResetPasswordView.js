@@ -14,8 +14,8 @@ const ResetPasswordView = () => {
         heading="Reset password"
         children={
           <>
-            <ResetPasswordForm/>
-            <StyledLink to={"/"}>Return to main page</StyledLink>
+            <ResetPasswordForm />
+            <StyledLink to={'/'}>Return to main page</StyledLink>
           </>
         }
       ></StartingMainSection>

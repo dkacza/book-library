@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import polishFlagImg from 'assets/images/poland.png';
 import ukFlagImg from 'assets/images/united-kingdom.png';
@@ -12,11 +12,12 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
-  
+
   img {
     height: 100%;
     width: 100%;
   }
+
   &:hover {
     cursor: pointer;
   }

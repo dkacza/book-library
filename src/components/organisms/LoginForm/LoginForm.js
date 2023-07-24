@@ -1,4 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
+import axios from 'api/axios';
+import { setCookie } from 'utils/cookies';
 import AuthContext from 'providers/AuthProvider';
 import { StyledForm } from 'components/organisms/LoginForm/LoginForm.styles';
 
@@ -8,10 +12,6 @@ import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
-import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
-import axios from 'api/axios';
-import { setCookie } from 'utils/cookies';
 
 const LoginForm = () => {
   const { setAuth } = useContext(AuthContext);
@@ -45,16 +45,18 @@ const LoginForm = () => {
         setNavigate(true);
       })
       .catch((err) => {
-        const { message } = err?.response?.data;
+        const message = err?.response?.data?.message || 'Connection error';
         setErrorMessage(message);
       });
   };
   const onError = (err) => {
     setErrorMessage('Email and password are required to sign in');
   };
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
       <InputWithIcon {...register('email', { required: true })} type={'text'} id={'email'} name={'email'} Icon={EmailIcon} error={errors.email} />
+
       <InputWithIcon
         {...register('password', { required: true })}
         type={'password'}
@@ -65,11 +67,12 @@ const LoginForm = () => {
       />
 
       <StyledLink to="/reset-password">Forgot the password?</StyledLink>
+
       <SubmitButton className="submit-button" type="submit">
         sign in
       </SubmitButton>
 
-      {errorMessage ? <p className="error-message">{errorMessage}</p> : ''}
+      <p className="error-message">{errorMessage}</p>
       {navigate ? <Navigate to="/dashboard" /> : ''}
     </StyledForm>
   );

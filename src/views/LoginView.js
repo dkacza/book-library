@@ -15,7 +15,7 @@ const LoginView = () => {
         children={
           <>
             <LoginForm></LoginForm>
-            <LinkWithDescription description={'First time in our library?'} linkName={"Sign up"} destination={"/register"}></LinkWithDescription>
+            <LinkWithDescription description={'First time in our library?'} linkName={'Sign up'} destination={'/register'}></LinkWithDescription>
           </>
         }
       ></StartingMainSection>

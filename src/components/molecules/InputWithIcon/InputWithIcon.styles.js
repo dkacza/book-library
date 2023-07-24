@@ -16,12 +16,14 @@ export const InputWrapper = styled.div`
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transition: 0.2s;
-  
+
   &.error {
     border: 3px solid ${({ theme }) => theme.colors.error1};
     border-bottom: 6px solid ${({ theme }) => theme.colors.error1};
+
     .icon-wrapper {
       border-right: 4px solid ${({ theme }) => theme.colors.error1};
+
       svg {
         color: ${({ theme }) => theme.colors.error1};
       }
@@ -50,6 +52,10 @@ export const InputWrapper = styled.div`
       height: 60%;
       color: ${({ theme }) => theme.colors.secondary1};
     }
+  }
+  
+  .toggle-visibility {
+    cursor: pointer;
   }
 
   label {

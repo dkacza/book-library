@@ -12,13 +12,14 @@ export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
 
-  @media(max-width: 1280px) {
+  @media (max-width: 1280px) {
     padding: 3rem;
   }
-  
+
   ${Title} {
     max-width: calc(100% - 5rem);
   }
+
   p {
     font-family: 'Roboto Slab', monospace;
   }
