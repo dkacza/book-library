@@ -1,17 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Link, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import axios from 'api/axios';
 import { getCookie } from 'utils/cookies';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'assets/styles/theme';
 import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import 'assets/styles/fonts.css';
-import ResetPasswordView from 'views/ResetPasswordView';
-import RegisterView from 'views/RegisterView';
-import LoginView from 'views/LoginView';
+import ResetPasswordView from 'views/StartingViews/ResetPasswordView';
+import RegisterView from 'views/StartingViews/RegisterView';
+import LoginView from 'views/StartingViews/LoginView';
 import AuthContext from 'providers/AuthProvider';
 import PrivateRoutes from 'utils/PrivateRoutes';
 import Spinner from 'components/atoms/Spinner';
+import CatalogueView from 'views/MainViews/CatalogueView';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -43,7 +44,7 @@ const Root = () => {
           <Spinner></Spinner>
         ) : (
           <Routes>
-            <Route path="/" element={<Navigate to={auth ? '/dashboard' : '/login'} />}></Route>
+            <Route path="/" element={<Navigate to={auth ? '/catalogue' : '/login'} />}></Route>
 
             {/*Publicly available routes*/}
             <Route path="/reset-password" element={<ResetPasswordView />}></Route>
@@ -52,15 +53,7 @@ const Root = () => {
 
             {/*Routes for logged-in users*/}
             <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
-              <Route
-                path="/dashboard"
-                element={
-                  <p>
-                    Dashboard <Link to="/settings">Settings</Link>{' '}
-                  </p>
-                }
-              ></Route>
-              <Route path="/settings" element={<p>Settings</p>}></Route>
+              <Route path="/catalogue" element={<CatalogueView />}></Route>
             </Route>
           </Routes>
         )}

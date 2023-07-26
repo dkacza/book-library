@@ -1,5 +1,5 @@
 import React from 'react';
-import StartingViewsStyles from 'views/StartingViews.styles';
+import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
 import LanguageButton from 'components/atoms/LanguageButton';
 import LoginForm from 'components/organisms/LoginForm/LoginForm';
@@ -8,7 +8,7 @@ import LinkWithDescription from 'components/molecules/LinkWithDescrption';
 
 const LoginView = () => {
   return (
-    <StartingViewsStyles>
+    <StartingViewTemplate>
       <AsidePhoto></AsidePhoto>
       <StartingMainSection
         heading="Log in"
@@ -20,7 +20,7 @@ const LoginView = () => {
         }
       ></StartingMainSection>
       <LanguageButton className="languageToggle"></LanguageButton>
-    </StartingViewsStyles>
+    </StartingViewTemplate>
   );
 };
 export default LoginView;

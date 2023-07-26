@@ -1,5 +1,5 @@
 import React from 'react';
-import StartingViewsStyles from 'views/StartingViews.styles';
+import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
 import StartingMainSection from 'components/templates/StartingMainSection/StartingMainSection';
 import LanguageButton from 'components/atoms/LanguageButton';
@@ -8,7 +8,7 @@ import ResetPasswordForm from 'components/organisms/ResetPasswordForm/ResetPassw
 
 const ResetPasswordView = () => {
   return (
-    <StartingViewsStyles>
+    <StartingViewTemplate>
       <AsidePhoto />
       <StartingMainSection
         heading="Reset password"
@@ -20,7 +20,7 @@ const ResetPasswordView = () => {
         }
       ></StartingMainSection>
       <LanguageButton className="languageToggle"></LanguageButton>
-    </StartingViewsStyles>
+    </StartingViewTemplate>
   );
 };
 export default ResetPasswordView;

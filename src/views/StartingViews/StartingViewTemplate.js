@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StartingViewsStyles = styled.div`
+const StartingViewTemplate = styled.div`
   display: flex;
   flex-direction: row;
   position: relative;
@@ -41,4 +41,4 @@ const StartingViewsStyles = styled.div`
     right: 5rem;
   }
 `;
-export default StartingViewsStyles;
+export default StartingViewTemplate;

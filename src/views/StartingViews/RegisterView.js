@@ -1,5 +1,5 @@
 import React from 'react';
-import StartingViewsStyles from 'views/StartingViews.styles';
+import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
 import LanguageButton from 'components/atoms/LanguageButton';
 import LinkWithDescription from 'components/molecules/LinkWithDescrption';
@@ -8,7 +8,7 @@ import RegisterForm from 'components/organisms/RegisterForm/RegisterForm';
 
 const RegisterView = () => {
   return (
-    <StartingViewsStyles>
+    <StartingViewTemplate>
       <AsidePhoto />
       <StartingMainSection
         heading="Sign in"
@@ -20,7 +20,7 @@ const RegisterView = () => {
         }
       ></StartingMainSection>
       <LanguageButton className="languageToggle"></LanguageButton>
-    </StartingViewsStyles>
+    </StartingViewTemplate>
   );
 };
 export default RegisterView;
