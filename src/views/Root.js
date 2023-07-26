@@ -11,6 +11,7 @@ import RegisterView from 'views/RegisterView';
 import LoginView from 'views/LoginView';
 import AuthContext from 'providers/AuthProvider';
 import PrivateRoutes from 'utils/PrivateRoutes';
+import Spinner from 'components/atoms/Spinner';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         {!authChecked ? (
-          <p>Loading...</p>
+          <Spinner></Spinner>
         ) : (
           <Routes>
             <Route path="/" element={<Navigate to={auth ? '/dashboard' : '/login'} />}></Route>

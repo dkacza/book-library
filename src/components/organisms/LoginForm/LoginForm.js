@@ -12,9 +12,11 @@ import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
+import LoadingDots from 'components/atoms/LoadingDots';
 
 const LoginForm = () => {
   const { setAuth } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -31,6 +33,8 @@ const LoginForm = () => {
   }, [setFocus]);
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+    setErrorMessage('');
     axios
       .post('/users/login', {
         email: data.email,
@@ -47,7 +51,8 @@ const LoginForm = () => {
       .catch((err) => {
         const message = err?.response?.data?.message || 'Connection error';
         setErrorMessage(message);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   const onError = (err) => {
     setErrorMessage('Email and password are required to sign in');
@@ -72,7 +77,12 @@ const LoginForm = () => {
         sign in
       </SubmitButton>
 
-      <p className="error-message">{errorMessage}</p>
+      <div className='message-section'>
+        {isLoading ? <LoadingDots/> : ''}
+        {errorMessage ? <p className="error">{errorMessage}</p> : ''}
+      </div>
+
+
       {navigate ? <Navigate to="/dashboard" /> : ''}
     </StyledForm>
   );
