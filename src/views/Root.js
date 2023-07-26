@@ -12,7 +12,13 @@ import LoginView from 'views/StartingViews/LoginView';
 import AuthContext from 'providers/AuthProvider';
 import PrivateRoutes from 'utils/PrivateRoutes';
 import Spinner from 'components/atoms/Spinner';
-import CatalogueView from 'views/MainViews/CatalogueView';
+import BooksView from 'views/MainViews/BooksView';
+import AddBookView from 'views/MainViews/AddBookView';
+import HistoryView from 'views/MainViews/HistoryView';
+import ManageBorrowings from 'views/MainViews/ManageBorrowingsView';
+import UsersView from 'views/MainViews/UsersView';
+import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView';
+import SettingsView from 'views/MainViews/SettingsView';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -44,7 +50,7 @@ const Root = () => {
           <Spinner></Spinner>
         ) : (
           <Routes>
-            <Route path="/" element={<Navigate to={auth ? '/catalogue' : '/login'} />}></Route>
+            <Route path="/" element={<Navigate to={auth ? '/books' : '/login'} />}></Route>
 
             {/*Publicly available routes*/}
             <Route path="/reset-password" element={<ResetPasswordView />}></Route>
@@ -53,7 +59,12 @@ const Root = () => {
 
             {/*Routes for logged-in users*/}
             <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
-              <Route path="/catalogue" element={<CatalogueView />}></Route>
+              <Route path="/books" element={<BooksView />}></Route>
+              <Route path="/add-book" element={<AddBookView />}></Route>
+              <Route path="/history" element={<HistoryView />}></Route>
+              <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
+              <Route path="/users" element={<UsersView />}></Route>
+              <Route path="/settings" element={<SettingsView />}></Route>
             </Route>
           </Routes>
         )}

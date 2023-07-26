@@ -11,6 +11,13 @@ const NavigationWrapper = styled.nav`
     font-weight: bold;
     font-size: 1.5rem;
     text-align: center;
+    margin: 2rem 0;
+  }
+  .nav-container {
+    margin-bottom: 5rem;
+  }
+  .logout {
+    margin-top: 6rem;
   }
 `;
 

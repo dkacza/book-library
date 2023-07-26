@@ -152,7 +152,7 @@ const RegisterForm = () => {
 
       <p className={`error-message ${errorMessage ? '' : 'hidden'}`}>{errorMessage}</p>
 
-      {navigate ? <Navigate to="/catalogue" /> : ''}
+      {navigate ? <Navigate to="/books" /> : ''}
     </StyledForm>
   );
 };

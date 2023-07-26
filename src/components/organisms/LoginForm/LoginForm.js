@@ -83,7 +83,7 @@ const LoginForm = () => {
       </div>
 
 
-      {navigate ? <Navigate to="/catalogue" /> : ''}
+      {navigate ? <Navigate to="/books" /> : ''}
     </StyledForm>
   );
 };
