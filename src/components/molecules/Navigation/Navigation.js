@@ -11,9 +11,22 @@ import { ReactComponent as ManageIcon } from 'assets/icons/swap_horiz_FILL0_wght
 import { ReactComponent as UsersIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as SettingsIcon } from 'assets/icons/settings_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as LogoutIcon } from 'assets/icons/logout_FILL0_wght600_GRAD0_opsz48.svg';
+import { setCookie } from 'utils/cookies';
+import axios from 'api/axios';
 
 const Navigation = () => {
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    console.log('Clearing users data');
+    axios
+      .get('/users/logout')
+      .then(() => console.log('Logged out'))
+      .catch(() => console.log('Error occurred while logging out'));
+    setCookie('user', 'LOGGED_OUT', 1);
+    setAuth({});
+  };
 
   return (
     <NavigationWrapper>
@@ -22,15 +35,23 @@ const Navigation = () => {
       <div className="user-name">{auth.firstName + ' ' + auth.lastName}</div>
 
       <div className="nav-container">
-        <NavWithIcon name={'Books'} destination={'/books'} Icon={BooksIcon} />
-        <NavWithIcon name={'Add book'} destination={'/add-book'} Icon={AddBookIcon} />
-        <NavWithIcon name={'History'} destination={'/history'} Icon={HistoryIcon} />
-        <NavWithIcon name={'Manage borrowings'} destination={'/manage-borrowings'} Icon={ManageIcon} />
-        <NavWithIcon name={'Users'} destination={'/users'} Icon={UsersIcon} />
-        <NavWithIcon name={'Settings'} destination={'/settings'} Icon={SettingsIcon} />
+        <div className="public">
+          <NavWithIcon name={'Books'} destination={'/books'} Icon={BooksIcon} />
+          <NavWithIcon name={'History'} destination={'/history'} Icon={HistoryIcon} />
+          <NavWithIcon name={'Settings'} destination={'/settings'} Icon={SettingsIcon} />
+        </div>
+        {auth.role === 'admin' || auth.role === 'librarian' ? (
+          <div className="private">
+            <NavWithIcon name={'Add book'} destination={'/add-book'} Icon={AddBookIcon} />
+            <NavWithIcon name={'Manage borrowings'} destination={'/manage-borrowings'} Icon={ManageIcon} />
+            <NavWithIcon name={'Users'} destination={'/users'} Icon={UsersIcon} />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
 
-      <NavWithIcon className="logout" name={'Log out'} destination={'/login'} Icon={LogoutIcon} />
+      <NavWithIcon onClick={handleLogout} className="logout" name={'Log out'} destination={'/login'} Icon={LogoutIcon} />
     </NavigationWrapper>
   );
 };

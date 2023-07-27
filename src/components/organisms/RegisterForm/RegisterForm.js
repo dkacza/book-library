@@ -32,9 +32,6 @@ const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [navigate, setNavigate] = useState(false);
 
-  useEffect(() => {
-    setFocus('firstName');
-  }, [setFocus]);
 
   const onSubmit = (data) => {
     setErrorMessage('');
@@ -74,6 +71,20 @@ const RegisterForm = () => {
     }
     setErrorMessage('Make sure, that values you have passed are in correct form.');
   };
+
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.code !== 'Enter') return;
+      e.preventDefault();
+      handleSubmit(onSubmit, onError)();
+    }
+    document.addEventListener('keydown', listener)
+    setFocus('firstName');
+    return () => {
+      document.removeEventListener('keydown', listener)
+    }
+
+  }, []);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>

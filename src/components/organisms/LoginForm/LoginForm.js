@@ -14,7 +14,7 @@ import SubmitButton from 'components/atoms/SubmitButton';
 import { StyledLink } from 'components/atoms/StyledLink';
 import LoadingDots from 'components/atoms/LoadingDots';
 
-const LoginForm = () => {
+const LoginForm = ({redirectMessage}) => {
   const { setAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,12 +25,8 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(redirectMessage);
   const [navigate, setNavigate] = useState(false);
-
-  useEffect(() => {
-    setFocus('email');
-  }, [setFocus]);
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -57,6 +53,18 @@ const LoginForm = () => {
   const onError = (err) => {
     setErrorMessage('Email and password are required to sign in');
   };
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.code !== 'Enter') return;
+      e.preventDefault();
+      handleSubmit(onSubmit, onError)();
+    }
+    document.addEventListener('keydown', listener)
+    setFocus('email');
+    return () => {
+      document.removeEventListener('keydown', listener)
+    }
+  }, []);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>

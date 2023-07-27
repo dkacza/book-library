@@ -14,7 +14,10 @@ const NavigationWrapper = styled.nav`
     margin: 2rem 0;
   }
   .nav-container {
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
+    .public {
+      margin-bottom: 2rem;
+    }
   }
   .logout {
     margin-top: 6rem;
