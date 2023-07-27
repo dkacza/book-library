@@ -19,7 +19,6 @@ export const StyledForm = styled.form`
 
   div.message-section {
     margin-top: 1.25rem;
-    height: 2rem;
     margin-bottom: 1rem;
 
     p.error {
