@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MainViewTemplate = styled.div`
+export const MainViewTemplate = styled.div`
   display: flex;
   flex-direction: row;
   nav {
@@ -9,7 +9,6 @@ const MainViewTemplate = styled.div`
   }
   main {
     flex-grow: 1;
+    height: 100vh;
   }
 `;
-
-export default MainViewTemplate;
