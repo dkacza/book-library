@@ -1,9 +1,9 @@
 import React from 'react';
 import StyledNavLink from 'components/molecules/NavWithIcon/NavWithIcon.styles';
 
-const NavWithIcon = ({destination, Icon, name}) => {
+const NavWithIcon = ({destination, Icon, name, onClick}) => {
   return (
-    <StyledNavLink to={destination}>
+    <StyledNavLink onClick={onClick} to={destination}>
       <div className='icon-container'>
         <Icon></Icon>
       </div>

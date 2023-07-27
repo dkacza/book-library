@@ -27,6 +27,10 @@ const Root = () => {
   useEffect(() => {
     setAuthChecked(false);
     const userId = getCookie('user');
+    if (getCookie('jwt') === 'LOGGED_OUT' || userId === 'LOGGED_OUT') {
+      setAuthChecked(true);
+      return;
+    }
     axios
       .get(`/users/${userId}`)
       .then((res) => {
