@@ -1,11 +1,13 @@
-import MainViewTemplate from 'views/MainViews/MainViewTemplate';
+import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/molecules/Navigation/Navigation';
+import MainSection from 'components/templates/MainSection/MainSection';
+import BookBrowser from 'components/organisms/BookBrowser/BookBrowser';
 
 const BooksView = () => {
   return (
     <MainViewTemplate>
       <Navigation />
-      <main></main>
+      <MainSection heading="Book Catalogue" children={<BookBrowser />} />
     </MainViewTemplate>
   );
 };

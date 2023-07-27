@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const NavigationWrapper = styled.nav`
   background-color: ${({theme}) => theme.colors.primary2};
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   
   .logo {
     margin: 3rem auto;
