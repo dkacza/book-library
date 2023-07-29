@@ -18,7 +18,6 @@ const Table = ({ columnNames, columnCodes, data }) => {
               return <td key={`${record._id} ${name}`}>{record[name]}</td>
             })
           }</tr>)
-
         })}
         </tbody>
       </table>
