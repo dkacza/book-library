@@ -3,6 +3,7 @@ import Table from 'components/organisms/Table/Table';
 import Filters from 'components/organisms/Filters/Filters';
 import Wrapper from 'components/organisms/BookBrowser/BookBrowser.styles';
 import axios from 'api/axios';
+import Pagination from 'components/molecules/Pagination/Pagination';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'status'];
@@ -48,23 +49,7 @@ const BookBrowser = () => {
     <Wrapper>
       <Table columnNames={columnNames} columnCodes={columnCodes} data={books} />
       <Filters />
-      <div className="pagination">
-        <p>
-          {pages.currentStart} - {pages.currentEnd} of {pages.total} items{' '}
-        </p>
-        <button className="first" onClick={() => handlePageChange(1)}>
-          First
-        </button>
-        <button className="previous" onClick={() => handlePageChange(pages.currentPage - 1)}>
-          Previous
-        </button>
-        <button className="next" onClick={() => handlePageChange(pages.currentPage + 1)}>
-          Next
-        </button>
-        <button className="last" onClick={() => handlePageChange(pages.totalPages)}>
-          Last
-        </button>
-      </div>
+      <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination>
     </Wrapper>
   );
 };
