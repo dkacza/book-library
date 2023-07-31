@@ -66,8 +66,19 @@ const StyledTable = styled.table`
   }
   
   @media (max-width: 1280px) {
+    td {
+      font-size: 1rem;
+    }
     th {
       font-size: 2.25rem;
+    }
+  }
+  @media (max-width: 1100px) {
+    td {
+      font-size: 0.75rem;
+    }
+    th {
+      font-size: 1.25rem;
     }
   }
 `;
