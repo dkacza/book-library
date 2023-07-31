@@ -68,7 +68,6 @@ const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
       })
       .catch((err) => console.log(`Could not fetch the data about books`));
   };
-
   const onSubmit = (data) => {
     const newQuery = buildQuery(data);
     setQuery(newQuery);
@@ -76,7 +75,6 @@ const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
   const onError = (err) => {
     reset();
   };
-
   const submitWithPrevent = (e) => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
@@ -91,7 +89,6 @@ const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
   useEffect(() => {
     getBookData(initialPage, limitPerPage);
   }, [query]);
-
 
   return {
     pages,
