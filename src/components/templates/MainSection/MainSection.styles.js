@@ -7,5 +7,8 @@ export const Wrapper = styled.main`
   ${Title} {
     margin-bottom: 2rem;
   }
+  div {
+    flex-grow: 1;
+  }
   padding: 3rem;
 `
