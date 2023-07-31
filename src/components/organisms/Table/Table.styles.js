@@ -8,6 +8,28 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   overflow-y: scroll;
   overflow-x: scroll;
+  
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    opacity: 1;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: ${({theme}) => theme.colors.secondary1};
+    border-radius: 0.25rem;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({theme}) => theme.colors.secondary2};
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
   th {
     font-size: 3rem;
     text-align: left;

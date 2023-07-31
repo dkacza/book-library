@@ -6,6 +6,7 @@ export const Wrapper = styled.main`
   flex-direction: column;
   ${Title} {
     margin-bottom: 2rem;
+    font-size: 3.5rem;
   }
   div {
     flex-grow: 1;
