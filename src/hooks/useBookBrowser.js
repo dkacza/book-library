@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'api/axios';
+import useWidowDimensions from 'hooks/useWidowDimensions';
 
 const buildQuery = (data) => {
   let queryString = '';
@@ -36,10 +37,14 @@ const buildQuery = (data) => {
   return queryString;
 };
 
-const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
+const useBookBrowser = (initialFormValues, initialPage) => {
+  const {width} = useWidowDimensions();
+
   const [books, setBooks] = useState([]);
   const [pages, setPages] = useState({});
   const [query, setQuery] = useState(buildQuery(initialFormValues));
+  const [limitPerPage, setLimitPerPage] = useState(15);
+
   const {
     register,
     handleSubmit,
@@ -63,7 +68,7 @@ const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
         });
         setBooks(preparedBooks);
 
-        const paginationResponse = res.data.data.pagination;
+        const paginationResponse = res.data.data.pagination
         setPages(paginationResponse);
       })
       .catch((err) => console.log(`Could not fetch the data about books`));
@@ -87,8 +92,15 @@ const useBookBrowser = (initialFormValues, limitPerPage, initialPage) => {
   };
 
   useEffect(() => {
+    if (width <= 1920) setLimitPerPage(10);
+    if (width > 1920)  setLimitPerPage(15);
+    if (width > 2560) setLimitPerPage(20);
+  }, [width]);
+
+  useEffect(() => {
+    console.log(limitPerPage);
     getBookData(initialPage, limitPerPage);
-  }, [query]);
+  }, [query, limitPerPage]);
 
   return {
     pages,

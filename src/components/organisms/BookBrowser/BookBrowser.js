@@ -7,7 +7,6 @@ import useBookBrowser from 'hooks/useBookBrowser';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'status'];
-const LIMIT_PER_PAGE = 10;
 const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {
   genre: {
@@ -22,7 +21,7 @@ const INITIAL_FORM_VALUES = {
 };
 
 const BookBrowser = () => {
-  const { books, pages, register, handlePageChange, submitWithPrevent } = useBookBrowser(INITIAL_FORM_VALUES, LIMIT_PER_PAGE, INITIAL_PAGE);
+  const { books, pages, register, handlePageChange, submitWithPrevent } = useBookBrowser(INITIAL_FORM_VALUES, INITIAL_PAGE);
 
   return (
     <Wrapper>
