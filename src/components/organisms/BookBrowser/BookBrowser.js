@@ -14,24 +14,28 @@ const INITIAL_PAGE = 1;
 const BookBrowser = () => {
   const [books, setBooks] = useState([]);
   const [pages, setPages] = useState({});
+  const [query, setQuery] = useState('');
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
-      fiction: true,
-      nonFiction: true,
-      scientific: true,
-      children: true,
-      poetry: true,
+      genre: {
+        fiction: true,
+        nonFiction: true,
+        scientific: true,
+        children: true,
+        poetry: true,
+      },
       yearFrom: 1800,
       yearTo: new Date().getFullYear(),
     },
   });
   const getBookData = (page, limit) => {
     axios
-      .get(`/books?page=${page}&limit=${limit}`)
+      .get(`/books?page=${page}&limit=${limit}&${query}`)
       .then((res) => {
         const booksResponse = res.data.data.books;
         const preparedBooks = booksResponse.map((book) => {
@@ -64,9 +68,11 @@ const BookBrowser = () => {
   const onSubmit = (data) => {
     console.log(data);
     console.log('Filters submitted');
+    setQuery(buildQuery(data));
+    getBookData(INITIAL_PAGE, LIMIT_PER_PAGE);
   };
   const onError = (err) => {
-    console.log('Filters submitted with error');
+    reset();
   };
 
   const submitWithPrevent = (e) => {
@@ -74,11 +80,52 @@ const BookBrowser = () => {
     handleSubmit(onSubmit, onError)();
   };
 
+  const buildQuery = (data) => {
+    let queryString = '';
+    // SET GENRES FILTER
+    console.log(data);
+    const { genre } = data;
+    let genreString = 'genre=[';
+    let emptyGenre = true;
+    for (const [key, value] of Object.entries(genre)) {
+      if (!value) continue;
+      genreString += key + ',';
+      emptyGenre = false;
+    }
+    if (!emptyGenre) {
+      genreString = genreString.substring(0, genreString.length - 1);
+      genreString += ']';
+      queryString += genreString + '&';
+    }
+
+    // SET AVAILABLE FILTER
+    if (data.availableOnly) {
+      queryString += 'availableOnly=true&';
+    }
+
+    // ADD SEARCH QUERY
+    // TODO
+    // if (data.searchQuery) {
+    //   queryString += 'queryString=' + URLEncoder(data.searchQuery) + '&';
+    // }
+    // SET YEAR FILTER
+    const startDate = new Date();
+    startDate.setFullYear(data.yearFrom);
+    queryString += 'publicationDate[gte]=' + startDate.getFullYear() + '&';
+
+    const endDate = new Date();
+    endDate.setFullYear(data.yearTo);
+    queryString += 'publicationDate[lte]=' + endDate.getFullYear();
+
+    return queryString;
+  };
   return (
     <Wrapper>
-      <Table columnNames={columnNames} columnCodes={columnCodes} data={books} />
-      <Filters onSubmit={(e) => submitWithPrevent(e)} register={register}/>
-      <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination>
+      {books.length !== 0 ? <Table columnNames={columnNames} columnCodes={columnCodes} data={books} /> : <p>There are no books that match current criteria</p>}
+
+      <Filters onSubmit={(e) => submitWithPrevent(e)} register={register} />
+      {books.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination> : ''}
+
     </Wrapper>
   );
 };
