@@ -4,23 +4,28 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as MyIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
+import StyledForm from 'components/organisms/Filters/Filters.styles';
+import NumberInput from 'components/atoms/NumberInput';
 
 const Filters = ({ register, onSubmit }) => {
   return (
-    <form className="filter-wrapper" onSubmit={onSubmit}>
-      <InputWithIcon name="search" id="search" type="text" Icon={MyIcon} {...register('searchQuery')} />
+    <StyledForm className="filter-wrapper" onSubmit={onSubmit}>
+      <InputWithIcon placeholder="search" name="search" id="search" type="text" Icon={MyIcon} {...register('searchQuery')} />
       <div className="release-year-filter">
         <p>Release year:</p>
-        <input
-          type="number"
-          id="date-from-input"
-          placeholder="from"
-          {...register('yearFrom', {
-            validate: (val, formValues) => val <= formValues.yearTo || 'Ending date must be greater or equal to starting date',
-          })}
-        />
-        <p>-</p>
-        <input type="number" id="date-to-input" placeholder="to" {...register('yearTo')} />
+        <div className="release-year-input">
+          <NumberInput
+            type="number"
+            id="date-from-input"
+            placeholder="from"
+            {...register('yearFrom', {
+              validate: (val, formValues) => val <= formValues.yearTo || 'Ending date must be greater or equal to starting date',
+            })}
+          />
+          <p>-</p>
+          {/*<input type="number" id="date-to-input" placeholder="to" {...register('yearTo')} />*/}
+          <NumberInput id="date-to-input" name="date-to" placeholder="to" {...register('yearTo')} />
+        </div>
       </div>
       <div className="genre-filter">
         <p>Genre:</p>
@@ -35,7 +40,7 @@ const Filters = ({ register, onSubmit }) => {
         <LabeledCheckbox id="available" label="Display only available books" name="available" {...register('availableOnly')} />
       </div>
       <SubmitButton type="submit">Apply filters</SubmitButton>
-    </form>
+    </StyledForm>
   );
 };
 export default Filters;
