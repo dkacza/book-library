@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'components/organisms/Table/Table';
 import Filters from 'components/organisms/Filters/Filters';
-import Wrapper from 'components/templates/BookBrowser/BookBrowser.styles';
+import StyledSection from 'components/templates/BookBrowser/BookBrowser.styles';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import useBookBrowser from 'hooks/useBookBrowser';
 
@@ -24,7 +24,7 @@ const BookBrowser = () => {
   const { books, pages, register, handlePageChange, submitWithPrevent } = useBookBrowser(INITIAL_FORM_VALUES, INITIAL_PAGE);
 
   return (
-    <Wrapper>
+    <StyledSection>
       {books.length !== 0 ? (
         <Table columnNames={columnNames} columnCodes={columnCodes} data={books} />
       ) : (
@@ -33,7 +33,7 @@ const BookBrowser = () => {
 
       <Filters onSubmit={(e) => submitWithPrevent(e)} register={register} />
       {books.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination> : ''}
-    </Wrapper>
+    </StyledSection>
   );
 };
 export default BookBrowser;
