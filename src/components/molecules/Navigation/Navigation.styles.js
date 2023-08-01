@@ -7,7 +7,6 @@ const NavigationWrapper = styled.nav`
   .logo {
     margin: 3rem auto;
   }
-  
   .user-name {
     font-weight: bold;
     font-size: 1.5rem;
@@ -22,6 +21,17 @@ const NavigationWrapper = styled.nav`
   }
   .logout {
     margin-top: 6rem;
+  }
+  
+  @media(max-width: 1300px) {
+    .logo {
+      margin: 2rem auto;
+    }
+    .nav-container {
+      .nav-link {
+        height: 3.5rem;
+      }
+    }
   }
 `;
 
