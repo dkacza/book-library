@@ -23,7 +23,7 @@ const NavigationWrapper = styled.nav`
     margin-top: 6rem;
   }
   
-  @media(max-width: 1300px) {
+  @media(max-height: 800px) {
     .logo {
       margin: 2rem auto;
     }

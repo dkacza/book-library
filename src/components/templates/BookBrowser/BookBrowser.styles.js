@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const StyledSection = styled.section`
   display: grid;
   grid-template-columns: 65% 1fr;
   column-gap: 1rem;
@@ -8,4 +8,4 @@ const Wrapper = styled.div`
   max-height: 100%;
 `;
 
-export default Wrapper;
+export default StyledSection;
