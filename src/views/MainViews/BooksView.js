@@ -1,7 +1,7 @@
 import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/molecules/Navigation/Navigation';
 import MainSection from 'components/templates/MainSection/MainSection';
-import BookBrowser from 'components/organisms/BookBrowser/BookBrowser';
+import BookBrowser from 'components/templates/BookBrowser/BookBrowser';
 
 const BooksView = () => {
   return (

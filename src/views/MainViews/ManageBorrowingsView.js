@@ -1,11 +1,13 @@
-import { MainSectionTemplate, MainViewTemplate } from 'views/MainViews/MainViewTemplate';
+import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/molecules/Navigation/Navigation';
+import MainSection from 'components/templates/MainSection/MainSection';
+import BorrowingsManager from 'components/templates/BorrowingsManager/BorrowingsManager';
 
 const ManageBorrowings = () => {
   return (
     <MainViewTemplate>
       <Navigation />
-      <main></main>
+      <MainSection heading="Manage Borrowings" children={<BorrowingsManager/>} />
     </MainViewTemplate>
   );
 };
