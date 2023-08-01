@@ -43,7 +43,7 @@ const useBookBrowser = (initialFormValues, initialPage) => {
   const [books, setBooks] = useState([]);
   const [pages, setPages] = useState({});
   const [query, setQuery] = useState(buildQuery(initialFormValues));
-  const [limitPerPage, setLimitPerPage] = useState(15);
+  const [limitPerPage, setLimitPerPage] = useState(10);
 
   const {
     register,
