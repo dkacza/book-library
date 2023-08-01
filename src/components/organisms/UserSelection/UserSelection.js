@@ -3,6 +3,7 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import axios from 'api/axios';
 import useDebounce from 'hooks/useDebounce';
+import StyledUserSelection from 'components/organisms/UserSelection/UserSelection.styles';
 
 const API_CALL_DELAY = 600;
 
@@ -32,7 +33,7 @@ const UserSelection = ({setSelectedUser}) => {
   }
 
   return (
-    <>
+    <StyledUserSelection className="user-selection">
       <InputWithIcon
         placeholder={'name, email, phone...'}
         name={'user-search'}
@@ -55,7 +56,7 @@ const UserSelection = ({setSelectedUser}) => {
           <p className="search-info">Search for users to get started...</p>
         )}
       </ul>
-    </>
+    </StyledUserSelection>
   );
 };
 export default UserSelection;
