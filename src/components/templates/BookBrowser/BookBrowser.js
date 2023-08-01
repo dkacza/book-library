@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'components/organisms/Table/Table';
 import Filters from 'components/organisms/Filters/Filters';
-import Wrapper from 'components/organisms/BookBrowser/BookBrowser.styles';
+import Wrapper from 'components/templates/BookBrowser/BookBrowser.styles';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import useBookBrowser from 'hooks/useBookBrowser';
 

@@ -10,7 +10,6 @@ export const Wrapper = styled.main`
     margin-bottom: 2rem;
     font-size: 3.5rem;
   }
-  
   & > div {
     flex-grow: 1;
     overflow: hidden;
