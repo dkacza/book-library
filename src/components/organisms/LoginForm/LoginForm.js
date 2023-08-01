@@ -68,13 +68,14 @@ const LoginForm = ({redirectMessage}) => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
-      <InputWithIcon {...register('email', { required: true })} type={'text'} id={'email'} name={'email'} Icon={EmailIcon} error={errors.email} />
+      <InputWithIcon {...register('email', { required: true })} type={'text'} id={'email'} name={'email'} placeholder={'email'} Icon={EmailIcon} error={errors.email} />
 
       <InputWithIcon
         {...register('password', { required: true })}
         type={'password'}
         id={'password'}
         name={'password'}
+        placeholder={'password'}
         Icon={PasswordIcon}
         error={errors.password}
       />

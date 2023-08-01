@@ -96,6 +96,7 @@ const RegisterForm = () => {
         type={'text'}
         id={'first-name'}
         name={'first-name'}
+        placeholder={'first name'}
         Icon={PersonIcon}
         error={errors['first-name']}
       ></InputWithIcon>
@@ -105,6 +106,7 @@ const RegisterForm = () => {
         type={'text'}
         id={'last-name'}
         name={'last-name'}
+        placeholder={'last name'}
         Icon={PersonIcon}
         error={errors['last-name']}
       ></InputWithIcon>
@@ -114,6 +116,7 @@ const RegisterForm = () => {
         type={'text'}
         id={'email'}
         name={'email'}
+        placeholder={'email address'}
         Icon={EmailIcon}
         error={errors.email}
       ></InputWithIcon>
@@ -123,6 +126,7 @@ const RegisterForm = () => {
         type={'text'}
         id={'phone'}
         name={'phone'}
+        placeholder={'phone number'}
         Icon={PhoneIcon}
         error={errors.phone}
       ></InputWithIcon>
@@ -132,6 +136,7 @@ const RegisterForm = () => {
         type={'password'}
         id={'password'}
         name={'password'}
+        placeholder={'password'}
         Icon={PasswordIcon}
         error={errors.password}
       ></InputWithIcon>
@@ -144,6 +149,7 @@ const RegisterForm = () => {
         type={'password'}
         id={'password-confirm'}
         name={'password-confirm'}
+        placeholder={'confirm password'}
         Icon={PasswordConfirmIcon}
         error={errors['password-confirm']}
       ></InputWithIcon>

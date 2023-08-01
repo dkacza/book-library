@@ -8,8 +8,8 @@ import StyledForm from 'components/organisms/ResetPasswordForm/ResetPasswordForm
 const ResetPasswordForm = () => {
   return (
     <StyledForm>
-      <InputWithIcon type={'password'} id={'password'} name={'new password'} Icon={PasswordIcon}></InputWithIcon>
-      <InputWithIcon type={'password'} id={'password-confirm'} name={'confirm new password'} Icon={PasswordConfirmIcon}></InputWithIcon>
+      <InputWithIcon type={'password'} id={'password'} placeholder={'new password'} name={'new password'} Icon={PasswordIcon}></InputWithIcon>
+      <InputWithIcon type={'password'} id={'password-confirm'} placeholder={'confirm new password'} name={'confirm new password'} Icon={PasswordConfirmIcon}></InputWithIcon>
 
       <SubmitButton className="submit-button">Reset password</SubmitButton>
     </StyledForm>

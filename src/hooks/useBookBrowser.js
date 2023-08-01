@@ -92,13 +92,12 @@ const useBookBrowser = (initialFormValues, initialPage) => {
   };
 
   useEffect(() => {
-    if (width <= 1920) setLimitPerPage(10);
-    if (width > 1920)  setLimitPerPage(15);
-    if (width > 2560) setLimitPerPage(20);
+    if (width <= 2000) setLimitPerPage(10);
+    if (width > 2000)  setLimitPerPage(15);
+    if (width > 2600) setLimitPerPage(20);
   }, [width]);
 
   useEffect(() => {
-    console.log(limitPerPage);
     getBookData(initialPage, limitPerPage);
   }, [query, limitPerPage]);
 
