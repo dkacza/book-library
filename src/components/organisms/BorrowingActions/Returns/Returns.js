@@ -4,14 +4,13 @@ import { ReactComponent as ReturnIcon } from 'assets/icons/keyboard_return_FILL0
 import StyledReturns from 'components/organisms/BorrowingActions/Returns/Returns.styles';
 
 const Returns = ({ currentBorrowings, handleBookReturn }) => {
-  console.log(currentBorrowings);
   return (
     <StyledReturns className='returns'>
       {currentBorrowings.length > 0 ? (
         <>
           <div className='list-headings'>
             <p>Title</p>
-            <p>Date of borrow</p>
+            <p>Date of borrowing</p>
             <p>Date of expiration</p>
           </div>
           {currentBorrowings.map((borrowing) => (
