@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 const Spinner = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: calc(50% - 72px);
+  left: calc(50% - 72px);
   width: 72px;
   height: 72px;
   border: 6px solid ${({theme}) => theme.colors.primary3};

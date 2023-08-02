@@ -31,7 +31,7 @@ const StyledTable = styled.table`
     display: none;
   }
   th {
-    font-size: 3rem;
+    font-size: 2.5rem;
     text-align: left;
     color: ${({theme}) => theme.colors.secondary2}
   }

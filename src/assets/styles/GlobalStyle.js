@@ -11,6 +11,9 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${({theme}) => theme.colors.primary1};
     color: ${({theme}) => theme.colors.secondary2};
   }
+  p {
+    font-family: 'Roboto Slab', monospace;
+  }
   @media (max-width: 720px){
     html {
       font-size: 15px;
