@@ -5,7 +5,6 @@ import SquareTileButton from 'components/atoms/SquareTileButton';
 import {ReactComponent as ArrowRightIcon} from 'assets/icons/keyboard_arrow_right_FILL0_wght600_GRAD0_opsz48.svg';
 
 const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow }) => {
-  console.log(books);
   return (
     <div className="borrowing-books-selection">
       <InputWithIcon
