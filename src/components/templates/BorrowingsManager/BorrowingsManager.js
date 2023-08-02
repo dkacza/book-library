@@ -5,7 +5,7 @@ import BorrowingActions from 'components/organisms/BorrowingActions/BorrowingAct
 
 const BorrowingsManager = () => {
   const [selectedUser, setSelectedUser] = useState();
-  const handleUserDelete = (e) => {
+  const handleUserUnset = (e) => {
     e.preventDefault();
     setSelectedUser(undefined);
   }
@@ -13,7 +13,7 @@ const BorrowingsManager = () => {
   return (
     <StyledBorrowingsManager className="borrowings-manager">
       {selectedUser ? (
-        <BorrowingActions selectedUser={selectedUser} setSelectedUser={setSelectedUser} handleUserDelete={handleUserDelete} />
+        <BorrowingActions selectedUser={selectedUser} setSelectedUser={setSelectedUser} handleUserUnset={handleUserUnset} />
       ) : (
         <UserSelection setSelectedUser={setSelectedUser} />
       )}
