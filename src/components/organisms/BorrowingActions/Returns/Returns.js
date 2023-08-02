@@ -1,18 +1,18 @@
 import React from 'react';
+import SquareTileButton from 'components/atoms/SquareTileButton';
+import {ReactComponent as ArrowLeftIcon} from 'assets/icons/keyboard_arrow_left_FILL0_wght600_GRAD0_opsz48.svg';
 
-const UsersBooks = ({currentBorrowings, handleBookReturn}) => {
+const Returns = ({currentBorrowings, handleBookReturn}) => {
   return (
     <ul className="users-books">
       {currentBorrowings ? (
         currentBorrowings.map((borrowing) => (
-          <ul key={borrowing._id}>
+          <li key={borrowing._id}>
             <p className="title">{borrowing.book.title}</p>
             <p className="start-date">{borrowing.startDate}</p>
             <p className="expiration-date">{borrowing.expirationDate}</p>
-            <button className="return-button" onClick={handleBookReturn}>
-              Return
-            </button>
-          </ul>
+            <SquareTileButton onClick={(e) => handleBookReturn(e, borrowing._id)} Icon={ArrowLeftIcon}/>
+          </li>
         ))
       ) : (
         <p className="no-books-info">User has no currently borrowed books</p>
@@ -21,4 +21,4 @@ const UsersBooks = ({currentBorrowings, handleBookReturn}) => {
   );
 }
 
-export default UsersBooks;
+export default Returns;

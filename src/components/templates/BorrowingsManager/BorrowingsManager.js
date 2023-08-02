@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StyledBorrowingsManager from 'components/templates/BorrowingsManager/BorrowingsManager.styles';
 import UserSelection from 'components/organisms/UserSelection/UserSelection';
-import BookBorrowing from 'components/organisms/BookBorrowing/BookBorrowing';
+import BorrowingActions from 'components/organisms/BorrowingActions/BorrowingActions';
 
 const BorrowingsManager = () => {
   const [selectedUser, setSelectedUser] = useState();
@@ -13,7 +13,7 @@ const BorrowingsManager = () => {
   return (
     <StyledBorrowingsManager className="borrowings-manager">
       {selectedUser ? (
-        <BookBorrowing selectedUser={selectedUser} handleUserDelete={handleUserDelete} />
+        <BorrowingActions selectedUser={selectedUser} setSelectedUser={setSelectedUser} handleUserDelete={handleUserDelete} />
       ) : (
         <UserSelection setSelectedUser={setSelectedUser} />
       )}
