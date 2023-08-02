@@ -27,6 +27,7 @@ const StyledNavLink = styled(NavLink)`
 
   p {
     font-size: 1.4rem;
+    font-family: 'Raleway', sans-serif;
   }
 
   &.active {

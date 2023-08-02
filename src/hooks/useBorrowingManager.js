@@ -13,12 +13,10 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
 
   // Fetch books to borrow from search query
   const fetchBooks = () => {
-    console.log('fetching')
     axios
       .get(`/books?currentStatus=available&search=${bookSearchQuery}`)
       .then((res) => {
         const books = flattenBookAuthors(res.data.data.books);
-        console.log(books)
         setBooks(books);
       })
       .catch((err) => console.log(err));
@@ -32,7 +30,15 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
       return response.data.data.rental;
     });
     const data = await Promise.all(promises);
-    setCurrentBorrowings(data);
+
+    // Fix dates
+    const processedData = data.map(record => ({
+      ...record,
+      startDate: record.startDate.substring(0, 10),
+      expirationDate: record.expirationDate.substring(0, 10)
+    }))
+    console.log(processedData);
+    setCurrentBorrowings(processedData);
   };
 
   // Make API request when book search query changes

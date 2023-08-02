@@ -5,6 +5,8 @@ import Captions from 'components/molecules/Captions/Captions';
 import Returns from 'components/organisms/BorrowingActions/Returns/Returns';
 import Borrowings from 'components/organisms/BorrowingActions/Borrowings/Borrowings';
 import useBorrowingManager from 'hooks/useBorrowingManager';
+import StyledBorrowingActions from 'components/organisms/BorrowingActions/BorrowingAction.styles';
+import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) => {
   const {
@@ -19,11 +21,11 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
   } = useBorrowingManager(selectedUser, setSelectedUser);
 
   return (
-    <div className="book-borrowing">
+    <StyledBorrowingActions className="borrowing-actions">
       <UserData selectedUser={selectedUser} />
-      <button className="unset-user" onClick={handleUserUnset}>
+      <BorderlessButton className="unset-user" onClick={handleUserUnset}>
         Select another user
-      </button>
+      </BorderlessButton>
       <div className="management">
         <Captions toggleAction={toggleAction} returnSelected={returnSelected} />
         <div className="content">
@@ -39,7 +41,7 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
           )}
         </div>
       </div>
-    </div>
+    </StyledBorrowingActions>
   );
 };
 

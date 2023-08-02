@@ -4,7 +4,7 @@ import Title from 'components/atoms/Title';
 const UserData = ({selectedUser}) => {
   return (
     <div className="user-data">
-      <Title>
+      <Title className="title">
         {selectedUser.firstName} {selectedUser.lastName}
       </Title>
       <p>{selectedUser.email}</p>
