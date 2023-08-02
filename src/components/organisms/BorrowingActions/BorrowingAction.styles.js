@@ -6,6 +6,10 @@ const StyledBorrowingActions = styled.div`
       font-family: 'Roboto Slab', monospace;
       font-size: 1.2rem;
     }
+    .not-eligible {
+      font-weight: bold;
+      color: ${({theme}) => theme.colors.error2}
+    }
     .title {
       margin-top: 2.5rem;
       margin-bottom: 0;
@@ -21,7 +25,7 @@ const StyledBorrowingActions = styled.div`
     border-radius: 0 0.5rem 0.5rem 0.5rem;
     box-shadow: 0 0 0.25rem 0 rgba(0, 0, 0, 0.25);
     padding: 2rem;
-    max-width: fit-content;
+    max-width: 50rem;
   }
 `;
 export default StyledBorrowingActions;

@@ -2,11 +2,12 @@ import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import SquareTileButton from 'components/atoms/SquareTileButton';
-import {ReactComponent as ArrowRightIcon} from 'assets/icons/keyboard_arrow_right_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.svg';
+import StyledBorrowings from 'components/organisms/BorrowingActions/Borrowings/Borrowings.styles';
 
 const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow }) => {
   return (
-    <div className="borrowing-books-selection">
+    <StyledBorrowings className="borrowing">
       <InputWithIcon
         Icon={SearchIcon}
         placeholder={'search for a book'}
@@ -22,12 +23,11 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorro
             <p>{book.title}</p>
             <p>{book.authors}</p>
             <p>{book.isbn}</p>
-            <p>{book.currentStatus}</p>
-            <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={ArrowRightIcon}/>
+            <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={BookBorrowIcon}/>
           </li>
         ))}
-      </ul> : <p>no books found</p> : ''}
-    </div>
+      </ul> : <p>No books found</p> : <p>Search for a book by title or ISBN</p>}
+    </StyledBorrowings>
   );
 };
 

@@ -32,13 +32,22 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     const data = await Promise.all(promises);
 
     // Fix dates
-    const processedData = data.map(record => ({
+    const processedData = data.map((record) => ({
       ...record,
       startDate: record.startDate.substring(0, 10),
-      expirationDate: record.expirationDate.substring(0, 10)
-    }))
+      expirationDate: record.expirationDate.substring(0, 10),
+    }));
     console.log(processedData);
     setCurrentBorrowings(processedData);
+  };
+
+  const fetchCurrentUserData = () => {
+    axios
+      .get(`users/${selectedUser._id}`)
+      .then((res) => {
+        setSelectedUser(res.data.data.user);
+      })
+      .catch((err) => console.log(err));
   };
 
   // Make API request when book search query changes
@@ -70,27 +79,18 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     axios
       .patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' })
       .then(() => {
-        setSelectedUser({
-          ...selectedUser,
-          rentals: selectedUser.rentals.filter((rental) => rental !== borrowingId),
-        });
+        fetchCurrentUserData();
       })
       .catch((err) => console.log(err));
   };
 
-  // Handle book return
+  // Handle book borrow
   // Modify selected user rental array, append borrowing id -> triggers useEffect
   const handleBookBorrow = (e, bookId) => {
     axios
       .post('/rentals', { user: selectedUser._id, book: bookId })
       .then((res) => {
-        const rentalId = res.data.data.rental._id;
-        const newRentals = [...selectedUser.rentals, rentalId];
-        setSelectedUser({
-          ...selectedUser,
-          rentals: newRentals,
-        });
-        // Update book data
+        fetchCurrentUserData();
         fetchBooks();
       })
       .catch((err) => console.log(err));
@@ -105,7 +105,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     bookSearchQuery,
     handleQueryChange,
     returnSelected,
-  }
+  };
 };
 
 export default UseBorrowingManager;
