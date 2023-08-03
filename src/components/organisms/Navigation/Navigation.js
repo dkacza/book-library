@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Logo from 'components/molecules/Logo/Logo';
-import NavigationWrapper from 'components/molecules/Navigation/Navigation.styles';
+import StyledNavigation from 'components/molecules/Navigation/Navigation.styles';
 import AuthContext from 'providers/AuthProvider';
 import NavWithIcon from 'components/molecules/NavWithIcon/NavWithIcon';
 
@@ -13,13 +13,13 @@ import { ReactComponent as SettingsIcon } from 'assets/icons/settings_FILL0_wght
 import { ReactComponent as LogoutIcon } from 'assets/icons/logout_FILL0_wght600_GRAD0_opsz48.svg';
 import { setCookie } from 'utils/cookies';
 import axios from 'api/axios';
+import styled from 'styled-components';
 
-const Navigation = () => {
+const Navigation = ({...props}) => {
   const { auth, setAuth } = useContext(AuthContext);
 
   const handleLogout = (e) => {
     e.preventDefault();
-    console.log('Clearing users data');
     axios
       .get('/users/logout')
       .then(() => console.log('Logged out'))
@@ -29,8 +29,8 @@ const Navigation = () => {
   };
 
   return (
-    <NavigationWrapper>
-      <Logo className="logo small black">Municipal Library</Logo>
+    <StyledNavigation classname={props.className}>
+      <Logo>Municipal Library</Logo>
 
       <div className="user-name">{auth.firstName + ' ' + auth.lastName}</div>
 
@@ -52,8 +52,8 @@ const Navigation = () => {
       </div>
 
       <NavWithIcon onClick={handleLogout} className="logout" name={'Log out'} destination={'/login'} Icon={LogoutIcon} />
-    </NavigationWrapper>
+    </StyledNavigation>
   );
 };
 
-export default Navigation;
+export default styled(Navigation)``;
