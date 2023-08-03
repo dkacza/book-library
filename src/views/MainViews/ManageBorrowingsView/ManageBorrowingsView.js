@@ -1,13 +1,16 @@
 import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
-import MainSection from 'components/templates/MainSection/MainSection';
 import BorrowingsManager from 'components/templates/BorrowingsManager/BorrowingsManager';
+import Title from 'components/atoms/Title';
 
 const ManageBorrowings = () => {
   return (
     <MainViewTemplate>
       <Navigation />
-      <MainSection heading="Manage Borrowings" children={<BorrowingsManager/>} />
+      <main>
+        <Title>Manage Borrowings</Title>
+        <BorrowingsManager />
+      </main>
     </MainViewTemplate>
   );
 };

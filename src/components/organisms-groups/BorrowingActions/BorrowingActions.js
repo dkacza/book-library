@@ -5,7 +5,7 @@ import Captions from 'components/molecules/Captions/Captions';
 import Returns from 'components/organisms/Returns/Returns';
 import Borrowings from 'components/organisms/Borrowings/Borrowings';
 import useBorrowingManager from 'hooks/useBorrowingManager';
-import StyledBorrowingActions from 'components/templates/BorrowingActions/BorrowingAction.styles';
+import StyledBorrowingActions from 'components/organismsGroups/BorrowingActions/BorrowingAction.styles';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) => {
