@@ -4,9 +4,9 @@ import { ReactComponent as ReturnIcon } from 'assets/icons/keyboard_return_FILL0
 import StyledReturns from 'components/organisms/Returns/Returns.styles';
 import styled from 'styled-components';
 
-const Returns = ({ currentBorrowings, handleBookReturn }) => {
+const Returns = ({ currentBorrowings, handleBookReturn, ...props }) => {
   return (
-    <StyledReturns>
+    <StyledReturns className={props.className}>
       {currentBorrowings.length > 0 ? (
         <>
           <div className='list-headings'>

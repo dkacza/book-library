@@ -5,7 +5,7 @@ import Captions from 'components/molecules/Captions/Captions';
 import Returns from 'components/organisms/Returns/Returns';
 import Borrowings from 'components/organisms/Borrowings/Borrowings';
 import useBorrowingManager from 'hooks/useBorrowingManager';
-import StyledBorrowingActions from 'components/organismsGroups/BorrowingActions/BorrowingAction.styles';
+import StyledBorrowingActions from 'components/organisms-groups/BorrowingActions/BorrowingAction.styles';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) => {
@@ -28,18 +28,16 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
       </BorderlessButton>
       <div className="management">
         <Captions toggleAction={toggleAction} returnSelected={returnSelected} />
-        <div className="content">
-          {returnSelected ? (
-            <Returns currentBorrowings={currentBorrowings} handleBookReturn={handleBookReturn} />
-          ) : (
-            <Borrowings
-              handleQueryChange={handleQueryChange}
-              bookSearchQuery={bookSearchQuery}
-              books={books}
-              handleBookBorrow={handleBookBorrow}
-            />
-          )}
-        </div>
+        {returnSelected ? (
+          <Returns currentBorrowings={currentBorrowings} handleBookReturn={handleBookReturn} />
+        ) : (
+          <Borrowings
+            handleQueryChange={handleQueryChange}
+            bookSearchQuery={bookSearchQuery}
+            books={books}
+            handleBookBorrow={handleBookBorrow}
+          />
+        )}
       </div>
     </StyledBorrowingActions>
   );

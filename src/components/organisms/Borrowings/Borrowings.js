@@ -4,10 +4,11 @@ import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_
 import SquareTileButton from 'components/atoms/SquareTileButton';
 import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.svg';
 import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
+import styled from 'styled-components';
 
-const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow }) => {
+const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow , ...props}) => {
   return (
-    <StyledBorrowings className="borrowing">
+    <StyledBorrowings className={props.className}>
       <InputWithIcon
         Icon={SearchIcon}
         placeholder={'search for a book'}
@@ -31,4 +32,4 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorro
   );
 };
 
-export default Borrowings;
+export default styled(Borrowings)``;

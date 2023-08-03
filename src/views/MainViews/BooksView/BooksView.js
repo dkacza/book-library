@@ -4,9 +4,9 @@ import Title from 'components/atoms/Title';
 import Table from 'components/organisms/Table/Table';
 import Filters from 'components/organisms/Filters/Filters';
 import Pagination from 'components/molecules/Pagination/Pagination';
-import StyledSection from 'components/templates/BookBrowser/BookBrowser.styles';
 import React from 'react';
 import useBookBrowser from 'hooks/useBookBrowser';
+import StyledContentSection from 'views/MainViews/BooksView/BooksView.styles';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'status'];
@@ -31,7 +31,7 @@ const BooksView = () => {
       <Navigation />
       <main>
         <Title>Book catalogue</Title>
-        <StyledSection>
+        <StyledContentSection>
           {books.length !== 0 ? (
             <Table columnNames={columnNames} columnCodes={columnCodes} data={books} />
           ) : (
@@ -40,7 +40,7 @@ const BooksView = () => {
 
           <Filters onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {books.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination> : ''}
-        </StyledSection>
+        </StyledContentSection>
       </main>
     </MainViewTemplate>
   );

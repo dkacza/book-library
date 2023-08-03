@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Title from 'components/atoms/Title';
 
 const StartingViewTemplate = styled.div`
   display: flex;
@@ -7,14 +8,23 @@ const StartingViewTemplate = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  
+
   aside {
     flex-grow: 80;
   }
+
   main {
     flex-grow: 40;
     max-width: 680px;
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+      
+    ${Title} {
+      max-width: calc(100% - 5rem);
+    }
   }
+
   @media (max-width: 1100px) {
     main {
       max-width: 400px;
@@ -23,6 +33,7 @@ const StartingViewTemplate = styled.div`
   @media (max-width: 1300px) {
     main {
       max-width: 480px;
+      padding: 3rem;
     }
   }
   @media (min-width: 2000px) {

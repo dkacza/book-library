@@ -6,10 +6,14 @@ import useDebounce from 'hooks/useDebounce';
 const API_CALL_DELAY = 600;
 
 const UseBorrowingManager = (selectedUser, setSelectedUser) => {
+
+
   const [returnSelected, setReturnSelected] = useState(true); // True -> returning books, False -> borrowing books
   const [currentBorrowings, setCurrentBorrowings] = useState([]); // Array of book objects
   const [bookSearchQuery, setBookSearchQuery] = useState(); // Search query for books
   const [books, setBooks] = useState(); // Books to rent
+
+
 
   // Fetch books to borrow from search query
   const fetchBooks = () => {

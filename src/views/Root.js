@@ -12,12 +12,12 @@ import LoginView from 'views/StartingViews/LoginView';
 import AuthContext from 'providers/AuthProvider';
 import PrivateRoutes from 'utils/PrivateRoutes';
 import Spinner from 'components/atoms/Spinner';
-import BooksView from 'views/MainViews/BooksView';
+import BooksView from 'views/MainViews/BooksView/BooksView';
 import AddBookView from 'views/MainViews/AddBookView';
 import HistoryView from 'views/MainViews/HistoryView';
 import UsersView from 'views/MainViews/UsersView';
 import SettingsView from 'views/MainViews/SettingsView';
-import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView';
+import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
