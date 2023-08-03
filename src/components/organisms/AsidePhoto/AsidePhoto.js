@@ -1,11 +1,13 @@
 import React from 'react';
-import Wrapper, { PositionedLogo } from 'components/organisms/AsidePhoto/AsidePhoto.styles';
+import StyledAsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto.styles';
+import Logo from 'components/molecules/Logo/Logo';
+import styled from 'styled-components';
 
 const AsidePhoto = () => {
   return (
-    <Wrapper>
-      <PositionedLogo></PositionedLogo>
-    </Wrapper>
+    <StyledAsidePhoto>
+      <Logo />
+    </StyledAsidePhoto>
   );
 };
-export default AsidePhoto;
+export default styled(AsidePhoto)``;

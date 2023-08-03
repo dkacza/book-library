@@ -1,22 +1,6 @@
 import styled from 'styled-components';
 
 const StyledBorrowingActions = styled.div`
-  .user-data {
-    p {
-      font-family: 'Roboto Slab', monospace;
-      font-size: 1.2rem;
-    }
-    .not-eligible {
-      font-weight: bold;
-      color: ${({theme}) => theme.colors.error2}
-    }
-    .title {
-      margin-top: 2.5rem;
-      margin-bottom: 0;
-      font-size: 3rem;
-    }
-    margin-bottom: 2rem;
-  }
   .unset-user {
     margin-bottom: 2rem;
   }

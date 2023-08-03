@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import SquareTileButton from 'components/atoms/SquareTileButton';
 
 const StyledReturns = styled.ul`
   max-height: 22vh;
@@ -52,7 +53,7 @@ const StyledReturns = styled.ul`
     width: 8rem;
   }
   
-  button {
+  ${SquareTileButton} {
     margin-bottom: 0.75rem;
     margin-left: 2rem;
     margin-right: 0.75rem;

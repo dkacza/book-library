@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Logo from 'components/molecules/Logo/Logo';
-import StyledNavigation from 'components/molecules/Navigation/Navigation.styles';
+import StyledNavigation from 'components/organisms/Navigation/Navigation.styles';
 import AuthContext from 'providers/AuthProvider';
 import NavWithIcon from 'components/molecules/NavWithIcon/NavWithIcon';
 
@@ -29,7 +29,7 @@ const Navigation = ({...props}) => {
   };
 
   return (
-    <StyledNavigation classname={props.className}>
+    <StyledNavigation className={props.className}>
       <Logo>Municipal Library</Logo>
 
       <div className="user-name">{auth.firstName + ' ' + auth.lastName}</div>

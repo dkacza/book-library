@@ -19,8 +19,6 @@ import UsersView from 'views/MainViews/UsersView';
 import SettingsView from 'views/MainViews/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView';
 
-const LOGIN_REQUIRED_MSG = 'Not so fast... Log in to get access to the resources.'
-
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
   const [authChecked, setAuthChecked] = useState(false);
@@ -52,15 +50,15 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         {!authChecked ? (
-          <Spinner></Spinner>
+          <Spinner />
         ) : (
           <Routes>
-            <Route path="/" element={<Navigate to={auth ? '/books' : '/login'}/>}></Route>
+            <Route path="/" element={<Navigate to={auth ? '/books' : '/login'} />}></Route>
 
             {/*Publicly available routes*/}
             <Route path="/reset-password" element={<ResetPasswordView />}></Route>
             <Route path="/register" element={<RegisterView />}></Route>
-            <Route path="/login" element={<LoginView/>}></Route>
+            <Route path="/login" element={<LoginView />}></Route>
 
             {/*Routes for logged-in users*/}
             <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
@@ -69,11 +67,11 @@ const Root = () => {
               <Route path="/history" element={<HistoryView />}></Route>
             </Route>
 
+            {/*Routes available for librarians and admins only*/}
             <Route element={<PrivateRoutes permittedRoles={['librarian', 'admin']} />}>
               <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
               <Route path="/users" element={<UsersView />}></Route>
               <Route path="/add-book" element={<AddBookView />}></Route>
-
             </Route>
           </Routes>
         )}

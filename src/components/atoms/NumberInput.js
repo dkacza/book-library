@@ -13,7 +13,7 @@ const StyledInput = styled.input`
 `;
 
 const NumberInput = React.forwardRef(({ name, id, value, onChange, ...props }, ref) => {
-  return <StyledInput type="number" name={name} id={id} value={value} ref={ref} {...props} />;
+  return <StyledInput type="number" className={props.className} name={name} id={id} value={value} ref={ref} onChange={onChange} {...props} />;
 });
 
-export default NumberInput;
+export default styled(NumberInput)``;

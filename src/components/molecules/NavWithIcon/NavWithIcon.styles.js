@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-const StyledNavLink = styled(NavLink)`
+const StyledNavWithIcon = styled(NavLink)`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,4 +58,4 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-export default StyledNavLink;
+export default StyledNavWithIcon;

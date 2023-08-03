@@ -2,29 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  border: none;
-  background-color: ${({theme}) => theme.colors.primary2};
-  color: ${({theme}) => theme.colors.secondary1};
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 0.25rem;
-  transition: 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  width: 2.5rem;
-  height: 2.5rem;
+  border: none;
+  background-color: ${({ theme }) => theme.colors.primary2};
+  color: ${({ theme }) => theme.colors.secondary1};
+  transition: 0.2s;
+
   &:hover {
-    background-color: ${({theme}) => theme.colors.primary3};
+    background-color: ${({ theme }) => theme.colors.primary3};
     cursor: pointer;
   }
 `;
 
-const SquareTileButton = ({Icon, onClick}) => {
+const SquareTileButton = ({Icon, onClick, ...props}) => {
   return (
-    <StyledButton onClick={onClick}>
+    <StyledButton className={props.className} onClick={onClick}>
       <Icon></Icon>
     </StyledButton>
   )
 }
 
-export default SquareTileButton;
+export default styled(SquareTileButton)``;

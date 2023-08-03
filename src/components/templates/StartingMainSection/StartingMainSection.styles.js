@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 import Title from 'components/atoms/Title';
-import LanguageButton from 'components/atoms/LanguageButton';
-
-export const PositionedLanguageButton = styled(LanguageButton)`
-  margin-top: auto;
-  align-self: flex-end;
-`;
 
 export const Wrapper = styled.main`
   padding: 5rem;

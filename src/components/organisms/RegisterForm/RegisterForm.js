@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as EmailIcon } from 'assets/icons/alternate_email_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/call_FILL0_wght600_GRAD0_opsz48.svg';
@@ -8,90 +8,19 @@ import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FIL
 import SubmitButton from 'components/atoms/SubmitButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
-import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
 import { Navigate } from 'react-router-dom';
-import AuthContext from 'providers/AuthProvider';
-import { setCookie } from 'utils/cookies';
-
-const NAME_REGEX = /^[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+$/;
-const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const PHONE_REGEX = /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż])(?=.*\d).{8,}$/;
+import useRegister from 'hooks/useRegister';
+import styled from 'styled-components';
 
 const RegisterForm = () => {
-  const { setAuth } = useContext(AuthContext);
-
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    formState: { errors },
-  } = useForm();
-
-  const [errorMessage, setErrorMessage] = useState('');
-  const [navigate, setNavigate] = useState(false);
-
-
-  const onSubmit = (data) => {
-    setErrorMessage('');
-    axios
-      .post('/users/signup', {
-        firstName: data['first-name'],
-        lastName: data['last-name'],
-        email: data['email'],
-        password: data['password'],
-        phoneNumber: data['phone'],
-      })
-      .then((res) => {
-        const userData = res.data.data.user;
-        setAuth(userData);
-        const cookieVal = userData._id;
-        setCookie('user', cookieVal, 1);
-        setErrorMessage('');
-        setNavigate(true);
-      })
-      .catch((err) => {
-        const { message } = err?.response?.data;
-        setErrorMessage(message);
-      });
-  };
-
-  const onError = (err) => {
-    setErrorMessage('');
-    if (err?.agreement) {
-      setErrorMessage('You have to accept the terms of service in order to register');
-      return;
-    }
-    for (const [, value] of Object.entries(err)) {
-      if (value.type === 'required') {
-        setErrorMessage('Please fill all the fields in the form');
-        return;
-      }
-    }
-    setErrorMessage('Make sure, that values you have passed are in correct form.');
-  };
-
-  useEffect(() => {
-    const listener = (e) => {
-      if (e.code !== 'Enter') return;
-      e.preventDefault();
-      handleSubmit(onSubmit, onError)();
-    }
-    document.addEventListener('keydown', listener)
-    setFocus('firstName');
-    return () => {
-      document.removeEventListener('keydown', listener)
-    }
-
-  }, []);
+  const { validationRegexes, register, handleRegister, errors, errorMessage, navigate } = useRegister();
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit, onError)}>
+    <StyledForm onSubmit={handleRegister}>
       <InputWithIcon
         {...register('first-name', {
           required: true,
-          validate: (val) => NAME_REGEX.test(val),
+          validate: (val) => validationRegexes.nameRegex.test(val),
         })}
         type={'text'}
         id={'first-name'}
@@ -102,7 +31,7 @@ const RegisterForm = () => {
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('last-name', { required: true, validate: (val) => NAME_REGEX.test(val) })}
+        {...register('last-name', { required: true, validate: (val) => validationRegexes.nameRegex.test(val) })}
         type={'text'}
         id={'last-name'}
         name={'last-name'}
@@ -112,7 +41,7 @@ const RegisterForm = () => {
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('email', { required: true, validate: (val) => EMAIL_REGEX.test(val) })}
+        {...register('email', { required: true, validate: (val) => validationRegexes.emailRegex.test(val) })}
         type={'text'}
         id={'email'}
         name={'email'}
@@ -122,7 +51,7 @@ const RegisterForm = () => {
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('phone', { required: true, validate: (val) => PHONE_REGEX.test(val) })}
+        {...register('phone', { required: true, validate: (val) => validationRegexes.phoneRegex.test(val) })}
         type={'text'}
         id={'phone'}
         name={'phone'}
@@ -132,7 +61,7 @@ const RegisterForm = () => {
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('password', { required: true, validate: (val) => PASSWORD_REGEX.test(val) })}
+        {...register('password', { required: true, validate: (val) => validationRegexes.passwordRegex.test(val) })}
         type={'password'}
         id={'password'}
         name={'password'}
@@ -163,7 +92,7 @@ const RegisterForm = () => {
         {...register('agreement', { required: true })}
       />
 
-      <SubmitButton className="submit-button" type="submit">
+      <SubmitButton type="submit">
         Register
       </SubmitButton>
 
@@ -173,4 +102,4 @@ const RegisterForm = () => {
     </StyledForm>
   );
 };
-export default RegisterForm;
+export default styled(RegisterForm)``;

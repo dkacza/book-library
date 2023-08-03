@@ -1,11 +1,12 @@
 import React from 'react';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 import { ReactComponent as ReturnIcon } from 'assets/icons/keyboard_return_FILL0_wght600_GRAD0_opsz48.svg';
-import StyledReturns from 'components/organisms/BorrowingActions/Returns/Returns.styles';
+import StyledReturns from 'components/organisms/Returns/Returns.styles';
+import styled from 'styled-components';
 
 const Returns = ({ currentBorrowings, handleBookReturn }) => {
   return (
-    <StyledReturns className='returns'>
+    <StyledReturns>
       {currentBorrowings.length > 0 ? (
         <>
           <div className='list-headings'>
@@ -29,4 +30,4 @@ const Returns = ({ currentBorrowings, handleBookReturn }) => {
   );
 };
 
-export default Returns;
+export default styled(Returns)``;

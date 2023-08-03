@@ -4,10 +4,11 @@ import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_
 import axios from 'api/axios';
 import useDebounce from 'hooks/useDebounce';
 import StyledUserSelection from 'components/organisms/UserSelection/UserSelection.styles';
+import styled from 'styled-components';
 
 const API_CALL_DELAY = 600;
 
-const UserSelection = ({setSelectedUser}) => {
+const UserSelection = ({ setSelectedUser }) => {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const getUsers = () => {
@@ -27,22 +28,22 @@ const UserSelection = ({setSelectedUser}) => {
   };
 
   const handleUserSelect = (e) => {
-    const {id} = e.currentTarget;
+    const { id } = e.currentTarget;
     const selectedUser = users.find((user) => user._id === id);
     setSelectedUser(selectedUser);
-  }
+  };
 
   return (
-    <StyledUserSelection className="user-selection">
+    <StyledUserSelection>
       <InputWithIcon
-        placeholder={'name, email, phone...'}
+        placeholder={'search'}
         name={'user-search'}
         id={'user-search'}
         type={'text'}
         Icon={SearchIcon}
         value={searchQuery}
         onChange={handleQueryChange}
-      ></InputWithIcon>
+      />
       <ul className="user-list">
         {users.length > 0 ? (
           users.map((user) => (
@@ -59,4 +60,4 @@ const UserSelection = ({setSelectedUser}) => {
     </StyledUserSelection>
   );
 };
-export default UserSelection;
+export default styled(UserSelection)``;

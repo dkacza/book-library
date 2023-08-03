@@ -3,7 +3,7 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.svg';
-import StyledBorrowings from 'components/organisms/BorrowingActions/Borrowings/Borrowings.styles';
+import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
 
 const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow }) => {
   return (

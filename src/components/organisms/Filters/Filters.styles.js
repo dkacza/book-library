@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
+import SubmitButton from 'components/atoms/SubmitButton';
+import NumberInput from 'components/atoms/NumberInput';
 
-const StyledForm = styled.form`
+const StyledFilters = styled.form`
   display: flex;
   flex-direction: column;
   padding-left: 1.5rem;
 
-  .icon-input {
+  ${InputWithIcon} {
     height: 3.5rem;
     margin-bottom: 1rem;
     width: 80%;
@@ -14,7 +17,7 @@ const StyledForm = styled.form`
   .release-year-filter {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    
+
     .release-year-input {
       margin-top: 0.25rem;
       display: flex;
@@ -23,30 +26,23 @@ const StyledForm = styled.form`
       font-size: 1.5rem;
     }
   }
-  
-  .genre-filter {
+
+  .genre-filter, .availability-filter {
     p {
       margin-bottom: 0.25rem;
     }
-    margin-bottom: 1rem;
-  }
-  .availability-filter {
-    p {
-      margin-bottom: 0.25rem;
-    }
+
     margin-bottom: 1rem;
   }
 
-  p {
-    font-family: 'Roboto Slab', monospace;
-  }
-  button {
+  ${SubmitButton} {
     margin-top: 2rem;
     width: 50%;
     height: 3rem;
     font-size: 1.25rem;
   }
-  @media(max-width: 1300px) {
+
+  @media (max-width: 1300px) {
     padding-left: 0.5rem;
 
     .release-year-filter {
@@ -59,16 +55,17 @@ const StyledForm = styled.form`
         flex-direction: row;
         height: 2rem;
         font-size: 1.5rem;
-        input {
+
+        ${NumberInput} {
           width: 6rem;
         }
       }
     }
-    
-    button {
+
+    ${SubmitButton} {
       width: 65%;
     }
   }
 `;
 
-export default StyledForm;
+export default StyledFilters;

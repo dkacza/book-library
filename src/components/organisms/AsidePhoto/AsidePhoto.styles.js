@@ -2,13 +2,8 @@ import styled from 'styled-components';
 import Logo from 'components/molecules/Logo/Logo';
 import img from 'assets/images/aside-photo.jpg';
 
-export const PositionedLogo = styled(Logo)`
-  margin-left: 4rem;
-  margin-bottom: 4rem;
-  color: ${({ theme }) => theme.colors.primary1};
-`;
 
-const Wrapper = styled.aside`
+const StyledAsidePhoto = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -19,11 +14,11 @@ const Wrapper = styled.aside`
   background-position: center;
   background-size: cover;
 
-  img {
-    z-index: -1;
-    width: 100%;
-    height: 100%;
+  ${Logo} {
+    color: ${({theme}) => theme.colors.primary1};
+    margin-left: 4rem;
+    margin-bottom: 4rem;
   }
 `;
 
-export default Wrapper;
+export default StyledAsidePhoto;

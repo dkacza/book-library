@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { InputWrapper } from 'components/molecules/InputWithIcon/InputWithIcon.styles';
+import { StyledInputWithIcon } from 'components/molecules/InputWithIcon/InputWithIcon.styles';
 import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
+import styled from 'styled-components';
 
 const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, placeholder, ...props }, ref) => {
   const initialVisibility = !(id === 'password' || id === 'password-confirm');
@@ -12,14 +13,14 @@ const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, placehold
   };
 
   return (
-    <InputWrapper {...props} className={`icon-input ${error ? 'error' : ''}`}>
+    <StyledInputWithIcon {...props} className={`${props.className} ${error ? 'error' : ''}`}>
       <div className="icon-wrapper">
         <Icon />
       </div>
       <label htmlFor={id}></label>
       <input  type={visible ? 'text' : 'password'} id={id} name={name} ref={ref} placeholder={placeholder}/>
       {id === 'password' ? <ToggleVisibilityButton className="icon-wrapper toggle-visibility" onClick={toggleVisibility} visible={visible} /> : ''}
-    </InputWrapper>
+    </StyledInputWithIcon>
   );
 });
-export default InputWithIcon;
+export default styled(InputWithIcon)``;

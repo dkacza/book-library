@@ -1,15 +1,16 @@
 import React from 'react';
-import Wrapper from 'components/molecules/Pagination/Pagination.styles';
+import StyledPagination from 'components/molecules/Pagination/Pagination.styles';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 
 import {ReactComponent as LeftIcon} from 'assets/icons/keyboard_arrow_left_FILL0_wght600_GRAD0_opsz48.svg';
 import {ReactComponent as DoubleLeftIcon} from 'assets/icons/keyboard_double_arrow_left_FILL0_wght600_GRAD0_opsz48.svg';
 import {ReactComponent as RightIcon} from 'assets/icons/keyboard_arrow_right_FILL0_wght600_GRAD0_opsz48.svg';
 import {ReactComponent as DoubleRightIcon} from 'assets/icons/keyboard_double_arrow_right_FILL0_wght600_GRAD0_opsz48.svg';
+import styled from 'styled-components';
 
-const Pagination = ({ pages, handlePageChange }) => {
+const Pagination = ({ pages, handlePageChange, ...props }) => {
   return (
-    <Wrapper className="pagination">
+    <StyledPagination className={props.className}>
       <p className="page-info">
         {pages.currentStart} - {pages.currentEnd} of {pages.total} items{' '}
       </p>
@@ -19,8 +20,8 @@ const Pagination = ({ pages, handlePageChange }) => {
         <SquareTileButton Icon={RightIcon} className="next" onClick={() => handlePageChange(pages.currentPage + 1)}/>
         <SquareTileButton Icon={DoubleRightIcon} className="last" onClick={() => handlePageChange(pages.totalPages)}/>
       </div>
-    </Wrapper>
+    </StyledPagination>
   );
 };
 
-export default Pagination;
+export default styled(Pagination)``;

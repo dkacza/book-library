@@ -1,15 +1,16 @@
 import React from 'react';
-import StyledNavLink from 'components/molecules/NavWithIcon/NavWithIcon.styles';
+import StyledNavWithIcon from 'components/molecules/NavWithIcon/NavWithIcon.styles';
+import styled from 'styled-components';
 
-const NavWithIcon = ({destination, Icon, name, onClick}) => {
+const NavWithIcon = ({destination, Icon, name, onClick, ...props}) => {
   return (
-    <StyledNavLink className="nav-link" onClick={onClick} to={destination}>
+    <StyledNavWithIcon className={props.className} onClick={onClick} to={destination}>
       <div className='icon-container'>
         <Icon></Icon>
       </div>
       <p>{name}</p>
-    </StyledNavLink>
+    </StyledNavWithIcon>
   );
 }
 
-export default NavWithIcon;
+export default styled(NavWithIcon)``;

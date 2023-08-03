@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // https://moderncss.dev/pure-css-custom-checkbox-style/
-const Wrapper = styled.div`
+const StyledLabeledCheckbox = styled.div`
   display: flex;
   flex-direction: row;
 
@@ -45,11 +45,11 @@ const Wrapper = styled.div`
 
 const LabeledCheckbox = React.forwardRef(({ id, name, label, value, onChange, ...props }, ref) => {
   return (
-    <Wrapper>
+    <StyledLabeledCheckbox>
       <input type="checkbox" name={name} id={id} ref={ref} value={value} onChange={onChange} {...props} />
       <label htmlFor={id}>{label}</label>
-    </Wrapper>
+    </StyledLabeledCheckbox>
   );
 });
 
-export default LabeledCheckbox;
+export default styled(LabeledCheckbox)``;

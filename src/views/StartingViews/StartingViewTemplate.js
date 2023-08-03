@@ -35,10 +35,5 @@ const StartingViewTemplate = styled.div`
       max-width: 1000px;
     }
   }
-  button.languageToggle {
-    position: absolute;
-    bottom: 5rem;
-    right: 5rem;
-  }
 `;
 export default StartingViewTemplate;

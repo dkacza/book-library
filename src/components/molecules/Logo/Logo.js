@@ -1,16 +1,17 @@
 import React from 'react';
 import Title from 'components/atoms/Title';
-import { Wrapper } from 'components/molecules/Logo/Logo.styles';
+import { StyledLogo } from 'components/molecules/Logo/Logo.styles';
+import styled from 'styled-components';
 
-const Logo = ({ ...props }) => {
+const Logo = ({...props}) => {
   return (
-    <Wrapper {...props}>
+    <StyledLogo className={props.className}>
       <Title>
         Municipal <br /> Library
       </Title>
       <p>Skoczów municipality</p>
-    </Wrapper>
+    </StyledLogo>
   );
 };
 
-export default Logo;
+export default styled(Logo)``;

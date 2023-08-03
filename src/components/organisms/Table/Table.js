@@ -1,5 +1,6 @@
 import React from 'react';
 import StyledTable from 'components/organisms/Table/Table.styles';
+import styled from 'styled-components';
 
 const Table = ({ columnNames, columnCodes, data }) => {
   return (
@@ -25,4 +26,4 @@ const Table = ({ columnNames, columnCodes, data }) => {
     </StyledTable>
   );
 };
-export default Table;
+export default styled(Table)``;

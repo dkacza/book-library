@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-// eslint-disable-next-line no-mixed-operators
-export const InputWrapper = styled.div`
+export const StyledInputWithIcon = styled.div`
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -10,13 +9,16 @@ export const InputWrapper = styled.div`
     transition: background-color 5000s ease-in-out 0s;
   }
 
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
   border: 3px solid ${({ theme }) => theme.colors.primary3};
   border-bottom: 6px solid ${({ theme }) => theme.colors.primary3};
   border-radius: 0.75rem;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transition: 0.2s;
-
+  
   &.error {
     border: 3px solid ${({ theme }) => theme.colors.error1};
     border-bottom: 6px solid ${({ theme }) => theme.colors.error1};
@@ -29,11 +31,7 @@ export const InputWrapper = styled.div`
       }
     }
   }
-
-  height: 4rem;
-  display: flex;
-  flex-direction: row;
-
+  
   .icon-wrapper {
     display: flex;
     justify-content: center;
@@ -53,7 +51,7 @@ export const InputWrapper = styled.div`
       color: ${({ theme }) => theme.colors.secondary1};
     }
   }
-  
+
   .toggle-visibility {
     cursor: pointer;
   }
@@ -67,7 +65,6 @@ export const InputWrapper = styled.div`
     display: block;
     background-color: ${({ theme }) => theme.colors.primary1};
     font-size: 1.25rem;
-    font-family: 'Roboto Slab', monospace;
     flex-grow: 1;
     width: 0;
     color: ${({ theme }) => theme.colors.secondary2};

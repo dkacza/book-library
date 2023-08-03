@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 
 const StyledUserSelection = styled.div`
-  .icon-input {
+  ${InputWithIcon} {
     margin-top: 2rem;
     height: 3.5rem;
     width: 36rem;
@@ -37,7 +38,6 @@ const StyledUserSelection = styled.div`
     }
 
     p {
-      font-family: 'Roboto Slab', monospace;
       font-size: 1.5rem;
       color: ${({ theme }) => theme.colors.secondary2};
     }

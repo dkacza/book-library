@@ -5,14 +5,11 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Raleway', "Times New Roman", sans-serif;
+    font-family: 'Roboto Slab', serif;
   }
   body {
     background-color: ${({theme}) => theme.colors.primary1};
     color: ${({theme}) => theme.colors.secondary2};
-  }
-  p {
-    font-family: 'Roboto Slab', monospace;
   }
   @media (max-width: 720px){
     html {

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
+import SquareTileButton from 'components/atoms/SquareTileButton';
 
 const StyledBorrowings = styled.div`
   
-  .icon-input {
+  ${InputWithIcon} {
     height: 3.5rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
@@ -57,7 +59,7 @@ const StyledBorrowings = styled.div`
         margin-right: 2rem;
       }
 
-      button {
+      ${SquareTileButton} {
         margin-top: 0.5rem;
         margin-bottom: 0.75rem;
         margin-right: 1rem;
