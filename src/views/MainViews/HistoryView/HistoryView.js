@@ -39,7 +39,7 @@ const HistoryView = () => {
             columnCodes={columnCodes}
             columnproportions={columnProportions}
           />
-          {/*<HistoryFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />*/}
+          <HistoryFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {historyRecords.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
         </StyledContentSection>
       </main>

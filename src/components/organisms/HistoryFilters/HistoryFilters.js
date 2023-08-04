@@ -17,25 +17,25 @@ const HistoryFilters = ({ onSubmit, register, ...props }) => {
         {...register('searchQuery')}
       />
       <div className='date-filters'>
-        {/*<div className='starting-date-filter'>*/}
-        {/*  <p className='label'>Starting date between: </p>*/}
-        {/*  <div className='starting-date-input'>*/}
-        {/*    <input type='date' {...register('startDateFrom')} />*/}
-        {/*    <p>-</p>*/}
-        {/*    <input type='date' {...register('startDateTo')} />*/}
-        {/*  </div>*/}
-        {/*  <BorderlessButton>clear</BorderlessButton>*/}
-        {/*</div>*/}
+        <div className='starting-date-filter'>
+          <p className='label'>Starting date between: </p>
+          <div className='starting-date-input'>
+            <input type='date' {...register('startDateFrom')} />
+            <p>-</p>
+            <input type='date' {...register('startDateTo')} />
+          </div>
+          <BorderlessButton>clear</BorderlessButton>
+        </div>
 
-        {/*<div className='return-date-filter'>*/}
-        {/*  <p className='label'>Return date between: </p>*/}
-        {/*  <div className='starting-date-input'>*/}
-        {/*    <input type='date' {...register('returnDateFrom')} />*/}
-        {/*    <p>-</p>*/}
-        {/*    <input type='date' {...register('returnDateTo')} />*/}
-        {/*  </div>*/}
-        {/*  <BorderlessButton>clears</BorderlessButton>*/}
-        {/*</div>*/}
+        <div className='return-date-filter'>
+          <p className='label'>Return date between: </p>
+          <div className='starting-date-input'>
+            <input type='date' {...register('returnDateFrom')} />
+            <p>-</p>
+            <input type='date' {...register('returnDateTo')} />
+          </div>
+          <BorderlessButton>clear</BorderlessButton>
+        </div>
       </div>
 
       <div className='status-filter'>

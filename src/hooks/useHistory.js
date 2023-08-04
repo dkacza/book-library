@@ -29,6 +29,29 @@ const flattenObjectForTable = (obj, columnCodes) => {
   return obj;
 };
 
+const buildQuery = (data) => {
+  let query = '';
+  // Start date from
+  if (data.startDateFrom) query += `startDate[gte]=${data.startDateFrom}&`;
+  if (data.startDateTo) query += `startDate[lte]=${data.startDateTo}&`;
+  // Return date
+  if (data.returnDateFrom) query += `returnDate[gte]=${data.returnDateFrom}&`;
+  if (data.returnDateTo) query += `returnDate[lte]=${data.returnDateTo}&`;
+
+  // Statuses
+  const statusArr = [];
+  for (const [key, val] of Object.entries(data.status)) {
+    if (val) statusArr.push(key);
+  }
+  if (statusArr.length > 0) query += `currentStatus=${statusArr.join(',')}&`;
+
+  // Search query on the title
+  if (data.searchQuery) query += `search=${data.searchQuery}&`;
+
+  // Delete the last & sign
+  return query.substring(0, query.length - 1);
+};
+
 const useHistory = (initialFormValues, initialPage, columnCodes) => {
   const { width } = useWidowDimensions();
   const { auth } = useContext(AuthContext);
@@ -36,6 +59,7 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
   const [pages, setPages] = useState({});
   const [currentUserHistorySelected, setCurrentUserHistorySelected] = useState();
   const [limitPerPage, setLimitPerPage] = useState(10);
+  const [query, setQuery] = useState(buildQuery(initialFormValues));
 
   const { register, handleSubmit, reset } = useForm({ defaultValues: initialFormValues });
 
@@ -46,15 +70,16 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
   };
 
   const fetchLoggedInUsersHistory = (page, limit) => {
-    axios.get(`users/me/history?page=${page}&limit=${limit}`).then((res) => {
+    axios.get(`users/me/history?${query}&page=${page}&limit=${limit}`).then((res) => {
       const history = res.data.data.rentals.map((record) => prepareObject(record, columnCodes));
       const pagination = res.data.data.pagination;
       setPages(pagination);
+      console.log(history);
       setHistoryRecords(history);
     });
   };
   const fetchAllHistory = (page, limit) => {
-    axios.get(`users/${auth._id}/history?page=${page}&limit=${limit}`).then((res) => {
+    axios.get(`users/${auth._id}/history?${query}&page=${page}&limit=${limit}`).then((res) => {
       const history = res.data.data.rentals.map((record) => prepareObject(record, columnCodes));
       const pagination = res.data.data.pagination;
       setPages(pagination);
@@ -70,8 +95,8 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
   };
 
   const onSubmit = (data) => {
-
-    console.log(data);
+    const query = buildQuery(data);
+    setQuery(query);
   };
   const onError = (err) => {
     reset();
@@ -95,7 +120,7 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
       setCurrentUserHistorySelected(true);
       fetchAllHistory();
     }
-  }, [auth, limitPerPage]);
+  }, [auth, limitPerPage, query]);
 
   return {
     currentUserHistorySelected,
