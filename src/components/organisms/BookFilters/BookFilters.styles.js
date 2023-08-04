@@ -3,7 +3,7 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
 import NumberInput from 'components/atoms/NumberInput';
 
-const StyledFilters = styled.form`
+const StyledBookFilters = styled.form`
   display: flex;
   flex-direction: column;
   padding-left: 1.5rem;
@@ -68,4 +68,4 @@ const StyledFilters = styled.form`
   }
 `;
 
-export default StyledFilters;
+export default StyledBookFilters;

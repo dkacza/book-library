@@ -2,7 +2,7 @@ import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import Table from 'components/organisms/Table/Table';
-import Filters from 'components/organisms/Filters/Filters';
+import BookFilters from 'components/organisms/BookFilters/BookFilters';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import React from 'react';
 import useBookBrowser from 'hooks/useBookBrowser';
@@ -10,6 +10,7 @@ import StyledContentSection from 'views/MainViews/BooksView/BooksView.styles';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'status'];
+const columnProportions = [0.3, 0.3, 0.25, 0.15]
 const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {
   genre: {
@@ -33,12 +34,12 @@ const BooksView = () => {
         <Title>Book catalogue</Title>
         <StyledContentSection>
           {books.length !== 0 ? (
-            <Table columnNames={columnNames} columnCodes={columnCodes} data={books} />
+            <Table columnNames={columnNames} columnCodes={columnCodes} data={books} columnproportions={columnProportions}/>
           ) : (
             <p>There are no books that match current criteria</p>
           )}
 
-          <Filters onSubmit={(e) => submitWithPrevent(e)} register={register} />
+          <BookFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {books.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination> : ''}
         </StyledContentSection>
       </main>

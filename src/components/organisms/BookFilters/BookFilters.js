@@ -4,13 +4,13 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as MyIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
-import StyledFilters from 'components/organisms/Filters/Filters.styles';
+import StyledBookFilters from 'components/organisms/BookFilters/BookFilters.styles';
 import NumberInput from 'components/atoms/NumberInput';
 import styled from 'styled-components';
 
-const Filters = ({ register, onSubmit, ...props }) => {
+const BookFilters = ({ register, onSubmit, ...props }) => {
   return (
-    <StyledFilters className={props.className} onSubmit={onSubmit}>
+    <StyledBookFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
         placeholder="search"
         name="search"
@@ -63,7 +63,7 @@ const Filters = ({ register, onSubmit, ...props }) => {
         />
       </div>
       <SubmitButton type="submit">Apply filters</SubmitButton>
-    </StyledFilters>
+    </StyledBookFilters>
   );
 };
-export default styled(Filters)``;
+export default styled(BookFilters)``;

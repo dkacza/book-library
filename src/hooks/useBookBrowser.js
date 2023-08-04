@@ -48,7 +48,6 @@ const useBookBrowser = (initialFormValues, initialPage) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
   } = useForm({ defaultValues: initialFormValues });
 

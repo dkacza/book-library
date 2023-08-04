@@ -2,13 +2,15 @@ import React from 'react';
 import StyledTable from 'components/organisms/Table/Table.styles';
 import styled from 'styled-components';
 
-const Table = ({ columnNames, columnCodes, data }) => {
+const Table = ({ columnNames, columnCodes, data, columnproportions }) => {
   return (
-    <StyledTable>
+    <StyledTable $columnproportions={columnproportions}>
       <thead>
         <tr>
           {columnNames.map((name, index) => (
-            <th key={columnCodes[index]}>{name}</th>
+            <th className={name.length > 9 ? 'long' : ''} key={columnCodes[index]}>
+              {name}
+            </th>
           ))}
         </tr>
       </thead>
@@ -17,7 +19,7 @@ const Table = ({ columnNames, columnCodes, data }) => {
           return (
             <tr key={record._id}>
               {columnCodes.map((name) => {
-                return <td key={`${record._id} ${name}`}>{record[name]}</td>;
+                return <td key={`${record._id} ${name}`}>{record[name] || '-'}</td>;
               })}
             </tr>
           );
