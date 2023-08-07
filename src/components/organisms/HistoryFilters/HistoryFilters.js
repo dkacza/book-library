@@ -1,52 +1,67 @@
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
+import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
+import { ReactComponent as BookIcon } from 'assets/icons/book_FILL0_wght600_GRAD0_opsz48.svg';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
+import StyledHistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters.styles';
+import DateInput from 'components/atoms/DateInput';
 
-const HistoryFilters = ({ onSubmit, register, ...props }) => {
+const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props }) => {
   return (
-    <form onSubmit={onSubmit}>
+    <StyledHistoryFilters onSubmit={onSubmit}>
       <InputWithIcon
-        Icon={SearchIcon}
-        placeholder='search'
-        name='search'
-        id='search'
-        type='text'
-        {...register('searchQuery')}
+        Icon={BookIcon}
+        placeholder="search by book"
+        name="book-search"
+        id="book-search"
+        type="text"
+        {...register('bookSearchQuery')}
       />
-      <div className='date-filters'>
-        <div className='starting-date-filter'>
-          <p className='label'>Starting date between: </p>
-          <div className='starting-date-input'>
-            <input type='date' {...register('startDateFrom')} />
+      {authorizedHistoryView ? (
+        <InputWithIcon
+          Icon={UserIcon}
+          placeholder="search by user"
+          name="user-search"
+          id="user-search"
+          type="text"
+          {...register('userSearchQuery')}
+        />
+      ) : (
+        ''
+      )}
+      <div className="date-filters">
+        <div className="starting-date-filter date-filter">
+          <p className="label">Starting date between: </p>
+          <div className="starting-date-input">
+            <DateInput type="date" {...register('startDateFrom')} />
             <p>-</p>
-            <input type='date' {...register('startDateTo')} />
+            <DateInput {...register('startDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>
 
-        <div className='return-date-filter'>
-          <p className='label'>Return date between: </p>
-          <div className='starting-date-input'>
-            <input type='date' {...register('returnDateFrom')} />
+        <div className="return-date-filter date-filter">
+          <p className="label">Return date between: </p>
+          <div className="starting-date-input">
+            <DateInput type="date" {...register('returnDateFrom')} />
             <p>-</p>
-            <input type='date' {...register('returnDateTo')} />
+            <DateInput {...register('returnDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>
       </div>
 
-      <div className='status-filter'>
-        <p className='label'>Status: </p>
-        <LabeledCheckbox label='Active' id='active' name='active' {...register('status.active')} />
-        <LabeledCheckbox label='Returned' id='returned' name='returned' {...register('status.returned')} />
-        <LabeledCheckbox label='Lost' id='lost' name='lost' {...register('status.lost')} />
+      <div className="status-filter">
+        <p className="label">Status: </p>
+        <LabeledCheckbox label="Active" id="active" name="active" {...register('status.active')} />
+        <LabeledCheckbox label="Returned" id="returned" name="returned" {...register('status.returned')} />
+        <LabeledCheckbox label="Lost" id="lost" name="lost" {...register('status.lost')} />
       </div>
 
       <SubmitButton type="submit">Apply filters</SubmitButton>
-    </form>
+    </StyledHistoryFilters>
   );
 };
 

@@ -17,7 +17,7 @@ const Table = ({ columnNames, columnCodes, data, columnproportions }) => {
       <tbody>
         {data.map((record) => {
           return (
-            <tr key={record._id}>
+            <tr key={record._id} className={record.currentStatus}>
               {columnCodes.map((name) => {
                 return <td key={`${record._id} ${name}`}>{record[name] || '-'}</td>;
               })}

@@ -46,7 +46,8 @@ const buildQuery = (data) => {
   if (statusArr.length > 0) query += `currentStatus=${statusArr.join(',')}&`;
 
   // Search query on the title
-  if (data.searchQuery) query += `search=${data.searchQuery}&`;
+  if (data.bookSearchQuery) query += `bookSearch=${data.bookSearchQuery}&`;
+  if (data.userSearchQuery) query += `userSearch=${data.userSearchQuery}&`;
 
   // Delete the last & sign
   return query.substring(0, query.length - 1);
@@ -57,7 +58,7 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
   const { auth } = useContext(AuthContext);
   const [historyRecords, setHistoryRecords] = useState([]);
   const [pages, setPages] = useState({});
-  const [currentUserHistorySelected, setCurrentUserHistorySelected] = useState();
+  const [authorizedHistoryView, setAuthorizedHistoryView] = useState();
   const [limitPerPage, setLimitPerPage] = useState(10);
   const [query, setQuery] = useState(buildQuery(initialFormValues));
 
@@ -66,6 +67,9 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
   const prepareObject = (obj, columnCodes) => {
     obj = flattenObjectForTable(obj, columnCodes);
     obj = shortenDates(obj, columnCodes);
+    if (obj.firstName && obj.lastName) {
+      obj.fullName = obj.firstName + ' ' + obj.lastName;
+    }
     return obj;
   };
 
@@ -74,12 +78,11 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
       const history = res.data.data.rentals.map((record) => prepareObject(record, columnCodes));
       const pagination = res.data.data.pagination;
       setPages(pagination);
-      console.log(history);
       setHistoryRecords(history);
     });
   };
   const fetchAllHistory = (page, limit) => {
-    axios.get(`users/${auth._id}/history?${query}&page=${page}&limit=${limit}`).then((res) => {
+    axios.get(`rentals?${query}&page=${page}&limit=${limit}`).then((res) => {
       const history = res.data.data.rentals.map((record) => prepareObject(record, columnCodes));
       const pagination = res.data.data.pagination;
       setPages(pagination);
@@ -114,16 +117,16 @@ const useHistory = (initialFormValues, initialPage, columnCodes) => {
 
   useEffect(() => {
     if (auth.role === 'user') {
-      setCurrentUserHistorySelected(true);
+      setAuthorizedHistoryView(false);
       fetchLoggedInUsersHistory(initialPage, limitPerPage);
     } else {
-      setCurrentUserHistorySelected(true);
-      fetchAllHistory();
+      setAuthorizedHistoryView(true);
+      fetchAllHistory(initialPage, limitPerPage);
     }
   }, [auth, limitPerPage, query]);
 
   return {
-    currentUserHistorySelected,
+    authorizedHistoryView,
     historyRecords,
     pages,
     register,

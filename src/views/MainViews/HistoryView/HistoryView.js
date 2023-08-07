@@ -7,9 +7,9 @@ import useHistory from 'hooks/useHistory';
 import HistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters';
 import StyledContentSection from 'views/MainViews/HistoryView/HistoryView.styles';
 
-const columnNames = ['Title', 'Start date', 'Return date', 'Expiration', 'Status'];
-const columnCodes = ['book.title', 'startDate', 'returnDate', 'expirationDate', 'currentStatus'];
-const columnProportions = [0.3, 0.2, 0.2, 0.2, 0.1];
+const columnNames = ['Title', 'Name', 'Start date', 'Return date', 'Expiration', 'Status'];
+const columnCodes = ['title', 'fullName', 'startDate', 'returnDate', 'expirationDate', 'currentStatus', ];
+const columnProportions = [0.3, 0.15, 0.15, 0.15, 0.15, 0.1];
 const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {
   startDateFrom: undefined,
@@ -24,8 +24,11 @@ const INITIAL_FORM_VALUES = {
 };
 
 const HistoryView = () => {
-  const { historyRecords, pages, register, handlePageChange, submitWithPrevent } =
-    useHistory(INITIAL_FORM_VALUES, INITIAL_PAGE, columnCodes);
+  const { historyRecords, pages, register, handlePageChange, submitWithPrevent, authorizedHistoryView } = useHistory(
+    INITIAL_FORM_VALUES,
+    INITIAL_PAGE,
+    columnCodes,
+  );
 
   return (
     <MainViewTemplate>
@@ -39,7 +42,11 @@ const HistoryView = () => {
             columnCodes={columnCodes}
             columnproportions={columnProportions}
           />
-          <HistoryFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
+          <HistoryFilters
+            onSubmit={(e) => submitWithPrevent(e)}
+            register={register}
+            authorizedHistoryView={authorizedHistoryView}
+          />
           {historyRecords.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
         </StyledContentSection>
       </main>
