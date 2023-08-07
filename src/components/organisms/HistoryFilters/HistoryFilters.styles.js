@@ -6,7 +6,7 @@ import SubmitButton from 'components/atoms/SubmitButton';
 
 const StyledHistoryFilters = styled.form`
   margin-top: 1rem;
-  
+
   ${InputWithIcon} {
     height: 3rem;
     border-radius: 0.4rem;
@@ -22,6 +22,7 @@ const StyledHistoryFilters = styled.form`
     .date-filter {
       margin-bottom: 1rem;
     }
+
     .label {
       font-size: 1.2rem;
       color: ${({ theme }) => theme.colors.secondary2};
@@ -35,14 +36,17 @@ const StyledHistoryFilters = styled.form`
         margin-right: 0.5rem;
       }
     }
+
     ${BorderlessButton} {
       margin-top: 0.25rem;
       font-size: 1rem;
     }
   }
+
   .status-filter {
     margin-bottom: 2rem;
   }
+
   ${SubmitButton} {
     width: 60%;
     font-size: 1.25rem;
@@ -53,6 +57,7 @@ const StyledHistoryFilters = styled.form`
     margin-top: 0;
     ${InputWithIcon} {
       max-width: 12rem;
+
       input {
         font-size: 0.8rem;
       }
@@ -65,11 +70,13 @@ const StyledHistoryFilters = styled.form`
           font-size: 0.58rem;
         }
       }
+
       ${BorderlessButton} {
         margin-top: 0.25rem;
         font-size: 1rem;
       }
     }
+
     ${SubmitButton} {
       width: 80%;
     }

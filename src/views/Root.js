@@ -16,7 +16,7 @@ import BooksView from 'views/MainViews/BooksView/BooksView';
 import AddBookView from 'views/MainViews/AddBookView';
 import HistoryView from 'views/MainViews/HistoryView/HistoryView';
 import UsersView from 'views/MainViews/UsersView';
-import SettingsView from 'views/MainViews/SettingsView';
+import SettingsView from 'views/MainViews/SettingsView/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 
 const Root = () => {
