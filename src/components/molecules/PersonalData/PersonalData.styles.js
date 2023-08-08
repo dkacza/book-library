@@ -9,6 +9,10 @@ const StyledPersonalData = styled.div`
   }
   ${BorderlessButton} {
     font-size: 1.5rem;
+    margin-right: 2rem;
+  }
+  ${BorderlessButton}.discard {
+    color: ${({theme}) => theme.colors.primary3};
   }
   @media(max-width: 1440px) {
     ${UserDataLine} {
