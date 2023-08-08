@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import validationRegexes from 'utils/validationRegexes';
 import isEmptyObject from 'utils/isEmptyObject';
+import axios from 'api/axios';
 
 const defaultValues = {
   firstName: '',
@@ -14,7 +15,15 @@ const defaultValues = {
   phone: ''
 }
 
-const PersonalData = ({ auth }) => {
+const PersonalData = ({ auth, setAuth }) => {
+
+  const sendProfilePatch = (data) => {
+    axios.patch('/users/me', data).then(res => {
+      console.log(res);
+      const newUser = res.data.data.user;
+      setAuth(newUser);
+    })
+  }
   const [updateSelected, setUpdateSelected] = useState(false);
   const {
     register,
@@ -25,19 +34,17 @@ const PersonalData = ({ auth }) => {
   } = useForm(defaultValues);
 
   const onSubmit = (data) => {
-    console.log('Submission');
-    console.log(data);
+    sendProfilePatch(data);
+    reset();
+    setUpdateSelected(false);
   };
   const onError = (err) => {
-    console.log('Wrong values')
     console.log(errors);
   };
   const handleSave = (e) => {
     e.preventDefault();
     console.log('Save button clicked');
-    console.log(errors);
     const formData = getValues();
-    console.log(formData);
     handleSubmit(onSubmit, onError)(formData);
   };
   const handleDiscard = (e) => {
@@ -52,44 +59,44 @@ const PersonalData = ({ auth }) => {
         label={'Name:'}
         updateSelected={updateSelected}
         placeholder={'first name'}
-        id={'first-name'}
+        fieldName={'firstName'}
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
-        error={errors['first-name']}
+        error={errors.firstName}
       />
       <UserDataLine
         data={auth.lastName}
         label={'Last name:'}
         updateSelected={updateSelected}
         placeholder={'last name'}
-        id={'last-name'}
+        fieldName={'lastName'}
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
-        error={errors['last-name']}
+        error={errors.lastName}
       />
       <UserDataLine
         data={auth.email}
         label={'Email address:'}
         updateSelected={updateSelected}
         placeholder={'email address'}
-        id={'email'}
+        fieldName={'email'}
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.emailRegex.test(val) || val === undefined}
         register={register}
-        error={errors['email']}
+        error={errors.email}
       />
       <UserDataLine
         data={auth.phoneNumber}
         label={'Phone number:'}
         updateSelected={updateSelected}
         placeholder={'phone number'}
-        id={'phone-number'}
+        fieldName={'phoneNumber'}
         canBeUpdated={true}
-        validationFunction={(val) => validationRegexes.passwordRegex.test(val) || val === undefined}
+        validationFunction={(val) => validationRegexes.phoneRegex.test(val) || val === undefined}
         register={register}
-        error={errors['phone-number']}
+        error={errors.phoneNumber}
       />
       <UserDataLine
         data={auth.registrationDate.substring(0, 10)}

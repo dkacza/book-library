@@ -34,7 +34,7 @@ const StyledUserDataLine = styled.div`
 `;
 
 const UserDataLine = React.forwardRef(
-  ({ data, label, updateSelected, register, placeholder, canBeUpdated, id, error, validationFunction, ...props }, ref) => {
+  ({ data, label, updateSelected, register, placeholder, canBeUpdated, fieldName, error, validationFunction, ...props }, ref) => {
     const [activeInput, setActiveInput] = useState(false);
     const handleInputActivation = () => {
       if (updateSelected) {
@@ -51,11 +51,10 @@ const UserDataLine = React.forwardRef(
         {activeInput && updateSelected ? (
           <SimpleInput
             type="text"
-            name={id}
-            id={id}
+            name={fieldName}
             placeholder={placeholder}
             ref={ref}
-            {...register(id, {validate: validationFunction})}
+            {...register(fieldName, {validate: validationFunction})}
             className={error ? 'error' : ''}
           />
         ) : (

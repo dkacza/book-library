@@ -7,15 +7,15 @@ import PersonalData from 'components/molecules/PersonalData/PersonalData';
 import AuthorizationData from 'components/molecules/AuthorizationData/AuthorizationData';
 
 const SettingsView = () => {
-  const { auth } = useContext(authProvider);
+  const { auth, setAuth } = useContext(authProvider);
   return (
     <MainViewTemplate>
       <Navigation />
       <main>
         <Title>Settings</Title>
         <section>
-          <PersonalData auth={auth} />
-          <AuthorizationData auth={auth} />
+          <PersonalData auth={auth} setAuth={setAuth} />
+          <AuthorizationData auth={auth} setAuth={setAuth} />
         </section>
       </main>
     </MainViewTemplate>
