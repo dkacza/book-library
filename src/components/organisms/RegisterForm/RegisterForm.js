@@ -11,9 +11,10 @@ import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 import { Navigate } from 'react-router-dom';
 import useRegister from 'hooks/useRegister';
 import styled from 'styled-components';
+import validationRegexes from 'utils/validationRegexes';
 
 const RegisterForm = () => {
-  const { validationRegexes, register, handleRegister, errors, errorMessage, navigate } = useRegister();
+  const { register, handleRegister, errors, errorMessage, navigate } = useRegister();
 
   return (
     <StyledForm onSubmit={handleRegister}>
@@ -92,9 +93,7 @@ const RegisterForm = () => {
         {...register('agreement', { required: true })}
       />
 
-      <SubmitButton type="submit">
-        Register
-      </SubmitButton>
+      <SubmitButton type="submit">Register</SubmitButton>
 
       <p className={`error-message ${errorMessage ? '' : 'hidden'}`}>{errorMessage}</p>
 

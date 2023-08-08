@@ -7,7 +7,7 @@ import StyledAuthorizationData from 'components/molecules/AuthorizationData/Auth
 const AuthorizationData = ({ auth }) => {
   return (
     <StyledAuthorizationData>
-      <UserDataLine value={auth.passwordChangedAt.substring(0, 10)} label={'Last password change date:'} />
+      <UserDataLine data={auth.passwordChangedAt.substring(0, 10)} label={'Last password change date:'} />
       <BorderlessButton>Update password</BorderlessButton>
     </StyledAuthorizationData>
   );

@@ -4,73 +4,105 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledPersonalData from 'components/molecules/PersonalData/PersonalData.styles';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import validationRegexes from 'utils/validationRegexes';
+import isEmptyObject from 'utils/isEmptyObject';
+
+const defaultValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: ''
+}
 
 const PersonalData = ({ auth }) => {
   const [updateSelected, setUpdateSelected] = useState(false);
   const {
     register,
     handleSubmit,
-    setFocus,
+    getValues,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm(defaultValues);
 
   const onSubmit = (data) => {
+    console.log('Submission');
     console.log(data);
-    setUpdateSelected(false);
   };
   const onError = (err) => {
-    console.log(err);
+    console.log('Wrong values')
+    console.log(errors);
   };
   const handleSave = (e) => {
     e.preventDefault();
     console.log('Save button clicked');
-    handleSubmit(onSubmit, onError);
+    console.log(errors);
+    const formData = getValues();
+    console.log(formData);
+    handleSubmit(onSubmit, onError)(formData);
   };
-
+  const handleDiscard = (e) => {
+    e.preventDefault();
+    reset();
+    setUpdateSelected(false);
+  }
   return (
     <StyledPersonalData>
       <UserDataLine
-        value={auth.firstName}
+        data={auth.firstName}
         label={'Name:'}
         updateSelected={updateSelected}
-        register={register}
         placeholder={'first name'}
+        id={'first-name'}
         canBeUpdated={true}
+        validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
+        register={register}
+        error={errors['first-name']}
       />
       <UserDataLine
-        value={auth.lastName}
+        data={auth.lastName}
         label={'Last name:'}
         updateSelected={updateSelected}
-        register={register}
         placeholder={'last name'}
+        id={'last-name'}
         canBeUpdated={true}
+        validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
+        register={register}
+        error={errors['last-name']}
       />
       <UserDataLine
-        value={auth.email}
+        data={auth.email}
         label={'Email address:'}
         updateSelected={updateSelected}
-        register={register}
         placeholder={'email address'}
+        id={'email'}
         canBeUpdated={true}
+        validationFunction={(val) => validationRegexes.emailRegex.test(val) || val === undefined}
+        register={register}
+        error={errors['email']}
       />
       <UserDataLine
-        value={auth.phoneNumber}
+        data={auth.phoneNumber}
         label={'Phone number:'}
         updateSelected={updateSelected}
-        register={register}
         placeholder={'phone number'}
+        id={'phone-number'}
         canBeUpdated={true}
+        validationFunction={(val) => validationRegexes.passwordRegex.test(val) || val === undefined}
+        register={register}
+        error={errors['phone-number']}
       />
       <UserDataLine
-        value={auth.registrationDate.substring(0, 10)}
+        data={auth.registrationDate.substring(0, 10)}
         label={'Registration date:'}
         updateSelected={updateSelected}
         canBeUpdated={false}
       />
+      {!isEmptyObject(errors) ? <p className='error-msg'>Please provide the updated data in correct form</p> : ''}
+
       {updateSelected ? (
         <>
           <BorderlessButton onClick={handleSave}>Save changes</BorderlessButton>
-          <BorderlessButton className="discard" onClick={() => setUpdateSelected(false)}>
+          <BorderlessButton className="discard" onClick={handleDiscard}>
             Discard
           </BorderlessButton>{' '}
         </>

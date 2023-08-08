@@ -20,6 +20,10 @@ const StyledPersonalData = styled.div`
   ${BorderlessButton}.discard {
     color: ${({theme}) => theme.colors.primary3};
   }
+  p.error-msg {
+    color: ${({theme}) => theme.colors.error2};
+    margin-bottom: 1rem;
+  }
   @media(max-width: 1440px) {
     ${UserDataLine} {
       font-size: 1.5rem;

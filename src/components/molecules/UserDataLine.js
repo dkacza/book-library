@@ -27,31 +27,49 @@ const StyledUserDataLine = styled.div`
       height: 1.5rem;
     }
   }
+
   ${SimpleInput} {
     font-size: 2rem;
   }
 `;
 
-const UserDataLine = ({ value, label, updateSelected, register, placeholder, canBeUpdated, ...props }) => {
-  const [activeInput, setActiveInput] = useState(false)
+const UserDataLine = React.forwardRef(
+  ({ data, label, updateSelected, register, placeholder, canBeUpdated, id, error, validationFunction, ...props }, ref) => {
+    const [activeInput, setActiveInput] = useState(false);
+    const handleInputActivation = () => {
+      if (updateSelected) {
+        setActiveInput(true);
+      }
+    };
+    useEffect(() => {
+      setActiveInput(false);
+    }, [updateSelected]);
+    if (error) console.log(error)
+    return (
+      <StyledUserDataLine className={props.className}>
+        <p className="label">{label}</p>
+        {activeInput && updateSelected ? (
+          <SimpleInput
+            type="text"
+            name={id}
+            id={id}
+            placeholder={placeholder}
+            ref={ref}
+            {...register(id, {validate: validationFunction})}
+            className={error ? 'error' : ''}
+          />
+        ) : (
+          <p className="data">{data}</p>
+        )}
 
-  const handleInputActivation = () => {
-    if (updateSelected) {
-      setActiveInput(true)
-    }
-  }
-  useEffect(() => {
-    setActiveInput(false);
-  }, [updateSelected])
-
-  return (
-    <StyledUserDataLine className={props.className}>
-      <p className="label">{label}</p>
-      {activeInput && updateSelected? <SimpleInput placeholder={placeholder} /> : <p className="value">{value}</p>}
-
-      {updateSelected && canBeUpdated && !activeInput ? <SquareTileButton Icon={EditIcon} onClick={handleInputActivation} /> : ''}
-    </StyledUserDataLine>
-  );
-};
+        {updateSelected && canBeUpdated && !activeInput ? (
+          <SquareTileButton Icon={EditIcon} onClick={handleInputActivation} />
+        ) : (
+          ''
+        )}
+      </StyledUserDataLine>
+    );
+  },
+);
 
 export default styled(UserDataLine)``;
