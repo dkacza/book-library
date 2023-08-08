@@ -19,7 +19,6 @@ const PersonalData = ({ auth, setAuth }) => {
 
   const sendProfilePatch = (data) => {
     axios.patch('/users/me', data).then(res => {
-      console.log(res);
       const newUser = res.data.data.user;
       setAuth(newUser);
     })
@@ -43,7 +42,6 @@ const PersonalData = ({ auth, setAuth }) => {
   };
   const handleSave = (e) => {
     e.preventDefault();
-    console.log('Save button clicked');
     const formData = getValues();
     handleSubmit(onSubmit, onError)(formData);
   };

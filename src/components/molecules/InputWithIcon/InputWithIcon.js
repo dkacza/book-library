@@ -4,7 +4,7 @@ import ToggleVisibilityButton from 'components/atoms/ToggleVisibilityButton';
 import styled from 'styled-components';
 
 const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, placeholder, ...props }, ref) => {
-  const initialVisibility = !(id === 'password' || id === 'password-confirm');
+  const initialVisibility = !(id === 'password' || id === 'password-confirm' || id === 'current-password');
   const [visible, setVisible] = useState(initialVisibility);
   const toggleVisibility = (e) => {
     e.preventDefault();
