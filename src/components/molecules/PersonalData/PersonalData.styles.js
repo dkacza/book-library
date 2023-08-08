@@ -1,11 +1,17 @@
 import styled from 'styled-components';
-import UserDataLine from 'components/atoms/UserDataLine';
+import UserDataLine from 'components/molecules/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
+import SimpleInput from 'components/atoms/SimpleInput';
 
 const StyledPersonalData = styled.div`
   margin-top: 3rem;
   ${UserDataLine} {
     margin-bottom: 1.5rem;
+    max-height: 2rem;
+    ${SimpleInput} {
+      width: 22rem;
+      margin-right: 2rem;
+    }
   }
   ${BorderlessButton} {
     font-size: 1.5rem;
@@ -23,6 +29,11 @@ const StyledPersonalData = styled.div`
     }
     ${BorderlessButton} {
       font-size: 1.25rem;
+    }
+  }
+  @media(max-width: 1300px) {
+    ${SimpleInput} {
+      font-size: 1.5rem;
     }
   }
 `;

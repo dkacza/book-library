@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import authProvider from 'providers/AuthProvider';
 import PersonalData from 'components/molecules/PersonalData/PersonalData';
 import AuthorizationData from 'components/molecules/AuthorizationData/AuthorizationData';
-import ChangeUserDataModal from 'components/organisms/ChangeUserDataModal/ChangeUserDataModal';
 
 const SettingsView = () => {
   const { auth } = useContext(authProvider);
@@ -17,9 +16,6 @@ const SettingsView = () => {
         <section>
           <PersonalData auth={auth} />
           <AuthorizationData auth={auth} />
-          {/*  Modal for changing personal data*/}
-          {/*<ChangeUserDataModal />*/}
-          {/*  Modal for changing password */}
         </section>
       </main>
     </MainViewTemplate>

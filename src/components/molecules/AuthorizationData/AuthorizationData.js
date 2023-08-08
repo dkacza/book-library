@@ -1,5 +1,5 @@
 import React from 'react';
-import UserDataLine from 'components/atoms/UserDataLine';
+import UserDataLine from 'components/molecules/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import styled from 'styled-components';
 import StyledAuthorizationData from 'components/molecules/AuthorizationData/AuthorizationData.styles';

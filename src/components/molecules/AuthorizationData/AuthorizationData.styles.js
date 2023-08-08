@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import UserDataLine from 'components/atoms/UserDataLine';
+import UserDataLine from 'components/molecules/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const StyledAuthorizationData = styled.div`
