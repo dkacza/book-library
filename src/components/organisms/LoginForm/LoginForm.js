@@ -12,9 +12,8 @@ import LoadingDots from 'components/atoms/LoadingDots';
 import useLogin from 'hooks/useLogin';
 import styled from 'styled-components';
 
-const LoginForm = ({...props}) => {
+const LoginForm = ({ ...props }) => {
   const { errors, register, handleLoginSubmit, isLoading, errorMessage, navigate } = useLogin();
-  console.log(errors);
 
   return (
     <StyledForm className={props.className} onSubmit={handleLoginSubmit}>
@@ -40,9 +39,7 @@ const LoginForm = ({...props}) => {
 
       <StyledLink to="/reset-password">Forgot the password?</StyledLink>
 
-      <SubmitButton type="submit">
-        sign in
-      </SubmitButton>
+      <SubmitButton type="submit">sign in</SubmitButton>
 
       <div className="message-section">
         {isLoading ? <LoadingDots /> : ''}

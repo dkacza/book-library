@@ -8,14 +8,12 @@ import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_
 import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
 import { useForm } from 'react-hook-form';
 import validationRegexes from 'utils/validationRegexes';
-import isEmptyObject from 'utils/isEmptyObject';
 import axios from 'api/axios';
-
-
 
 const AuthorizationData = ({ auth, setAuth }) => {
   const [updateSelected, setUpdateSelected] = useState(false);
-  const [passwordMessage, setPasswordMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const {
     register,
     handleSubmit,
@@ -23,31 +21,41 @@ const AuthorizationData = ({ auth, setAuth }) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {setPasswordMessage('')}, [])
+  useEffect(() => {
+    setErrorMessage('');
+  }, []);
   const sendPasswordPatch = (data) => {
-    axios.patch('users/changePassword', data).then(res => {
-      setPasswordMessage('Password has been successfully changed');
-    }).catch(err => {
-      setPasswordMessage('Wrong current password');
-    })
-  }
+    axios
+      .patch('users/changePassword', data)
+      .then((res) => {
+        setSuccessMessage('Password has been successfully changed');
+        setErrorMessage('');
+        reset();
+        setUpdateSelected(false);
+      })
+      .catch((err) => {
+        const message = err.response.data.message;
+        setErrorMessage(message);
+        setSuccessMessage('');
+      });
+  };
 
   const handleDiscard = (e) => {
     e.preventDefault();
     reset();
     setUpdateSelected(false);
   };
-  const onSubmit = (data) => {
-    sendPasswordPatch(data)
-    reset();
-    setUpdateSelected(false);
+  const onSubmit = async (data) => {
+    sendPasswordPatch(data);
   };
   const onError = (err) => {
     console.log(errors);
+    setErrorMessage('Provided passwords are not the same or they are not meeting the requirements');
   };
   const handleSave = (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setSuccessMessage('');
     const formValues = getValues();
     handleSubmit(onSubmit, onError)(formValues);
   };
@@ -86,20 +94,19 @@ const AuthorizationData = ({ auth, setAuth }) => {
             })}
           ></InputWithIcon>
           <p className="password-info">Password should contain at least 8 characters, including letters and digits.</p>
-          {!isEmptyObject(errors) ? (
-            <p className="error-msg">Passwords do not match or they do not meet requirements</p>
-          ) : (
-            ''
-          )}
+          {errorMessage ? <p className="error-msg">{errorMessage}</p> : ''}
+
           <BorderlessButton onClick={handleSave}>Submit new password</BorderlessButton>
           <BorderlessButton className="discard" onClick={handleDiscard}>
             Discard
           </BorderlessButton>
         </>
       ) : (
-        <BorderlessButton onClick={() => setUpdateSelected(true)}>Update password</BorderlessButton>
+        <>
+          {successMessage ? <p className="success-msg">{successMessage}</p> : ''}
+          <BorderlessButton onClick={() => setUpdateSelected(true)}>Update password</BorderlessButton>
+        </>
       )}
-      {passwordMessage ? <p>{passwordMessage}</p> : ''}
     </StyledAuthorizationData>
   );
 };

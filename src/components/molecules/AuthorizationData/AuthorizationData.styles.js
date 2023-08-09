@@ -29,9 +29,12 @@ const StyledAuthorizationData = styled.div`
   p.password-info {
     margin-bottom: 1rem;
   }
-
   p.error-msg {
     color: ${({theme}) => theme.colors.error2};
+    margin-bottom: 1rem;
+  }
+  p.success-msg {
+    color: ${({theme}) => theme.colors.accept3};
     margin-bottom: 1rem;
   }
 
