@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from 'providers/AuthProvider';
 import axios from 'api/axios';
-import useWidowDimensions from 'hooks/useWidowDimensions';
+import useWidowDimensions from 'hooks/useWindowDimensions';
 import { useForm } from 'react-hook-form';
 
 // For regular user, display only table

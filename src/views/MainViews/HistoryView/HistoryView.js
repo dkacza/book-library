@@ -8,7 +8,7 @@ import HistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters';
 import StyledContentSection from 'views/MainViews/HistoryView/HistoryView.styles';
 
 const columnNames = ['Title', 'Name', 'Start date', 'Return date', 'Expiration', 'Status'];
-const columnCodes = ['title', 'fullName', 'startDate', 'returnDate', 'expirationDate', 'currentStatus', ];
+const columnCodes = ['title', 'fullName', 'startDate', 'returnDate', 'expirationDate', 'currentStatus'];
 const columnProportions = [0.3, 0.15, 0.15, 0.15, 0.15, 0.1];
 const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'api/axios';
-import useWidowDimensions from 'hooks/useWidowDimensions';
+import useWidowDimensions from 'hooks/useWindowDimensions';
 
 const buildQuery = (data) => {
   let queryString = '';

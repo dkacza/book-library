@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const UseWidowDimensions = () => {
+const UseWindowDimensions = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -22,4 +22,4 @@ const UseWidowDimensions = () => {
     height
   }
 }
-export default UseWidowDimensions;
+export default UseWindowDimensions;

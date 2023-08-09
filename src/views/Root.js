@@ -15,7 +15,7 @@ import Spinner from 'components/atoms/Spinner';
 import BooksView from 'views/MainViews/BooksView/BooksView';
 import AddBookView from 'views/MainViews/AddBookView';
 import HistoryView from 'views/MainViews/HistoryView/HistoryView';
-import UsersView from 'views/MainViews/UsersView';
+import UsersView from 'views/MainViews/UsersView/UsersView';
 import SettingsView from 'views/MainViews/SettingsView/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 
