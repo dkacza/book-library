@@ -24,11 +24,14 @@ const StyledPersonalData = styled.div`
     color: ${({theme}) => theme.colors.error2};
     margin-bottom: 1rem;
   }
-  @media(max-width: 1440px) {
+  @media(max-width: 1600px) {
     ${UserDataLine} {
       font-size: 1.5rem;
       p:nth-child(1) {
         width: 18rem;
+      }
+      ${SimpleInput} {
+        font-size: 1.5rem;
       }
     }
     ${BorderlessButton} {
@@ -36,9 +39,15 @@ const StyledPersonalData = styled.div`
     }
   }
   @media(max-width: 1300px) {
-    ${SimpleInput} {
-      font-size: 1.5rem;
+    margin-top: 0;
+    ${UserDataLine} {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      ${SimpleInput} {
+        font-size: 1.25rem;
+      }
     }
+    
   }
 `;
 export default StyledPersonalData;

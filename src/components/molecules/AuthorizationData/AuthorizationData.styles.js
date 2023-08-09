@@ -38,7 +38,8 @@ const StyledAuthorizationData = styled.div`
     margin-bottom: 1rem;
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1600px) {
+    margin-top: 1.5rem;
     ${UserDataLine} {
       font-size: 1.5rem;
 
@@ -46,9 +47,24 @@ const StyledAuthorizationData = styled.div`
         width: 18rem;
       }
     }
-
     ${BorderlessButton} {
       font-size: 1.25rem;
+    }
+    ${InputWithIcon} {
+      height: 2.5rem;
+      border-radius: 0.25rem;
+      input {
+        font-size: 1rem;
+      }
+    }
+    p.password-info, p.error-msg, p.success-msg {
+      margin-bottom: 0.5rem;
+    }
+  }
+  @media(max-width: 1300px) {
+    ${UserDataLine} {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
     }
   }
 `;
