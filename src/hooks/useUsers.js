@@ -24,10 +24,15 @@ const prepareObject = (obj, columnCodes) => {
   if (obj.firstName && obj.lastName) {
     obj.fullName = obj.firstName + ' ' + obj.lastName;
   }
-  // Fix dates
+
   for (const [key, val] of Object.entries(obj)) {
-    if (!key.endsWith('Date')) continue;
-    obj[key] = val.substring(0, 10);
+    // Fix dates
+    if (key.endsWith('Date')) obj[key] = val.substring(0, 10);
+    // Convert true false to yes no;
+    if (typeof val === 'boolean') {
+      if (val) obj[key] = 'yes';
+      else obj[key] = 'no';
+    }
   }
   return obj;
 };
@@ -53,7 +58,6 @@ const useUsers = (initialFormValues, initialPage, columnCodes) => {
   const onSubmit = (data) => {
     const query = buildQuery(data);
     setQuery(query);
-
   };
   const onError = (err) => {
     reset();

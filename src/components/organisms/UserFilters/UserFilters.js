@@ -5,10 +5,12 @@ import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wg
 import DateInput from 'components/atoms/DateInput';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
+import BorderlessButton from 'components/atoms/BorderlessButton';
+import StyledUserFilters from 'components/organisms/UserFilters/UserFilter.styles';
 
 const UserFilters = ({ onSubmit, register, ...props }) => {
   return (
-    <form onSubmit={onSubmit} className={props.className}>
+    <StyledUserFilters onSubmit={onSubmit} className={props.className}>
       <InputWithIcon
         Icon={UserIcon}
         placeholder={'search by user'}
@@ -24,6 +26,7 @@ const UserFilters = ({ onSubmit, register, ...props }) => {
           <p>-</p>
           <DateInput type="date" {...register('registrationDateTo')} />
         </div>
+        <BorderlessButton>clear</BorderlessButton>
       </div>
       <div className="role-filter">
         <p className="label">Role:</p>
@@ -33,7 +36,7 @@ const UserFilters = ({ onSubmit, register, ...props }) => {
       </div>
 
       <SubmitButton type="submit">Apply filters</SubmitButton>
-    </form>
+    </StyledUserFilters>
   );
 };
 
