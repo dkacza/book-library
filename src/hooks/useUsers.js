@@ -4,7 +4,20 @@ import { useForm } from 'react-hook-form';
 import axios from 'api/axios';
 
 const buildQuery = (data) => {
-  return '';
+  let query = '';
+  // Registration date
+  if (data.registrationDateFrom) query += `registrationDate[gte]=${data.registrationDateFrom}&`;
+  if (data.registrationDateTo) query += `registrationDate[lte]=${data.registrationDateTo}&`;
+  // Roles
+  const roleArr = [];
+  for (const [key, val] of Object.entries(data.role)) {
+    if (val) roleArr.push(key);
+  }
+  if (roleArr.length > 0) query += `role=${roleArr.join(',')}&`;
+  // Search query
+  if (data.userSearchQuery) query += `search=${data.userSearchQuery}&`;
+
+  return query.substring(0, query.length - 1);
 };
 
 const prepareObject = (obj, columnCodes) => {
@@ -29,6 +42,7 @@ const useUsers = (initialFormValues, initialPage, columnCodes) => {
   const { register, handleSubmit, reset } = useForm({ defaultValues: initialFormValues });
 
   const fetchUsers = (page, limit) => {
+    console.log(query);
     axios.get(`users/?${query}&page=${page}&limit=${limit}`).then((res) => {
       const users = res.data.data.users.map((user) => prepareObject(user, columnCodes));
       const pagination = res.data.data.pagination;
@@ -37,12 +51,12 @@ const useUsers = (initialFormValues, initialPage, columnCodes) => {
     });
   };
   const onSubmit = (data) => {
-    console.log('filters submitted');
-    console.log(data);
+    const query = buildQuery(data);
+    setQuery(query);
+
   };
   const onError = (err) => {
-    console.log('filters submitted with error');
-    console.log(err);
+    reset();
   };
   const submitWithPrevent = (e) => {
     e.preventDefault();

@@ -5,6 +5,7 @@ import StyledContentSection from 'views/MainViews/UsersView/UsersView.styles';
 import useUsers from 'hooks/useUsers';
 import Table from 'components/organisms/Table/Table';
 import Pagination from 'components/molecules/Pagination/Pagination';
+import UserFilters from 'components/organisms/UserFilters/UserFilters';
 
 const columnNames = ['Full name', 'Email address', 'Registration', 'Role', 'Eligible'];
 const columnCodes = ['fullName', 'email', 'registrationDate', 'role', 'eligible'];
@@ -39,7 +40,7 @@ const UsersView = () => {
             columnCodes={columnCodes}
             columnproportions={columnProportions}
           />
-          <div className="filters">filters</div>
+          <UserFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {users.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
         </StyledContentSection>
       </main>
