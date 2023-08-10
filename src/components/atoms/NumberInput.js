@@ -6,7 +6,6 @@ const StyledInput = styled.input`
   border-radius: 0.4rem;
   padding-left: 0.5rem;
   font-size: 1rem;
-  width: 8rem;
   border-bottom: 3px solid ${({theme}) => theme.colors.primary3};
   outline: none;
   background-color: ${({theme}) => theme.colors.primary1};

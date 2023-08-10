@@ -8,6 +8,11 @@ import { StyledLink } from 'components/atoms/StyledLink';
 import authProvider from 'providers/AuthProvider';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import { useForm } from 'react-hook-form';
+import SimpleInput from 'components/atoms/SimpleInput';
+import TextArea from 'components/atoms/TextArea';
+import BookTextData from 'components/organisms/BookTextData/BookTextData';
+import BookImage from 'components/organisms/BookImage/BookImage';
+import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetails.styles';
 
 const BookDetailsView = () => {
   const [book, setBook] = useState({});
@@ -102,60 +107,10 @@ const BookDetailsView = () => {
       <Navigation />
       <main>
         <Title>{book.title}</Title>
-        <section>
+        <StyledContentSection>
           <div className="book-data">
-            <div className="img-container">
-              <img
-                crossOrigin="anonymous"
-                src={book ? `http://localhost:8000/img/book-covers/${book.bookCoverPhoto}` : ''}
-                alt="book cover"
-              />
-              {updateSelected ? <input type="file" onChange={(e) => handleImageSelection(e)} /> : ''}
-            </div>
-            <div className="text-data">
-              {updateSelected ? (
-                <div className="title-data">
-                  <p className="label">Title</p>
-                  <input type="text" {...register('title')} />
-                </div>
-              ) : (
-                ''
-              )}
-              <div className="author-data">
-                <p className="label">Author</p>
-                {updateSelected ? (
-                  <input type="text" {...register('authors')} />
-                ) : (
-                  <p className="data">{book.authors}</p>
-                )}
-              </div>
-              <div className="publication-year-data">
-                <p className="label">Publication year</p>
-                {updateSelected ? (
-                  <input type="number" {...register('publicationDate')} />
-                ) : (
-                  <p className="data">{book.publicationDate}</p>
-                )}
-              </div>
-              <div className="isbn-data">
-                <p className="label">ISBN</p>
-                {updateSelected ? <input type="text" {...register('isbn')} /> : <p className="data">{book.isbn}</p>}
-              </div>
-              <div className="description-data">
-                <p className="label">Description</p>
-                {updateSelected ? (
-                  <textarea {...register('description')} />
-                ) : (
-                  <p className="data">{book.description}</p>
-                )}
-              </div>
-              <div className="availability-data">
-                <p className="label">Availability</p>
-                <p className="data">
-                  {book.currentStatus === 'available' ? 'Book is available' : 'Book currently is not available'}
-                </p>
-              </div>
-            </div>
+            <BookImage updateSelected={updateSelected} book={book} handleImageSelection={handleImageSelection}/>
+            <BookTextData updateSelected={updateSelected} register={register} book={book}/>
           </div>
           <div className="links-container">
             <StyledLink to={'/books'}>Back to the catalogue</StyledLink>
@@ -165,14 +120,14 @@ const BookDetailsView = () => {
               ) : (
                 <>
                   <BorderlessButton onClick={(e) => handleSave(e)}>Save</BorderlessButton>
-                  <BorderlessButton onClick={() => setUpdateSelected(false)}>Discard</BorderlessButton>
+                  <BorderlessButton className="discard" onClick={() => setUpdateSelected(false)}>Discard</BorderlessButton>
                 </>
               )
             ) : (
               ''
             )}
           </div>
-        </section>
+        </StyledContentSection>
       </main>
     </MainViewTemplate>
   );
