@@ -18,6 +18,7 @@ import HistoryView from 'views/MainViews/HistoryView/HistoryView';
 import UsersView from 'views/MainViews/UsersView/UsersView';
 import SettingsView from 'views/MainViews/SettingsView/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
+import BookDetailsView from 'views/MainViews/BookDetailsView/BookDetailsView';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -62,6 +63,7 @@ const Root = () => {
 
             {/*Routes for logged-in users*/}
             <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
+              <Route path="/book/:id" element={<BookDetailsView />}></Route>
               <Route path="/books" element={<BooksView />}></Route>
               <Route path="/settings" element={<SettingsView />}></Route>
               <Route path="/history" element={<HistoryView />}></Route>

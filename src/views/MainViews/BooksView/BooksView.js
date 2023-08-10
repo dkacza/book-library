@@ -34,7 +34,7 @@ const BooksView = () => {
         <Title>Book catalogue</Title>
         <StyledContentSection>
           {books.length !== 0 ? (
-            <Table columnNames={columnNames} columnCodes={columnCodes} data={books} columnproportions={columnProportions}/>
+            <Table columnNames={columnNames} columnCodes={columnCodes} data={books} columnproportions={columnProportions} recordLink={'book/'}/>
           ) : (
             <p>There are no books that match current criteria</p>
           )}

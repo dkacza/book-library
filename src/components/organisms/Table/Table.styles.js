@@ -78,6 +78,17 @@ const StyledTable = styled.table`
   thead tr:nth-child(1) {
     border: none;
   }
+  &.selectable {
+    tbody {
+      tr {
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      tr:hover {
+        font-weight: bold;
+      }
+    }
+  }
 
   @media (max-width: 1440px) {
     th {
