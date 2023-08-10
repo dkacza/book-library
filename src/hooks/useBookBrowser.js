@@ -21,7 +21,7 @@ const buildQuery = (data) => {
 
   // Set available only filter
   if (data.availableOnly) {
-    queryString += 'availableOnly=true&';
+    queryString += 'currentStatus=available&';
   }
 
   // Set year filter
@@ -31,9 +31,11 @@ const buildQuery = (data) => {
 
   const endDate = new Date();
   endDate.setFullYear(data.yearTo);
-  queryString += 'publicationDate[lte]=' + endDate.getFullYear();
+  queryString += 'publicationDate[lte]=' + endDate.getFullYear() + '&';
 
-  // TODO Add search query
+  if (data.searchQuery) {
+    queryString += `search=${data.searchQuery}&`
+  }
   return queryString;
 };
 
