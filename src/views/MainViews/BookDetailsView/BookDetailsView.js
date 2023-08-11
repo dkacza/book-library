@@ -8,11 +8,9 @@ import { StyledLink } from 'components/atoms/StyledLink';
 import authProvider from 'providers/AuthProvider';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import { useForm } from 'react-hook-form';
-import SimpleInput from 'components/atoms/SimpleInput';
-import TextArea from 'components/atoms/TextArea';
 import BookTextData from 'components/organisms/BookTextData/BookTextData';
 import BookImage from 'components/organisms/BookImage/BookImage';
-import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetails.styles';
+import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetailsView.styles';
 
 const BookDetailsView = () => {
   const [book, setBook] = useState({});
@@ -109,8 +107,13 @@ const BookDetailsView = () => {
         <Title>{book.title}</Title>
         <StyledContentSection>
           <div className="book-data">
-            <BookImage updateSelected={updateSelected} book={book} handleImageSelection={handleImageSelection}/>
-            <BookTextData updateSelected={updateSelected} register={register} book={book}/>
+            <BookImage
+              updateSelected={updateSelected}
+              book={book}
+              handleImageSelection={handleImageSelection}
+              file={file}
+            />
+            <BookTextData updateSelected={updateSelected} register={register} book={book} />
           </div>
           <div className="links-container">
             <StyledLink to={'/books'}>Back to the catalogue</StyledLink>
@@ -120,7 +123,9 @@ const BookDetailsView = () => {
               ) : (
                 <>
                   <BorderlessButton onClick={(e) => handleSave(e)}>Save</BorderlessButton>
-                  <BorderlessButton className="discard" onClick={() => setUpdateSelected(false)}>Discard</BorderlessButton>
+                  <BorderlessButton className="discard" onClick={() => setUpdateSelected(false)}>
+                    Discard
+                  </BorderlessButton>
                 </>
               )
             ) : (

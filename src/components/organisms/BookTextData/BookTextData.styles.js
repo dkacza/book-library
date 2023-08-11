@@ -21,5 +21,24 @@ const StyledBookTextData = styled.div`
   ${TextArea} {
     font-size: 1rem;
   }
+  
+  @media(max-width: 1300px) {
+    &>div {
+      margin-bottom: 0.25rem;
+    }
+    .label {
+      font-size: 1.25rem;
+    }
+    .data {
+      font-size: 1rem;
+    }
+    ${SimpleInput} {
+      font-size: 1rem;
+    }
+    ${TextArea} {
+      font-size: 0.75rem;
+    }
+  }
+  
 `;
 export default StyledBookTextData;
