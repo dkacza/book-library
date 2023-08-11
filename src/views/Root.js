@@ -13,7 +13,7 @@ import AuthContext from 'providers/AuthProvider';
 import PrivateRoutes from 'utils/PrivateRoutes';
 import Spinner from 'components/atoms/Spinner';
 import BooksView from 'views/MainViews/BooksView/BooksView';
-import AddBookView from 'views/MainViews/AddBookView';
+import AddBookView from 'views/MainViews/AddBookView/AddBookView';
 import HistoryView from 'views/MainViews/HistoryView/HistoryView';
 import UsersView from 'views/MainViews/UsersView/UsersView';
 import SettingsView from 'views/MainViews/SettingsView/SettingsView';

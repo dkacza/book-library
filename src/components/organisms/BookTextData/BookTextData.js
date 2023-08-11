@@ -15,8 +15,8 @@ const BookTextData = ({updateSelected, register, book, ...props}) => {
       ) : (
         ''
       )}
-      <div className="author">
-        <p className="label">Author</p>
+      <div className="authors">
+        <p className="label">Authors</p>
         {updateSelected ? <SimpleInput {...register('authors')} /> : <p className="data">{book.authors}</p>}
       </div>
       <div className="publication-year">
