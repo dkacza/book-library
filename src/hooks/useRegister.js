@@ -5,8 +5,6 @@ import axios from 'api/axios';
 import { setCookie } from 'utils/cookies';
 
 const useRegister = () => {
-
-
   const { setAuth } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [navigate, setNavigate] = useState(false);

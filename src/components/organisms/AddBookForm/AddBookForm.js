@@ -5,8 +5,10 @@ import validationRegexes from 'utils/validationRegexes';
 import TextArea from 'components/atoms/TextArea';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledAddBookForm from 'components/organisms/AddBookForm/AddBookForm.styles';
+import FileInput from 'components/atoms/FileInput';
+import BorderlessButton from 'components/atoms/BorderlessButton';
 
-const AddBookForm = ({submitWithPrevent, register, errors, file, handleImageSelection, errorMsg, successMsg}) => {
+const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSelection, errorMsg, successMsg }) => {
   return (
     <StyledAddBookForm onSubmit={(e) => submitWithPrevent(e)}>
       <div className="title">
@@ -37,11 +39,7 @@ const AddBookForm = ({submitWithPrevent, register, errors, file, handleImageSele
 
       <div className="isbn">
         <p className="label">ISBN</p>
-        <SimpleInput
-          type="number"
-          {...register('isbn', { required: true })}
-          className={errors.isbn ? 'error' : ''}
-        />
+        <SimpleInput type="number" {...register('isbn', { required: true })} className={errors.isbn ? 'error' : ''} />
       </div>
 
       <div className="genre">
@@ -67,15 +65,18 @@ const AddBookForm = ({submitWithPrevent, register, errors, file, handleImageSele
 
       <div className="photo-input">
         <p className="label">Cover image</p>
-        <input type="file" onChange={(e) => handleImageSelection(e)} />
-        <p className="selected-info">{file ? file.name : 'Default cover photo will be applied'}</p>
+        <FileInput handleImageSelection={handleImageSelection} file={file}/>
+        <BorderlessButton>clear photo selection</BorderlessButton>
       </div>
 
-      {errorMsg ? <p className='error-msg'>{errorMsg}</p> : ''}
-      {successMsg ? <p className='success-msg'>{successMsg}</p> : ''}
 
-      <SubmitButton>Add book</SubmitButton>
+      <div className='submission-wrapper'>
+        <SubmitButton type="submit">Add book</SubmitButton>
+        {errorMsg ? <p className="error-msg">{errorMsg}</p> : ''}
+        {successMsg ? <p className="success-msg">{successMsg}</p> : ''}
+      </div>
+
     </StyledAddBookForm>
-  )
-}
+  );
+};
 export default styled(AddBookForm)``;
