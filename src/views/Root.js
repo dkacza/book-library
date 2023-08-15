@@ -19,6 +19,7 @@ import UsersView from 'views/MainViews/UsersView/UsersView';
 import SettingsView from 'views/MainViews/SettingsView/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 import BookDetailsView from 'views/MainViews/BookDetailsView/BookDetailsView';
+import UserDetailsView from 'views/MainViews/UserDetailsView/UserDetailsView';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -71,6 +72,7 @@ const Root = () => {
 
             {/*Routes available for librarians and admins only*/}
             <Route element={<PrivateRoutes permittedRoles={['librarian', 'admin']} />}>
+              <Route path="/user/:id" element={<UserDetailsView/>}></Route>
               <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
               <Route path="/users" element={<UsersView />}></Route>
               <Route path="/add-book" element={<AddBookView />}></Route>

@@ -3,12 +3,13 @@ import StyledTable from 'components/organisms/Table/Table.styles';
 import styled from 'styled-components';
 import { Navigate } from 'react-router-dom';
 
-const Table = ({ columnNames, columnCodes, data, columnproportions, recordLink }) => {
+const Table = ({ columnNames, columnCodes, data, columnproportions, routePath }) => {
   const [route, setRoute] = useState('');
   const handleRecordSelect = (e) => {
+    if (!routePath) return;
     e.preventDefault();
     const id = e.currentTarget.id;
-    setRoute(`/book/${id}`);
+    setRoute(`${routePath}/${id}`);
   };
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, recordLink }
 
   return (
     <>
-      <StyledTable $columnproportions={columnproportions} className={recordLink ? 'selectable' : ''}>
+      <StyledTable $columnproportions={columnproportions} className={routePath ? 'selectable' : ''}>
         <thead>
           <tr>
             {columnNames.map((name, index) => (

@@ -39,6 +39,7 @@ const UsersView = () => {
             columnNames={columnNames}
             columnCodes={columnCodes}
             columnproportions={columnProportions}
+            routePath={"/user"}
           />
           <UserFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {users.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
