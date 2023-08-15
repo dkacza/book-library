@@ -33,27 +33,15 @@ const buildQuery = (data) => {
   queryString += 'publicationDate[lte]=' + endDate.getFullYear() + '&';
 
   if (data.searchQuery) {
-    queryString += `search=${data.searchQuery}&`
+    queryString += `search=${data.searchQuery}&`;
   }
   return queryString;
 };
 
 const useBookBrowser = (initialFormValues) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm({ defaultValues: initialFormValues });
+  const { register, handleSubmit, reset } = useForm({ defaultValues: initialFormValues });
 
-  const {
-    books,
-    currentPage,
-    paginationData,
-    errorMsg,
-    setBookQuery,
-    setCurrentPage,
-  } = useContext(BookContext);
-
+  const { books, paginationData, errorMsg, setBookQuery, setCurrentPage } = useContext(BookContext);
 
   const onSubmit = (data) => {
     const newQuery = buildQuery(data);
@@ -78,7 +66,7 @@ const useBookBrowser = (initialFormValues) => {
     books,
     register,
     handlePageChange,
-    submitWithPrevent
-  }
-}
+    submitWithPrevent,
+  };
+};
 export default useBookBrowser;

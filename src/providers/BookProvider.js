@@ -35,8 +35,8 @@ export const BookProvider = ({ children }) => {
         setPaginationData(paginationResponse);
       })
       .catch((err) => {
-        const errorMsg = err.response.data.message;
-        setErrorMsg(errorMsg);
+        const errorMsgResponse = err.response.data.message;
+        setErrorMsg(errorMsgResponse);
       });
   };
 

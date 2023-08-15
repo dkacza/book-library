@@ -10,7 +10,6 @@ import StyledContentSection from 'views/MainViews/HistoryView/HistoryView.styles
 const columnNames = ['Title', 'Name', 'Start date', 'Return date', 'Expiration', 'Status'];
 const columnCodes = ['title', 'fullName', 'startDate', 'returnDate', 'expirationDate', 'currentStatus'];
 const columnProportions = [0.3, 0.15, 0.15, 0.15, 0.15, 0.1];
-const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {
   startDateFrom: undefined,
   startDateTo: undefined,
@@ -24,11 +23,8 @@ const INITIAL_FORM_VALUES = {
 };
 
 const HistoryView = () => {
-  const { historyRecords, pages, register, handlePageChange, submitWithPrevent, authorizedHistoryView } = useHistory(
-    INITIAL_FORM_VALUES,
-    INITIAL_PAGE,
-    columnCodes,
-  );
+  const { authorizedHistory, history, paginationData, register, handlePageChange, submitWithPrevent } =
+    useHistory(INITIAL_FORM_VALUES);
 
   return (
     <MainViewTemplate>
@@ -37,7 +33,7 @@ const HistoryView = () => {
         <Title>History</Title>
         <StyledContentSection>
           <Table
-            data={historyRecords}
+            data={history}
             columnNames={columnNames}
             columnCodes={columnCodes}
             columnproportions={columnProportions}
@@ -45,9 +41,13 @@ const HistoryView = () => {
           <HistoryFilters
             onSubmit={(e) => submitWithPrevent(e)}
             register={register}
-            authorizedHistoryView={authorizedHistoryView}
+            authorizedHistoryView={authorizedHistory}
           />
-          {historyRecords.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
+          {history.length !== 0 ? (
+            <Pagination paginationData={paginationData} handlePageChange={handlePageChange} />
+          ) : (
+            ''
+          )}
         </StyledContentSection>
       </main>
     </MainViewTemplate>
