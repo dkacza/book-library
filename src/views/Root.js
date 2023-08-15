@@ -72,7 +72,7 @@ const Root = () => {
 
             {/*Routes available for librarians and admins only*/}
             <Route element={<PrivateRoutes permittedRoles={['librarian', 'admin']} />}>
-              <Route path="/user/:id" element={<UserDetailsView/>}></Route>
+              <Route path="/user/:id" element={<UserDetailsView />}></Route>
               <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
               <Route path="/users" element={<UsersView />}></Route>
               <Route path="/add-book" element={<AddBookView />}></Route>

@@ -25,7 +25,13 @@ const INITIAL_FORM_VALUES = {
 };
 
 const BooksView = () => {
-  const { books, pages, register, handlePageChange, submitWithPrevent } = useBookBrowser(
+  const {
+    paginationData,
+    books,
+    register,
+    handlePageChange,
+    submitWithPrevent
+  } = useBookBrowser(
     INITIAL_FORM_VALUES,
     INITIAL_PAGE,
   );
@@ -49,7 +55,7 @@ const BooksView = () => {
           )}
 
           <BookFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
-          {books.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange}></Pagination> : ''}
+          {books.length !== 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange}></Pagination> : ''}
         </StyledContentSection>
       </main>
     </MainViewTemplate>

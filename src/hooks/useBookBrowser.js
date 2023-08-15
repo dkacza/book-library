@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
-import useWidowDimensions from 'hooks/useWindowDimensions';
+import BookContext from 'providers/BookProvider';
 
 const buildQuery = (data) => {
   let queryString = '';
@@ -39,45 +38,29 @@ const buildQuery = (data) => {
   return queryString;
 };
 
-const useBookBrowser = (initialFormValues, initialPage) => {
-  const {width} = useWidowDimensions();
-
-  const [books, setBooks] = useState([]);
-  const [pages, setPages] = useState({});
-  const [query, setQuery] = useState(buildQuery(initialFormValues));
-  const [limitPerPage, setLimitPerPage] = useState(10);
-
+const useBookBrowser = (initialFormValues) => {
   const {
     register,
     handleSubmit,
     reset,
   } = useForm({ defaultValues: initialFormValues });
 
-  const getBookData = (page, limit) => {
-    axios
-      .get(`/books?page=${page}&limit=${limit}&${query}`)
-      .then((res) => {
-        const booksResponse = res.data.data.books;
-        const preparedBooks = booksResponse.map((book) => {
-          const newBookObj = {
-            ...book,
-            authors: book.authors.map((author) => author.name).join('\n'),
-            status: book.currentStatus,
-          };
-          delete newBookObj.currentStatus;
-          return newBookObj;
-        });
-        setBooks(preparedBooks);
+  const {
+    books,
+    currentPage,
+    paginationData,
+    errorMsg,
+    setBookQuery,
+    setCurrentPage,
+  } = useContext(BookContext);
 
-        const paginationResponse = res.data.data.pagination
-        setPages(paginationResponse);
-      })
-      .catch((err) => console.log(`Could not fetch the data about books`));
-  };
+
   const onSubmit = (data) => {
     const newQuery = buildQuery(data);
-    setQuery(newQuery);
+    setBookQuery(newQuery);
   };
+
+  // TODO - do something meaningfully here
   const onError = (err) => {
     reset();
   };
@@ -86,24 +69,12 @@ const useBookBrowser = (initialFormValues, initialPage) => {
     handleSubmit(onSubmit, onError)();
   };
   const handlePageChange = (newPage) => {
-    if (newPage > pages.totalPages || newPage < 1) {
-      return;
-    }
-    getBookData(newPage, limitPerPage);
+    if (newPage > paginationData.totalPages || newPage < 1) return;
+    setCurrentPage(newPage);
   };
 
-  useEffect(() => {
-    if (width <= 2000) setLimitPerPage(10);
-    if (width > 2000)  setLimitPerPage(15);
-    if (width > 2600) setLimitPerPage(20);
-  }, [width]);
-
-  useEffect(() => {
-    getBookData(initialPage, limitPerPage);
-  }, [query, limitPerPage]);
-
   return {
-    pages,
+    paginationData,
     books,
     register,
     handlePageChange,
