@@ -10,6 +10,11 @@ const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
 
+const processUser = (user) => {
+  user.fullName = user.firstName + ' ' + user.lastName;
+  return user;
+}
+
 export const UsersProvider = ({ children }) => {
   const { auth } = useContext(AuthContext);
 
@@ -28,7 +33,7 @@ export const UsersProvider = ({ children }) => {
       .get(`users/?page=${page}&limit=${limitPerPage}&${usersQuery}`)
       .then((res) => {
         const usersResponse = res.data.data.users;
-        setUsers(usersResponse);
+        setUsers(usersResponse.map(processUser));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);

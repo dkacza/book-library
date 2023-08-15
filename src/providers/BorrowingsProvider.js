@@ -9,6 +9,13 @@ const INITIAL_HISTORY_PAGE = 1;
 const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
+const processBorrowing = (borrowing) => {
+  borrowing.fullName = borrowing.firstName + ' ' + borrowing.lastName;
+  borrowing.startDate = borrowing.startDate.split('T')[0];
+  borrowing.returnDate = borrowing.returnDate.split('T')[0];
+  borrowing.expirationDate = borrowing.expirationDate.split('T')[0];
+  return borrowing;
+}
 
 export const BorrowingsProvider = ({ children }) => {
   const { auth } = useContext(AuthContext);
@@ -27,7 +34,7 @@ export const BorrowingsProvider = ({ children }) => {
       .get(`users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then((res) => {
         const historyResponse = res.data.data.rentals;
-        setHistory(historyResponse.map());
+        setHistory(historyResponse.map(processBorrowing));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
@@ -42,7 +49,7 @@ export const BorrowingsProvider = ({ children }) => {
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then((res) => {
         const historyResponse = res.data.data.rentals;
-        setHistory(historyResponse);
+        setHistory(historyResponse.map(processBorrowing));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);

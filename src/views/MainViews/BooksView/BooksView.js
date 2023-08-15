@@ -9,7 +9,7 @@ import useBookBrowser from 'hooks/useBookBrowser';
 import StyledContentSection from 'views/MainViews/BooksView/BooksView.styles';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
-const columnCodes = ['title', 'authors', 'isbn', 'status'];
+const columnCodes = ['title', 'authors', 'isbn', 'currentStatus'];
 const columnProportions = [0.3, 0.3, 0.25, 0.15];
 const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {

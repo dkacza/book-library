@@ -8,11 +8,9 @@ const INITIAL_BOOK_PAGE = 1;
 const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
-const processBooks = (books) => {
-  return books.map((book) => ({
-    ...book,
-    // authors: book.authors.map((author) => author.name),
-  }));
+const processBook = (book) => {
+  book.publicationDate = book.publicationDate.split('T')[0];
+  return book;
 };
 
 export const BookProvider = ({ children }) => {
@@ -30,7 +28,7 @@ export const BookProvider = ({ children }) => {
       .get(`/books?page=${page}&limit=${limitPerPage}&${bookQuery}`)
       .then((res) => {
         const booksResponse = res.data.data.books;
-        setBooks(processBooks(booksResponse));
+        setBooks(booksResponse.map(processBook));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
@@ -49,7 +47,7 @@ export const BookProvider = ({ children }) => {
 
     try {
       const bookResponse = await axios.get(`books/${id}`);
-      return bookResponse.data.data.book;
+      return processBook(bookResponse.data.data.book);
     } catch (err) {
       setBookDetailsErrorMsg(err.response.data.message);
       return {};
@@ -67,12 +65,11 @@ export const BookProvider = ({ children }) => {
         const updatedBookResponse = res.data.data.book;
         const updatedBooks = [...books];
         for (let i = 0; i < updatedBooks.length; i++) {
-          if (updatedBooks[i]._id === id) updatedBooks[i] = updatedBookResponse;
+          if (updatedBooks[i]._id === id) updatedBooks[i] = processBook(updatedBookResponse);
         }
         setBooks(updatedBooks);
       })
       .catch((err) => {
-        console.log(err);
         const errorMsgResponse = err.response.data.message;
         setBookDetailsErrorMsg(errorMsgResponse);
       });
