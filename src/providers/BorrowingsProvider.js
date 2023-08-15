@@ -74,10 +74,10 @@ export const BorrowingsProvider = ({ children }) => {
   useEffect(() => {
     if (auth.role === 'user') {
       setAuthorizedHistory(false);
-      fetchLoggedInUsersBorrowings(INITIAL_HISTORY_PAGE);
+      fetchLoggedInUsersBorrowings(currentPage);
     } else if (auth.role === 'librarian' || auth.role === 'admin') {
       setAuthorizedHistory(true);
-      fetchAllBorrowings(INITIAL_HISTORY_PAGE);
+      fetchAllBorrowings(currentPage);
     }
   }, [auth, limitPerPage, historyQuery, currentPage]);
 

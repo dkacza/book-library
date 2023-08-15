@@ -22,10 +22,8 @@ const INITIAL_FORM_VALUES = {
 };
 
 const UsersView = () => {
-  const { users, pages, register, handlePageChange, submitWithPrevent } = useUsers(
+  const { users, paginationData, register, handlePageChange, submitWithPrevent } = useUsers(
     INITIAL_FORM_VALUES,
-    INITIAL_PAGE,
-    columnCodes,
   );
 
   return (
@@ -42,7 +40,7 @@ const UsersView = () => {
             routePath={"/user"}
           />
           <UserFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
-          {users.length !== 0 ? <Pagination pages={pages} handlePageChange={handlePageChange} /> : ''}
+          {users.length !== 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange} /> : ''}
         </StyledContentSection>
       </main>
     </MainViewTemplate>

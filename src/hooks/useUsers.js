@@ -1,7 +1,6 @@
-import useWindowDimensions from 'hooks/useWindowDimensions';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
+import UsersContext from 'providers/UsersProvider';
 
 const buildQuery = (data) => {
   let query = '';
@@ -20,44 +19,12 @@ const buildQuery = (data) => {
   return query.substring(0, query.length - 1);
 };
 
-const prepareObject = (obj, columnCodes) => {
-  if (obj.firstName && obj.lastName) {
-    obj.fullName = obj.firstName + ' ' + obj.lastName;
-  }
-
-  for (const [key, val] of Object.entries(obj)) {
-    // Fix dates
-    if (key.endsWith('Date')) obj[key] = val.substring(0, 10);
-    // Convert true false to yes no;
-    if (typeof val === 'boolean') {
-      if (val) obj[key] = 'yes';
-      else obj[key] = 'no';
-    }
-  }
-  return obj;
-};
-
-const useUsers = (initialFormValues, initialPage, columnCodes) => {
-  const { width } = useWindowDimensions();
-  const [users, setUsers] = useState([]);
-  const [pages, setPages] = useState({});
-  const [limitPerPage, setLimitPerPage] = useState(10);
-  const [query, setQuery] = useState(buildQuery(initialFormValues));
-
+const useUsers = (initialFormValues) => {
   const { register, handleSubmit, reset } = useForm({ defaultValues: initialFormValues });
-
-  const fetchUsers = (page, limit) => {
-    console.log(query);
-    axios.get(`users/?${query}&page=${page}&limit=${limit}`).then((res) => {
-      const users = res.data.data.users.map((user) => prepareObject(user, columnCodes));
-      const pagination = res.data.data.pagination;
-      setUsers(users);
-      setPages(pagination);
-    });
-  };
+  const { users, currentPage, paginationData, errorMsg, setUsersQuery, setCurrentPage } = useContext(UsersContext);
   const onSubmit = (data) => {
     const query = buildQuery(data);
-    setQuery(query);
+    setUsersQuery(query);
   };
   const onError = (err) => {
     reset();
@@ -67,23 +34,11 @@ const useUsers = (initialFormValues, initialPage, columnCodes) => {
     handleSubmit(onSubmit, onError)();
   };
   const handlePageChange = (newPage) => {
-    if (newPage > pages.totalPages || newPage < 1) {
-      return;
-    }
-    fetchUsers(newPage, limitPerPage);
+    if (newPage > paginationData.totalPages || newPage < 1) return
+    setCurrentPage(newPage);
   };
 
-  useEffect(() => {
-    if (width <= 2000) setLimitPerPage(10);
-    if (width > 2000) setLimitPerPage(15);
-    if (width > 2600) setLimitPerPage(20);
-  }, [width]);
-
-  useEffect(() => {
-    fetchUsers(initialPage, limitPerPage);
-  }, [limitPerPage, query]);
-
-  return { users, pages, register, handlePageChange, submitWithPrevent };
+  return { users, paginationData, register, handlePageChange, submitWithPrevent };
 };
 
 export default useUsers;
