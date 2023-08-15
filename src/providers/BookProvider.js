@@ -11,7 +11,7 @@ const LIMIT_4K = 20;
 const processBooks = (books) => {
   return books.map((book) => ({
     ...book,
-    authors: book.authors.map((author) => author.name),
+    // authors: book.authors.map((author) => author.name),
   }));
 };
 
@@ -20,7 +20,8 @@ export const BookProvider = ({ children }) => {
   const [bookQuery, setBookQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_BOOK_PAGE);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [bookBrowserErrorMsg, setBookBrowserErrorMsg] = useState('');
+  const [bookDetailsErrorMsg, setBookDetailsErrorMsg] = useState('');
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
 
@@ -36,7 +37,44 @@ export const BookProvider = ({ children }) => {
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setErrorMsg(errorMsgResponse);
+        setBookBrowserErrorMsg(errorMsgResponse);
+      });
+  };
+
+  // Return a book from the currently loaded ones
+  // If it cannot be found, fetch it
+  const getBookById = async (id) => {
+    let book = books.find((book) => book._id === id);
+    if (book) return book;
+
+    try {
+      const bookResponse = await axios.get(`books/${id}`);
+      return bookResponse.data.data.book;
+    } catch (err) {
+      setBookDetailsErrorMsg(err.response.data.message);
+      return {};
+    }
+  };
+
+  const patchBookDetails = async (id, requestBody) => {
+    axios
+      .patch(`books/${id}`, requestBody, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        const updatedBookResponse = res.data.data.book;
+        const updatedBooks = [...books];
+        for (let i = 0; i < updatedBooks.length; i++) {
+          if (updatedBooks[i]._id === id) updatedBooks[i] = updatedBookResponse;
+        }
+        setBooks(updatedBooks);
+      })
+      .catch((err) => {
+        console.log(err);
+        const errorMsgResponse = err.response.data.message;
+        setBookDetailsErrorMsg(errorMsgResponse);
       });
   };
 
@@ -67,9 +105,12 @@ export const BookProvider = ({ children }) => {
         books,
         currentPage,
         paginationData,
-        errorMsg,
+        bookBrowserErrorMsg,
+        bookDetailsErrorMsg,
         setBookQuery,
         setCurrentPage,
+        getBookById,
+        patchBookDetails,
       }}
     >
       {children}

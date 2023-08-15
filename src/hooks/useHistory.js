@@ -6,8 +6,6 @@ import BorrowingsContext from 'providers/BorrowingsProvider';
 // For regular user, display only table
 // For admin or librarian, display table and filters
 
-
-
 const buildQuery = (data) => {
   let query = '';
   // Start date from

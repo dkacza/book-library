@@ -35,6 +35,10 @@ const BooksView = () => {
     INITIAL_FORM_VALUES,
     INITIAL_PAGE,
   );
+  const processedBooks = books.map(book => ({
+    ...book,
+    authors: book.authors.map(author => author.name).join(', ')
+  }))
 
   return (
     <MainViewTemplate>
@@ -46,7 +50,7 @@ const BooksView = () => {
             <Table
               columnNames={columnNames}
               columnCodes={columnCodes}
-              data={books}
+              data={processedBooks}
               columnproportions={columnProportions}
               routePath={'/book'}
             />
