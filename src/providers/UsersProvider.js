@@ -23,9 +23,20 @@ export const UsersProvider = ({ children }) => {
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_USER_PAGE);
 
-  const [usersListErrorMsg, setUsersListErrorMsg] = useState('');
-  const [personalSettingsErrorMsg, setPersonalSettingsErrorMsg] = useState('');
-  const [authenticationSettingsErrorMsg, setAuthenticationSettingsErrorMsg] = useState('');
+  const [fetchAllUsersErrorMsg, setFetchAllUsersErrorMsg] = useState('');
+  const [fetchAllUsersConfirmationMsg, setFetchAllUsersConfirmationMsg] = useState('');
+
+  const [getUserByIdErrorMsg, setGetUserByIdErrorMsg] = useState('');
+  const [getUserByIdConfirmationMsg, setGetUserByIdConfirmationMsg] = useState('');
+
+  const [patchPersonalDataErrorMsg, setPatchPersonalDataErrorMsg] = useState('');
+  const [patchPersonalDataConfirmationMsg, setPatchPersonalDataConfirmationMsg] = useState('');
+
+  const [patchAuthenticationDataErrorMsg, setPatchAuthenticationDataErrorMsg] = useState('');
+  const [patchAuthenticationDataConfirmationMsg, setPatchAuthenticationDataConfirmationMsg] = useState('');
+
+  const [patchRoleErrorMsg, setPatchRoleErrorMsg] = useState('');
+  const [patchRoleConfirmationMsg, setPatchRoleConfirmationMsg] = useState('');
 
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
@@ -39,35 +50,78 @@ export const UsersProvider = ({ children }) => {
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
+
+        setFetchAllUsersConfirmationMsg('Users successfully fetched');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setUsersListErrorMsg(errorMsgResponse);
+        setFetchAllUsersErrorMsg(errorMsgResponse);
       });
   };
 
-  const patchCurrentUserPersonalData = (requestBody) => {
+  const getUserById = async (id) => {
+    let user = users.find((user) => user._id === id);
+    if (user) {
+      setGetUserByIdConfirmationMsg('User successfully selected');
+      return user;
+    }
+
+    try {
+      const userResponse = await axios.get(`users/${id}`);
+      setGetUserByIdConfirmationMsg('User successfully fetched');
+      return processUser(userResponse.data.data.user);
+    } catch (err) {
+      const errorMsgResponse = err.res.data.message;
+      setGetUserByIdErrorMsg(errorMsgResponse);
+      return {};
+    }
+  };
+
+  const patchPersonalData = (requestBody) => {
     axios
       .patch(`users/me`, requestBody)
       .then((res) => {
         const updatedUserResponse = res.data.data.user;
         setAuth(processUser(updatedUserResponse));
+        setPatchPersonalDataConfirmationMsg('Users personal data successfully patched');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setPersonalSettingsErrorMsg(errorMsgResponse);
+        setPatchPersonalDataErrorMsg(errorMsgResponse);
       });
   };
-  const patchCurrentUserAuthenticationData = (requestBody) => {
+  const patchAuthenticationData = (requestBody) => {
     axios
       .patch('users/changePassword', requestBody)
       .then((res) => {
         const updatedUserResponse = res.data.data.user;
         setAuth(processUser(updatedUserResponse));
+        setPatchAuthenticationDataConfirmationMsg('Users authentication data successfully patched');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setAuthenticationSettingsErrorMsg(errorMsgResponse);
+        setPatchAuthenticationDataErrorMsg(errorMsgResponse);
+      });
+  };
+
+  const patchRole = (id, requestBody) => {
+    axios
+      .patch(`users/promote/${id}`, requestBody)
+      .then((res) => {
+        const updatedUserResponse = res.data.user;
+        const updatedUsers = [...users];
+        for (let i = 0; i < updatedUsers.length; i++) {
+          if (updatedUsers[i]._id === id) {
+            updatedUsers[i] = processUser(updatedUserResponse);
+            console.log('user found and updated');
+          }
+        }
+        setUsers(updatedUsers);
+        setPatchRoleConfirmationMsg('User successfully promoted');
+      })
+      .catch((err) => {
+        const errorMsgResponse = err.response.data.message;
+        setPatchRoleErrorMsg(errorMsgResponse);
       });
   };
 
@@ -93,13 +147,21 @@ export const UsersProvider = ({ children }) => {
         users,
         currentPage,
         paginationData,
-        usersListErrorMsg,
-        personalSettingsErrorMsg,
-        authenticationSettingsErrorMsg,
+        usersListErrorMsg: fetchAllUsersErrorMsg,
+        personalSettingsErrorMsg: patchPersonalDataErrorMsg,
+        authenticationSettingsErrorMsg: patchAuthenticationDataErrorMsg,
         setUsersQuery,
         setCurrentPage,
-        patchCurrentUserPersonalData,
-        patchCurrentUserAuthenticationData,
+        patchCurrentUserPersonalData: patchPersonalData,
+        patchCurrentUserAuthenticationData: patchAuthenticationData,
+
+        getUserById,
+        getUserByIdConfirmationMsg,
+        getUserByIdErrorMsg,
+
+        patchRole,
+        patchRoleConfirmationMsg,
+        patchRoleErrorMsg,
       }}
     >
       {children}

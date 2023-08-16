@@ -56,8 +56,10 @@ export const BookProvider = ({ children }) => {
   // If it cannot be found, fetch it
   const getBookById = async (id) => {
     let book = books.find((book) => book._id === id);
-    setGetBookByIdConfirmationMsg('Book successfully selected');
-    if (book) return book;
+    if (book) {
+      setGetBookByIdConfirmationMsg('Book successfully selected');
+      return book;
+    }
 
     try {
       const bookResponse = await axios.get(`books/${id}`);

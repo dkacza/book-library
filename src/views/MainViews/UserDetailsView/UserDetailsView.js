@@ -8,6 +8,8 @@ import axios from 'api/axios';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledContentSection from 'views/MainViews/UserDetailsView/UserDetailsView.styles';
 import { StyledLink } from 'components/atoms/StyledLink';
+import UsersContext from 'providers/UsersProvider';
+
 const UserDetailsView = () => {
   const { id } = useParams();
   const { auth } = useContext(authProvider);
@@ -15,39 +17,30 @@ const UserDetailsView = () => {
   const [errorMsg, setErrorMsg] = useState('Error message');
   const [redirectToMyProfile, setRedirectToMyProfile] = useState(false);
 
-  const patchUserRole = (id, newRole) => {
-    axios.patch(`/users/promote/${id}`, {role: newRole}).then(res => {
-      console.log(res);
-      const newUserDetails = res.data.user;
-      setUser(newUserDetails);
-    }).catch(err => {
-      console.log(err)
-      const errorMessage = err.response.data.message;
-      setErrorMsg(errorMessage);
-      console.log(err);
-    });
-  }
-  const fetchUserDetails = (id) => {
-    axios
-      .get(`/users/${id}`)
-      .then((res) => {
-        const userDetails = res.data.data.user;
-        setUser(userDetails);
-      })
-      .catch((err) => {
-        const errorMessage = err.response.data.message;
-        setErrorMsg(errorMessage);
-        console.log(err);
-      });
+  const {
+    getUserById,
+    getUserByIdConfirmationMsg,
+    getUserByIdErrorMsg,
+    patchRole,
+    patchRoleConfirmationMsg,
+    patchRoleErrorMsg,
+    users
+  } = useContext(UsersContext);
+
+  const handleRoleChange = (newRole) => {
+    patchRole(user._id, { role: newRole });
   };
 
   useEffect(() => {
-    console.log(auth)
     if (auth._id === id) {
       setRedirectToMyProfile(true);
     }
-    fetchUserDetails(id);
-  }, [id, auth]);
+    const getUserFromProvider = async () => {
+      const userDetails = await getUserById(id)
+      setUser(userDetails)
+    }
+    getUserFromProvider();
+  }, [id, auth, users]);
 
   return (
     <MainViewTemplate>
@@ -88,10 +81,22 @@ const UserDetailsView = () => {
             {auth.role === 'admin' ? (
               <div className="promotion">
                 <p className="role-label">Change user role</p>
-                {user.role !== 'librarian' && user.role !== 'admin' ? <BorderlessButton onClick={() => patchUserRole(user._id, 'librarian')}>Promote to librarian</BorderlessButton> : ''}
-                {user.role !== 'admin' ? <BorderlessButton onClick={() => patchUserRole(user._id, 'admin')}>Promote to admin</BorderlessButton> : ''}
+                {user.role !== 'librarian' && user.role !== 'admin' ? (
+                  <BorderlessButton onClick={() => handleRoleChange('librarian')}>
+                    Promote to librarian
+                  </BorderlessButton>
+                ) : (
+                  ''
+                )}
+                {user.role !== 'admin' ? (
+                  <BorderlessButton onClick={() => handleRoleChange('admin')}>Promote to admin</BorderlessButton>
+                ) : (
+                  ''
+                )}
                 {user.role !== 'user' ? (
-                  <BorderlessButton className="demote" onClick={() => patchUserRole(user._id, 'user')}>Demote to regular user</BorderlessButton>
+                  <BorderlessButton className="demote" onClick={() => handleRoleChange('user')}>
+                    Demote to regular user
+                  </BorderlessButton>
                 ) : (
                   ''
                 )}
