@@ -9,6 +9,25 @@ const INITIAL_HISTORY_PAGE = 1;
 const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
+
+const INITIAL_STATUS = {
+  error: '',
+  confirm: '',
+};
+
+const setSuccessStatus = (setter, message) => {
+  setter({
+    error: '',
+    success: message,
+  });
+};
+const setErrorStatus = (setter, message) => {
+  setter({
+    error: message,
+    success: '',
+  });
+};
+
 const processBorrowing = (borrowing) => {
   if (borrowing.firstName && borrowing.lastName) {
     borrowing.fullName = borrowing.firstName + ' ' + borrowing.lastName;
@@ -28,12 +47,13 @@ export const BorrowingsProvider = ({ children }) => {
   const [historyQuery, setHistoryQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_HISTORY_PAGE);
-  const [errorMsg, setErrorMsg] = useState('');
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
   const [authorizedHistory, setAuthorizedHistory] = useState(false);
 
+  const [borrowingsListStatus, setBorrowingsListStatus] = useState(INITIAL_STATUS);
   const fetchLoggedInUsersBorrowings = (page) => {
+    setBorrowingsListStatus(INITIAL_STATUS);
     axios
       .get(`users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then((res) => {
@@ -42,13 +62,16 @@ export const BorrowingsProvider = ({ children }) => {
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
+
+        setSuccessStatus(setBorrowingsListStatus, 'Borrowings successfully fetched');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setErrorMsg(errorMsgResponse);
+        setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
       });
   };
   const fetchAllBorrowings = (page) => {
+    setBorrowingsListStatus(INITIAL_STATUS);
     axios
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then((res) => {
@@ -57,50 +80,58 @@ export const BorrowingsProvider = ({ children }) => {
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
+
+        setSuccessStatus(setBorrowingsListStatus, 'Borrowings successfully fetched');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setErrorMsg(errorMsgResponse);
+        setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
       });
   };
 
-  const [getBorrowingByIdErrorMsg, setGetBorrowingByIdErrorMsg] = useState('');
-  const [getBorrowingByIdConfirmationMsg, setGetBorrowingByIdConfirmationMsg] = useState('');
+  const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(INITIAL_STATUS);
   const getBorrowingById = async (borrowingId) => {
+    setBorrowingByIdStatus(INITIAL_STATUS);
     let borrowing = history.find((borrowing) => borrowing._id === borrowingId);
     if (borrowing) {
-      setGetBorrowingByIdConfirmationMsg('Borrowing found');
+      setSuccessStatus(setBorrowingByIdStatus, 'Borrowing found');
       return borrowing;
     }
     try {
       const response = await axios.get(`/rentals/${borrowingId}`);
       const borrowing = processBorrowing(response.data.data.rental);
+      setSuccessStatus(setBorrowingByIdStatus, 'Borrowing fetched successfully');
       return borrowing;
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setGetBorrowingByIdErrorMsg(errorMsgResponse);
+      setErrorStatus(setBorrowingByIdStatus, errorMsgResponse);
       return {};
     }
   };
 
+  const [returnedBorrowingsStatus, setReturnedBorrowingsStatus] = useState(INITIAL_STATUS);
   const patchBorrowingAsReturned = async (borrowingId) => {
-    axios
-      .patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' })
-      .then((res) => {
-        return 12;
-      })
-      .catch((err) => {
-        return 12;
-      });
+    setReturnedBorrowingsStatus(INITIAL_STATUS);
+    try {
+      const response = await axios.patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' });
+      setSuccessStatus(setReturnedBorrowingsStatus, 'Book successfully returned');
+      return processBorrowing(response.data.data.rental);
+    } catch (err) {
+      const errorMsgResponse = err.response.data.message;
+      setErrorStatus(setReturnedBorrowingsStatus, errorMsgResponse);
+      return {};
+    }
   };
 
+  const [createBorrowingStatus, setCreateBorrowingStatus] = useState(INITIAL_STATUS);
   const postBorrowing = async (bookId, userId) => {
     try {
       const response = await axios.post('/rentals', { user: userId, book: bookId });
-      console.log(response);
+      setSuccessStatus(setCreateBorrowingStatus, 'Borrowing successfully indexed');
       return processBorrowing(response.data.data.rental);
-    } catch(err) {
-      console.log(':(');
+    } catch (err) {
+      const errorMsgResponse = err.response.data.message;
+      setErrorStatus(setCreateBorrowingStatus, errorMsgResponse);
       return {};
     }
   };
@@ -136,16 +167,20 @@ export const BorrowingsProvider = ({ children }) => {
   return (
     <BorrowingsContext.Provider
       value={{
-        history,
         currentPage,
         paginationData,
         authorizedHistory,
-        errorMsg,
         setHistoryQuery,
         setCurrentPage,
+
+        history,
+        borrowingsListStatus,
         getBorrowingById,
+        borrowingByIdStatus,
         patchBorrowingAsReturned,
+        returnedBorrowingsStatus,
         postBorrowing,
+        createBorrowingStatus,
       }}
     >
       {children}
