@@ -15,6 +15,24 @@ const processUser = (user) => {
   return user;
 };
 
+const INITIAL_STATUS = {
+  error: '',
+  confirm: '',
+};
+
+const setSuccessStatus = (setter, message) => {
+  setter({
+    error: '',
+    success: message,
+  });
+};
+const setErrorStatus = (setter, message) => {
+  setter({
+    error: message,
+    success: '',
+  });
+};
+
 export const UsersProvider = ({ children }) => {
   const { auth, setAuth } = useContext(AuthContext);
 
@@ -22,29 +40,12 @@ export const UsersProvider = ({ children }) => {
   const [usersQuery, setUsersQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_USER_PAGE);
-
-  const [fetchAllUsersErrorMsg, setFetchAllUsersErrorMsg] = useState('');
-  const [fetchAllUsersConfirmationMsg, setFetchAllUsersConfirmationMsg] = useState('');
-
-  const [getUserByIdErrorMsg, setGetUserByIdErrorMsg] = useState('');
-  const [getUserByIdConfirmationMsg, setGetUserByIdConfirmationMsg] = useState('');
-
-  const [patchPersonalDataErrorMsg, setPatchPersonalDataErrorMsg] = useState('');
-  const [patchPersonalDataConfirmationMsg, setPatchPersonalDataConfirmationMsg] = useState('');
-
-  const [patchAuthenticationDataErrorMsg, setPatchAuthenticationDataErrorMsg] = useState('');
-  const [patchAuthenticationDataConfirmationMsg, setPatchAuthenticationDataConfirmationMsg] = useState('');
-
-  const [patchRoleErrorMsg, setPatchRoleErrorMsg] = useState('');
-  const [patchRoleConfirmationMsg, setPatchRoleConfirmationMsg] = useState('');
-
-  const [searchUsersErrorMsg, setSearchUsersErrorMsg] = useState('');
-  const [searchUsersConfirmationMsg, setSearchUsersConfirmationMsg] = useState('');
-
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
 
+  const [allUsersStatus, setAllUsersStatus] = useState(INITIAL_STATUS);
   const fetchAllUsers = (page) => {
+    setAllUsersStatus(INITIAL_STATUS);
     axios
       .get(`users/?page=${page}&limit=${limitPerPage}&${usersQuery}`)
       .then((res) => {
@@ -54,60 +55,69 @@ export const UsersProvider = ({ children }) => {
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        setFetchAllUsersConfirmationMsg('Users successfully fetched');
+        setSuccessStatus(setAllUsersStatus, 'Successfully fetched users');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setFetchAllUsersErrorMsg(errorMsgResponse);
+        setErrorStatus(setAllUsersStatus, errorMsgResponse);
       });
   };
 
+  const [userByIdStatus, setUserByIdStatus] = useState(INITIAL_STATUS);
   const getUserById = async (id) => {
+    setUserByIdStatus(INITIAL_STATUS);
     let user = users.find((user) => user._id === id);
     if (user) {
-      setGetUserByIdConfirmationMsg('User successfully selected');
+      setSuccessStatus(setUserByIdStatus, 'User successfully selected');
       return user;
     }
 
     try {
       const userResponse = await axios.get(`users/${id}`);
-      setGetUserByIdConfirmationMsg('User successfully fetched');
+      setSuccessStatus(setUserByIdStatus, 'User successfully fetched');
       return processUser(userResponse.data.data.user);
     } catch (err) {
       const errorMsgResponse = err.res.data.message;
-      setGetUserByIdErrorMsg(errorMsgResponse);
+      setErrorStatus(setUserByIdStatus, errorMsgResponse);
       return {};
     }
   };
 
+  const [personalDataStatus, setPersonalDataStatus] = useState(INITIAL_STATUS);
   const patchPersonalData = (requestBody) => {
+    setPersonalDataStatus(INITIAL_STATUS);
     axios
       .patch(`users/me`, requestBody)
       .then((res) => {
         const updatedUserResponse = res.data.data.user;
         setAuth(processUser(updatedUserResponse));
-        setPatchPersonalDataConfirmationMsg('Users personal data successfully patched');
+        setSuccessStatus(setPersonalDataStatus, 'Successfully updated users data');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setPatchPersonalDataErrorMsg(errorMsgResponse);
+        setErrorStatus(setPersonalDataStatus, errorMsgResponse);
       });
   };
+
+  const [authenticationDataStatus, setAuthenticationDataStatus] = useState(INITIAL_STATUS);
   const patchAuthenticationData = (requestBody) => {
+    setAuthenticationDataStatus(INITIAL_STATUS);
     axios
       .patch('users/changePassword', requestBody)
       .then((res) => {
         const updatedUserResponse = res.data.data.user;
         setAuth(processUser(updatedUserResponse));
-        setPatchAuthenticationDataConfirmationMsg('Users authentication data successfully patched');
+        setSuccessStatus(setAuthenticationDataStatus, 'Users authentication data successfully patched');
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setPatchAuthenticationDataErrorMsg(errorMsgResponse);
+        setErrorStatus(setAuthenticationDataStatus, errorMsgResponse);
       });
   };
 
+  const [roleStatus, setRoleStatus] = useState(INITIAL_STATUS);
   const patchRole = (id, requestBody) => {
+    setRoleStatus(INITIAL_STATUS);
     axios
       .patch(`users/promote/${id}`, requestBody)
       .then((res) => {
@@ -116,27 +126,28 @@ export const UsersProvider = ({ children }) => {
         for (let i = 0; i < updatedUsers.length; i++) {
           if (updatedUsers[i]._id === id) {
             updatedUsers[i] = processUser(updatedUserResponse);
-            console.log('user found and updated');
           }
         }
         setUsers(updatedUsers);
-        setPatchRoleConfirmationMsg('User successfully promoted');
+        setSuccessStatus(setRoleStatus, 'User successfully promoted');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setPatchRoleErrorMsg(errorMsgResponse);
+        setErrorStatus(setRoleStatus, errorMsgResponse);
       });
   };
 
+  const [searchedUsersStatus, setSearchedUsersStatus] = useState(INITIAL_STATUS);
   const searchUsers = async (searchQuery) => {
+    setSearchedUsersStatus(INITIAL_STATUS);
     try {
       const response = await axios.get(`/users?search=${searchQuery}`);
       const usersResponse = response.data.data.users;
-      setSearchUsersConfirmationMsg('Users found');
+      setSuccessStatus(setSearchedUsersStatus, 'Users found');
       return usersResponse;
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setSearchUsersConfirmationMsg(errorMsgResponse);
+      setErrorStatus(setSearchedUsersStatus, errorMsgResponse);
       return [];
     }
   };
@@ -160,28 +171,22 @@ export const UsersProvider = ({ children }) => {
   return (
     <UsersContext.Provider
       value={{
-        users,
         currentPage,
         paginationData,
-        usersListErrorMsg: fetchAllUsersErrorMsg,
-        personalSettingsErrorMsg: patchPersonalDataErrorMsg,
-        authenticationSettingsErrorMsg: patchAuthenticationDataErrorMsg,
         setUsersQuery,
         setCurrentPage,
-        patchCurrentUserPersonalData: patchPersonalData,
-        patchCurrentUserAuthenticationData: patchAuthenticationData,
-
+        users,
+        allUsersStatus,
+        userByIdStatus,
         getUserById,
-        getUserByIdConfirmationMsg,
-        getUserByIdErrorMsg,
-
+        personalDataStatus,
+        patchPersonalData,
+        authenticationDataStatus,
+        patchAuthenticationData,
+        roleStatus,
         patchRole,
-        patchRoleConfirmationMsg,
-        patchRoleErrorMsg,
-
+        searchedUsersStatus,
         searchUsers,
-        searchUsersConfirmationMsg,
-        searchUsersErrorMsg,
       }}
     >
       {children}
