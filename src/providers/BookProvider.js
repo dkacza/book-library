@@ -8,6 +8,24 @@ const INITIAL_BOOK_PAGE = 1;
 const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
+
+const INITIAL_STATUS = {
+  error: '',
+  confirm: '',
+};
+
+const setSuccessStatus = (setter, message) => {
+  setter({
+    error: '',
+    success: message,
+  });
+};
+const setErrorStatus = (setter, message) => {
+  setter({
+    error: message,
+    success: '',
+  });
+};
 const processBook = (book) => {
   book.publicationDate = book.publicationDate.split('T')[0];
   return book;
@@ -21,23 +39,9 @@ export const BookProvider = ({ children }) => {
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
 
-  // Each used endpoint contains it error and confirmation message.
-  const [fetchAllBookErrorMsg, setFetchAllBookErrorMsg] = useState('');
-  const [fetchAllBooksConfirmationMsg, setFetchAllBooksConfirmationMsg] = useState('');
-
-  const [getBookByIdErrorMsg, setGetBookByIdErrorMsg] = useState('');
-  const [getBookByIdConfirmationMsg, setGetBookByIdConfirmationMsg] = useState('');
-
-  const [patchBookDetailsErrorMsg, setPatchBookDetailsErrorMsg] = useState('');
-  const [patchBookDetailsConfirmationMsg, setPatchBookDetailsConfirmationMsg] = useState('');
-
-  const [postBookErrorMsg, setPostBookErrorMsg] = useState('');
-  const [postBookConfirmationMsg, setPostBookConfirmationMsg] = useState('');
-
-  const [searchForBookErrorMsg, setSearchForBookErrorMsg] = useState('');
-  const [searchForBookConfirmationMsg, setSearchForBookConfirmationMsg] = useState('');
-
+  const [allBooksStatus, setAllBooksStatus] = useState(INITIAL_STATUS);
   const fetchAllBooks = (page) => {
+    setAllBooksStatus(INITIAL_STATUS);
     axios
       .get(`/books?page=${page}&limit=${limitPerPage}&${bookQuery}`)
       .then((res) => {
@@ -47,33 +51,36 @@ export const BookProvider = ({ children }) => {
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        setFetchAllBooksConfirmationMsg('Books successfully fetched');
+        setSuccessStatus(setAllBooksStatus, 'Books successfully fetched');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setFetchAllBookErrorMsg(errorMsgResponse);
+        setErrorStatus(setAllBooksStatus, errorMsgResponse);
       });
   };
 
   // Return a book from the currently loaded ones
   // If it cannot be found, fetch it
+  const [bookByIdStatus, setBookByIdStatus] = useState(INITIAL_STATUS);
   const getBookById = async (id) => {
+    setBookByIdStatus(INITIAL_STATUS);
     let book = books.find((book) => book._id === id);
     if (book) {
-      setGetBookByIdConfirmationMsg('Book successfully selected');
+      setSuccessStatus(setBookByIdStatus, 'Book successfully selected');
       return book;
     }
 
     try {
       const bookResponse = await axios.get(`books/${id}`);
-      setGetBookByIdConfirmationMsg('Book successfully fetched');
+      setSuccessStatus(setBookByIdStatus, 'Book successfully fetched');
       return processBook(bookResponse.data.data.book);
     } catch (err) {
-      setGetBookByIdErrorMsg(err.response.data.message);
+      setErrorStatus(setBookByIdStatus, err.response.data.message);
       return {};
     }
   };
 
+  const [updateBookStatus, setUpdateBookStatus] = useState(INITIAL_STATUS);
   const patchBookDetails = async (id, requestBody) => {
     axios
       .patch(`books/${id}`, requestBody, {
@@ -88,15 +95,17 @@ export const BookProvider = ({ children }) => {
           if (updatedBooks[i]._id === id) updatedBooks[i] = processBook(updatedBookResponse);
         }
         setBooks(updatedBooks);
-        setPatchBookDetailsConfirmationMsg('Book details successfully updated');
+        setSuccessStatus(setUpdateBookStatus, 'Book details successfully updated');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setPatchBookDetailsErrorMsg(errorMsgResponse);
+        setErrorStatus(setUpdateBookStatus, errorMsgResponse);
       });
   };
 
+  const [createBookStatus, setCreateBookStatus] = useState(INITIAL_STATUS);
   const postBook = (requestBody) => {
+    setCreateBookStatus(INITIAL_STATUS);
     axios
       .post(`books`, requestBody, {
         headers: {
@@ -104,22 +113,24 @@ export const BookProvider = ({ children }) => {
         },
       })
       .then((res) => {
-        setPostBookConfirmationMsg('Book successfully created');
+        setSuccessStatus(setCreateBookStatus, 'Book successfully created');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setPostBookErrorMsg(errorMsgResponse);
+        setErrorStatus(setCreateBookStatus, errorMsgResponse);
       });
   };
 
+  const [searchedBooksStatus, setSearchedBooksStatus] = useState(INITIAL_STATUS);
   const searchForBook = async (searchQuery) => {
+    setSearchedBooksStatus(INITIAL_STATUS);
     try {
       const response = await axios.get(`/books?currentStatus=available&search=${searchQuery}`);
-      setSearchForBookConfirmationMsg('Books found');
+      setSuccessStatus(setSearchedBooksStatus, 'Books found');
       return response.data.data.books.map(processBook);
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setSearchForBookErrorMsg(errorMsgResponse);
+      setErrorStatus(setSearchedBooksStatus, errorMsgResponse);
       return [];
     }
   };
@@ -148,30 +159,21 @@ export const BookProvider = ({ children }) => {
   return (
     <BookContext.Provider
       value={{
-        books,
         currentPage,
         paginationData,
         setBookQuery,
         setCurrentPage,
 
-        fetchAllBooksConfirmationMsg,
-        fetchAllBookErrorMsg,
-
+        books,
+        allBooksStatus,
         getBookById,
-        getBookByIdConfirmationMsg,
-        getBookByIdErrorMsg,
-
+        bookByIdStatus,
         patchBookDetails,
-        patchBookDetailsConfirmationMsg,
-        patchBookDetailsErrorMsg,
-
+        updateBookStatus,
         postBook,
-        postBookConfirmationMsg,
-        postBookErrorMsg,
-
+        createBookStatus,
+        searchedBooksStatus,
         searchForBook,
-        searchForBookErrorMsg,
-        setSearchForBookConfirmationMsg,
       }}
     >
       {children}
