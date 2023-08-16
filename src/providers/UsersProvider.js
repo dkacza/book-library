@@ -13,19 +13,21 @@ const LIMIT_4K = 20;
 const processUser = (user) => {
   user.fullName = user.firstName + ' ' + user.lastName;
   return user;
-}
+};
 
 export const UsersProvider = ({ children }) => {
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   const [users, setUsers] = useState([]);
   const [usersQuery, setUsersQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_USER_PAGE);
-  const [errorMsg, setErrorMsg] = useState('');
+
+  const [usersListErrorMsg, setUsersListErrorMsg] = useState('');
+  const [personalSettingsErrorMsg, setPersonalSettingsErrorMsg] = useState('');
+
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
-
 
 
   const fetchAllUsers = (page) => {
@@ -40,7 +42,20 @@ export const UsersProvider = ({ children }) => {
       })
       .catch((err) => {
         const errorMsgResponse = err.res.data.message;
-        setErrorMsg(errorMsgResponse);
+        setUsersListErrorMsg(errorMsgResponse);
+      });
+  };
+
+  const patchCurrentUserPersonalData = (requestBody) => {
+    axios
+      .patch(`users/me`, requestBody)
+      .then((res) => {
+        const updatedUserResponse = res.data.data.user;
+        setAuth(processUser(updatedUserResponse));
+      })
+      .catch((err) => {
+        const errorMsgResponse = err.res.data.message;
+        setPersonalSettingsErrorMsg(errorMsgResponse);
       });
   };
 
@@ -66,9 +81,11 @@ export const UsersProvider = ({ children }) => {
         users,
         currentPage,
         paginationData,
-        errorMsg,
+        usersListErrorMsg,
+        personalSettingsErrorMsg,
         setUsersQuery,
         setCurrentPage,
+        patchCurrentUserPersonalData,
       }}
     >
       {children}

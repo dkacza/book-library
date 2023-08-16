@@ -1,55 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import UserDataLine from 'components/molecules/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledPersonalData from 'components/molecules/PersonalData/PersonalData.styles';
-import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import validationRegexes from 'utils/validationRegexes';
 import isEmptyObject from 'utils/isEmptyObject';
-import axios from 'api/axios';
+import AuthContext from 'providers/AuthProvider';
+import usePersonalData from 'hooks/usePersonalData';
 
-const defaultValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: ''
-}
 
-const PersonalData = ({ auth, setAuth }) => {
+const PersonalData = () => {
+  const {auth} = useContext(AuthContext);
+  const {updateSelected, errors, register, handleSave, handleDiscard, setUpdateSelected} = usePersonalData();
 
-  const sendProfilePatch = (data) => {
-    axios.patch('/users/me', data).then(res => {
-      const newUser = res.data.data.user;
-      setAuth(newUser);
-    })
-  }
-  const [updateSelected, setUpdateSelected] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    reset,
-    formState: { errors },
-  } = useForm(defaultValues);
-
-  const onSubmit = (data) => {
-    sendProfilePatch(data);
-    reset();
-    setUpdateSelected(false);
-  };
-  const onError = (err) => {
-    console.log(errors);
-  };
-  const handleSave = (e) => {
-    e.preventDefault();
-    const formData = getValues();
-    handleSubmit(onSubmit, onError)(formData);
-  };
-  const handleDiscard = (e) => {
-    e.preventDefault();
-    reset();
-    setUpdateSelected(false);
-  }
   return (
     <StyledPersonalData>
       <UserDataLine
