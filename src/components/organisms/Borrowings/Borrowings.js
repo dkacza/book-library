@@ -6,7 +6,7 @@ import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.sv
 import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
 import styled from 'styled-components';
 
-const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorrow , ...props}) => {
+const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow , ...props}) => {
   return (
     <StyledBorrowings className={props.className}>
       <InputWithIcon
@@ -18,11 +18,11 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, books, handleBookBorro
         value={bookSearchQuery}
         onChange={handleQueryChange}
       ></InputWithIcon>
-      {books ? books.length > 0 ? <ul className="book-list">
-        {books.map(book => (
+      {booksSearchResult ? booksSearchResult.length > 0 ? <ul className="book-list">
+        {booksSearchResult.map(book => (
           <li key={book._id}>
             <p>{book.title}</p>
-            <p>{book.authors}</p>
+            <p>{book.authors?.map(author => author.name)?.join(', ')}</p>
             <p>{book.isbn}</p>
             <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={BookBorrowIcon}/>
           </li>

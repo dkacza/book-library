@@ -5,33 +5,12 @@ import axios from 'api/axios';
 import useDebounce from 'hooks/useDebounce';
 import StyledUserSelection from 'components/organisms/UserSelection/UserSelection.styles';
 import styled from 'styled-components';
+import useUserSelection from 'hooks/useUserSelection';
 
-const API_CALL_DELAY = 600;
+
 
 const UserSelection = ({ setSelectedUser }) => {
-  const [users, setUsers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const getUsers = () => {
-    if (searchQuery === '') return;
-    axios
-      .get(`/users?role=user&search=${searchQuery}`)
-      .then((res) => {
-        const usersResponse = res.data.data.users || [];
-        setUsers(usersResponse);
-      })
-      .catch((err) => console.log(err));
-  };
-  useDebounce(getUsers, API_CALL_DELAY, [searchQuery]);
-  const handleQueryChange = (e) => {
-    setSearchQuery(e.target.value);
-    if (e.target.value === '') setUsers([]);
-  };
-
-  const handleUserSelect = (e) => {
-    const { id } = e.currentTarget;
-    const selectedUser = users.find((user) => user._id === id);
-    setSelectedUser(selectedUser);
-  };
+  const {searchQuery, users, handleUserSelect, handleQueryChange} = useUserSelection(setSelectedUser);
 
   return (
     <StyledUserSelection>

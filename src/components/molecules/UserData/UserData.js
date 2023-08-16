@@ -4,7 +4,6 @@ import StyledUserData from 'components/molecules/UserData/UserData.styles';
 import styled from 'styled-components';
 
 const UserData = ({ selectedUser }) => {
-  console.log(selectedUser);
   return (
     <StyledUserData>
       <Title>

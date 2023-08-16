@@ -34,6 +34,9 @@ export const BookProvider = ({ children }) => {
   const [postBookErrorMsg, setPostBookErrorMsg] = useState('');
   const [postBookConfirmationMsg, setPostBookConfirmationMsg] = useState('');
 
+  const [searchForBookErrorMsg, setSearchForBookErrorMsg] = useState('');
+  const [searchForBookConfirmationMsg, setSearchForBookConfirmationMsg] = useState('');
+
   const fetchAllBooks = (page) => {
     axios
       .get(`/books?page=${page}&limit=${limitPerPage}&${bookQuery}`)
@@ -109,6 +112,18 @@ export const BookProvider = ({ children }) => {
       });
   };
 
+  const searchForBook = async (searchQuery) => {
+    try {
+      const response = await axios.get(`/books?currentStatus=available&search=${searchQuery}`);
+      setSearchForBookConfirmationMsg('Books found');
+      return response.data.data.books.map(processBook);
+    } catch (err) {
+      const errorMsgResponse = err.response.data.message;
+      setSearchForBookErrorMsg(errorMsgResponse);
+      return [];
+    }
+  };
+
   // Set limit per page on render and widow resize
   useEffect(() => {
     if (width <= 2000) setLimitPerPage(LIMIT_1080P);
@@ -153,6 +168,10 @@ export const BookProvider = ({ children }) => {
         postBook,
         postBookConfirmationMsg,
         postBookErrorMsg,
+
+        searchForBook,
+        searchForBookErrorMsg,
+        setSearchForBookConfirmationMsg,
       }}
     >
       {children}

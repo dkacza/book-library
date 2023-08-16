@@ -10,12 +10,16 @@ const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
 const processBorrowing = (borrowing) => {
-  borrowing.fullName = borrowing.firstName + ' ' + borrowing.lastName;
+  if (borrowing.firstName && borrowing.lastName) {
+    borrowing.fullName = borrowing.firstName + ' ' + borrowing.lastName;
+  }
+  if (borrowing.returnDate) {
+    borrowing.returnDate = borrowing.returnDate.split('T')[0];
+  }
   borrowing.startDate = borrowing.startDate.split('T')[0];
-  borrowing.returnDate = borrowing.returnDate.split('T')[0];
   borrowing.expirationDate = borrowing.expirationDate.split('T')[0];
   return borrowing;
-}
+};
 
 export const BorrowingsProvider = ({ children }) => {
   const { auth } = useContext(AuthContext);
@@ -60,6 +64,47 @@ export const BorrowingsProvider = ({ children }) => {
       });
   };
 
+  const [getBorrowingByIdErrorMsg, setGetBorrowingByIdErrorMsg] = useState('');
+  const [getBorrowingByIdConfirmationMsg, setGetBorrowingByIdConfirmationMsg] = useState('');
+  const getBorrowingById = async (borrowingId) => {
+    let borrowing = history.find((borrowing) => borrowing._id === borrowingId);
+    if (borrowing) {
+      setGetBorrowingByIdConfirmationMsg('Borrowing found');
+      return borrowing;
+    }
+    try {
+      const response = await axios.get(`/rentals/${borrowingId}`);
+      const borrowing = processBorrowing(response.data.data.rental);
+      return borrowing;
+    } catch (err) {
+      const errorMsgResponse = err.response.data.message;
+      setGetBorrowingByIdErrorMsg(errorMsgResponse);
+      return {};
+    }
+  };
+
+  const patchBorrowingAsReturned = async (borrowingId) => {
+    axios
+      .patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' })
+      .then((res) => {
+        return 12;
+      })
+      .catch((err) => {
+        return 12;
+      });
+  };
+
+  const postBorrowing = async (bookId, userId) => {
+    try {
+      const response = await axios.post('/rentals', { user: userId, book: bookId });
+      console.log(response);
+      return processBorrowing(response.data.data.rental);
+    } catch(err) {
+      console.log(':(');
+      return {};
+    }
+  };
+
   // Set limit per page on render and widow resize
   useEffect(() => {
     if (width <= 2000) setLimitPerPage(LIMIT_1080P);
@@ -98,6 +143,9 @@ export const BorrowingsProvider = ({ children }) => {
         errorMsg,
         setHistoryQuery,
         setCurrentPage,
+        getBorrowingById,
+        patchBorrowingAsReturned,
+        postBorrowing,
       }}
     >
       {children}

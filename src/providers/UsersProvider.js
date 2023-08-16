@@ -38,6 +38,9 @@ export const UsersProvider = ({ children }) => {
   const [patchRoleErrorMsg, setPatchRoleErrorMsg] = useState('');
   const [patchRoleConfirmationMsg, setPatchRoleConfirmationMsg] = useState('');
 
+  const [searchUsersErrorMsg, setSearchUsersErrorMsg] = useState('');
+  const [searchUsersConfirmationMsg, setSearchUsersConfirmationMsg] = useState('');
+
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
 
@@ -125,6 +128,19 @@ export const UsersProvider = ({ children }) => {
       });
   };
 
+  const searchUsers = async (searchQuery) => {
+    try {
+      const response = await axios.get(`/users?search=${searchQuery}`);
+      const usersResponse = response.data.data.users;
+      setSearchUsersConfirmationMsg('Users found');
+      return usersResponse;
+    } catch (err) {
+      const errorMsgResponse = err.response.data.message;
+      setSearchUsersConfirmationMsg(errorMsgResponse);
+      return [];
+    }
+  };
+
   // Set limit per page on render and widow resize
   useEffect(() => {
     if (width <= 2000) setLimitPerPage(LIMIT_1080P);
@@ -162,6 +178,10 @@ export const UsersProvider = ({ children }) => {
         patchRole,
         patchRoleConfirmationMsg,
         patchRoleErrorMsg,
+
+        searchUsers,
+        searchUsersConfirmationMsg,
+        searchUsersErrorMsg,
       }}
     >
       {children}

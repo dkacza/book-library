@@ -10,7 +10,7 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) => {
   const {
-    books,
+    booksSearchResult,
     currentBorrowings,
     toggleAction,
     handleBookBorrow,
@@ -34,7 +34,7 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
           <Borrowings
             handleQueryChange={handleQueryChange}
             bookSearchQuery={bookSearchQuery}
-            books={books}
+            booksSearchResult={booksSearchResult}
             handleBookBorrow={handleBookBorrow}
           />
         )}
