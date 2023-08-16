@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import UserDataLine from 'components/molecules/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import styled from 'styled-components';
@@ -6,59 +6,22 @@ import StyledAuthorizationData from 'components/molecules/AuthorizationData/Auth
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
-import { useForm } from 'react-hook-form';
 import validationRegexes from 'utils/validationRegexes';
-import axios from 'api/axios';
+import useAuthorizationData from 'hooks/useAuthorizationData';
+import AuthContext from 'providers/AuthProvider';
 
-const AuthorizationData = ({ auth, setAuth }) => {
-  const [updateSelected, setUpdateSelected] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+const AuthorizationData = () => {
+  const { auth } = useContext(AuthContext);
   const {
+    updateSelected,
+    errors,
     register,
-    handleSubmit,
-    getValues,
-    reset,
-    formState: { errors },
-  } = useForm();
-  useEffect(() => {
-    setErrorMessage('');
-  }, []);
-  const sendPasswordPatch = (data) => {
-    axios
-      .patch('users/changePassword', data)
-      .then((res) => {
-        setSuccessMessage('Password has been successfully changed');
-        setErrorMessage('');
-        reset();
-        setUpdateSelected(false);
-      })
-      .catch((err) => {
-        const message = err.response.data.message;
-        setErrorMessage(message);
-        setSuccessMessage('');
-      });
-  };
-
-  const handleDiscard = (e) => {
-    e.preventDefault();
-    reset();
-    setUpdateSelected(false);
-  };
-  const onSubmit = async (data) => {
-    sendPasswordPatch(data);
-  };
-  const onError = (err) => {
-    console.log(errors);
-    setErrorMessage('Provided passwords are not the same or they are not meeting the requirements');
-  };
-  const handleSave = (e) => {
-    e.preventDefault();
-    setErrorMessage('');
-    setSuccessMessage('');
-    const formValues = getValues();
-    handleSubmit(onSubmit, onError)(formValues);
-  };
+    errorMessage,
+    handleSave,
+    handleDiscard,
+    successMessage,
+    setUpdateSelected,
+  } = useAuthorizationData();
   return (
     <StyledAuthorizationData>
       <UserDataLine data={auth.passwordChangedAt.substring(0, 10)} label={'Last password change date:'} />

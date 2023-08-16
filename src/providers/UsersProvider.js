@@ -25,10 +25,10 @@ export const UsersProvider = ({ children }) => {
 
   const [usersListErrorMsg, setUsersListErrorMsg] = useState('');
   const [personalSettingsErrorMsg, setPersonalSettingsErrorMsg] = useState('');
+  const [authenticationSettingsErrorMsg, setAuthenticationSettingsErrorMsg] = useState('');
 
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
-
 
   const fetchAllUsers = (page) => {
     axios
@@ -58,6 +58,18 @@ export const UsersProvider = ({ children }) => {
         setPersonalSettingsErrorMsg(errorMsgResponse);
       });
   };
+  const patchCurrentUserAuthenticationData = (requestBody) => {
+    axios
+      .patch('users/changePassword', requestBody)
+      .then((res) => {
+        const updatedUserResponse = res.data.data.user;
+        setAuth(processUser(updatedUserResponse));
+      })
+      .catch((err) => {
+        const errorMsgResponse = err.res.data.message;
+        setAuthenticationSettingsErrorMsg(errorMsgResponse);
+      });
+  };
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -83,9 +95,11 @@ export const UsersProvider = ({ children }) => {
         paginationData,
         usersListErrorMsg,
         personalSettingsErrorMsg,
+        authenticationSettingsErrorMsg,
         setUsersQuery,
         setCurrentPage,
         patchCurrentUserPersonalData,
+        patchCurrentUserAuthenticationData,
       }}
     >
       {children}
