@@ -1,68 +1,11 @@
 import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import axios from 'api/axios';
 import AddBookForm from 'components/organisms/AddBookForm/AddBookForm';
+import useAddBook from 'hooks/useAddBook';
 
 const AddBookView = () => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    getValues,
-  } = useForm();
-  const [file, setFile] = useState();
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
-
-  const postBook = (data) => {
-    // process authors
-    const newAuthors = data.authors.split(',').map((author) => ({ name: author }));
-    console.log(newAuthors);
-    const requestBody = {
-      ...data,
-      authors: newAuthors,
-    };
-    if (file) requestBody.bookCoverPhoto = file;
-
-    console.log(requestBody);
-    axios
-      .post(`books`, requestBody, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((res) => {
-        setSuccessMsg('Book has been created');
-      })
-      .catch((err) => {
-        setErrorMsg(err.response.data.message || 'Something went wrong');
-      });
-  };
-
-  const onSubmit = (data) => {
-    postBook(data);
-  };
-  const onError = (err) => {
-    setErrorMsg('Validation rules violated');
-  };
-  const submitWithPrevent = (e) => {
-    e.preventDefault();
-    setSuccessMsg('');
-    setErrorMsg('');
-    handleSubmit(onSubmit, onError)();
-  };
-  const handleImageSelection = (e) => {
-    setFile(e.target.files[0]);
-    console.log(e.target.files[0]);
-  };
-
-  useEffect(() => {
-    setSuccessMsg('');
-    setErrorMsg('');
-  }, []);
+  const {submitWithPrevent, register, errors, file,handleImageSelection, errorMsg, successMsg} = useAddBook();
 
   return (
     <MainViewTemplate>

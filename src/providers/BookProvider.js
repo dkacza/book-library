@@ -18,10 +18,21 @@ export const BookProvider = ({ children }) => {
   const [bookQuery, setBookQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_BOOK_PAGE);
-  const [bookBrowserErrorMsg, setBookBrowserErrorMsg] = useState('');
-  const [bookDetailsErrorMsg, setBookDetailsErrorMsg] = useState('');
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
+
+  // Each used endpoint contains it error and confirmation message.
+  const [fetchAllBookErrorMsg, setFetchAllBookErrorMsg] = useState('');
+  const [fetchAllBooksConfirmationMsg, setFetchAllBooksConfirmationMsg] = useState('');
+
+  const [getBookByIdErrorMsg, setGetBookByIdErrorMsg] = useState('');
+  const [getBookByIdConfirmationMsg, setGetBookByIdConfirmationMsg] = useState('');
+
+  const [patchBookDetailsErrorMsg, setPatchBookDetailsErrorMsg] = useState('');
+  const [patchBookDetailsConfirmationMsg, setPatchBookDetailsConfirmationMsg] = useState('');
+
+  const [postBookErrorMsg, setPostBookErrorMsg] = useState('');
+  const [postBookConfirmationMsg, setPostBookConfirmationMsg] = useState('');
 
   const fetchAllBooks = (page) => {
     axios
@@ -32,10 +43,12 @@ export const BookProvider = ({ children }) => {
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
+
+        setFetchAllBooksConfirmationMsg('Books successfully fetched');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setBookBrowserErrorMsg(errorMsgResponse);
+        setFetchAllBookErrorMsg(errorMsgResponse);
       });
   };
 
@@ -43,13 +56,15 @@ export const BookProvider = ({ children }) => {
   // If it cannot be found, fetch it
   const getBookById = async (id) => {
     let book = books.find((book) => book._id === id);
+    setGetBookByIdConfirmationMsg('Book successfully selected');
     if (book) return book;
 
     try {
       const bookResponse = await axios.get(`books/${id}`);
+      setGetBookByIdConfirmationMsg('Book successfully fetched');
       return processBook(bookResponse.data.data.book);
     } catch (err) {
-      setBookDetailsErrorMsg(err.response.data.message);
+      setGetBookByIdErrorMsg(err.response.data.message);
       return {};
     }
   };
@@ -68,10 +83,27 @@ export const BookProvider = ({ children }) => {
           if (updatedBooks[i]._id === id) updatedBooks[i] = processBook(updatedBookResponse);
         }
         setBooks(updatedBooks);
+        setPatchBookDetailsConfirmationMsg('Book details successfully updated');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setBookDetailsErrorMsg(errorMsgResponse);
+        setPatchBookDetailsErrorMsg(errorMsgResponse);
+      });
+  };
+
+  const postBook = (requestBody) => {
+    axios
+      .post(`books`, requestBody, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        setPostBookConfirmationMsg('Book successfully created');
+      })
+      .catch((err) => {
+        const errorMsgResponse = err.response.data.message;
+        setPostBookErrorMsg(errorMsgResponse);
       });
   };
 
@@ -102,12 +134,23 @@ export const BookProvider = ({ children }) => {
         books,
         currentPage,
         paginationData,
-        bookBrowserErrorMsg,
-        bookDetailsErrorMsg,
         setBookQuery,
         setCurrentPage,
+
+        fetchAllBooksConfirmationMsg,
+        fetchAllBookErrorMsg,
+
         getBookById,
+        getBookByIdConfirmationMsg,
+        getBookByIdErrorMsg,
+
         patchBookDetails,
+        patchBookDetailsConfirmationMsg,
+        patchBookDetailsErrorMsg,
+
+        postBook,
+        postBookConfirmationMsg,
+        postBookErrorMsg,
       }}
     >
       {children}
