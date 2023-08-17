@@ -4,7 +4,6 @@ const StyledTable = styled.table`
   display: block;
   position: relative;
   max-height: 100%;
-  padding-right: 2rem;
   border-collapse: collapse;
   overflow-y: scroll;
   overflow-x: scroll;
@@ -32,7 +31,7 @@ const StyledTable = styled.table`
   }
 
   th {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: left;
     color: ${({ theme }) => theme.colors.secondary2};
     font-family: 'Raleway', sans-serif;
@@ -40,7 +39,7 @@ const StyledTable = styled.table`
   }
 
   th.long {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   // Table proportions

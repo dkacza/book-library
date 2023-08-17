@@ -11,14 +11,21 @@ import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_
 const BookFilters = ({ register, onSubmit, errors, ...props }) => {
   return (
     <StyledBookFilters className={props.className} onSubmit={onSubmit}>
-      <InputWithIcon id="search" name="search" placeholder="search" Icon={SearchIcon} {...register('searchQuery')} />
+      <InputWithIcon
+        id="search"
+        name="search"
+        placeholder="search"
+        type="text"
+        Icon={SearchIcon}
+        {...register('searchQuery')}
+      />
       <div className="release-year-filter">
-        <p>Release year:</p>
+        <p className="label">Release year:</p>
         <div className="release-year-input">
           <OutlinedInput
-            type="number"
             id="date-from-input"
             placeholder="from"
+            type="number"
             {...register('yearFrom', {
               validate: (val, formValues) => val <= formValues.yearTo,
             })}
@@ -37,7 +44,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
         </div>
       </div>
       <div className="genre-filter">
-        <p>Genre:</p>
+        <p className="label">Genre:</p>
         <LabeledCheckbox id="fiction" label="Fiction literature" name="fiction" {...register('genre.fiction')} />
         <LabeledCheckbox
           id="non-fiction"
@@ -55,7 +62,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
         <LabeledCheckbox id="poetry" label="Poetry and drama" name="poetry" {...register('genre.poetry')} />
       </div>
       <div className="availability-filter">
-        <p>Availability:</p>
+        <p className="label">Availability:</p>
         <LabeledCheckbox
           id="available"
           name="available"
@@ -63,7 +70,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
           {...register('availableOnly')}
         />
       </div>
-      {!errors || !isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly.</p> : ''}
+      {!isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly</p> : ''}
       <SubmitButton type="submit">Apply filters</SubmitButton>
     </StyledBookFilters>
   );

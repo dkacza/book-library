@@ -13,7 +13,7 @@ const UserFilters = ({ onSubmit, register, ...props }) => {
     <StyledUserFilters onSubmit={onSubmit} className={props.className}>
       <InputWithIcon
         Icon={UserIcon}
-        placeholder={'search by user'}
+        placeholder={'search'}
         name="user-search"
         id="user-search"
         type="text"

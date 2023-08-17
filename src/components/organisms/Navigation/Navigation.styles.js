@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Logo from 'components/molecules/Logo/Logo';
 import Title from 'components/atoms/Title';
+import NavWithIcon from 'components/molecules/NavWithIcon/NavWithIcon';
 
 const StyledNavigation = styled.nav`
   background-color: ${({ theme }) => theme.colors.primary2};
@@ -35,18 +36,14 @@ const StyledNavigation = styled.nav`
       margin-bottom: 2rem;
     }
   }
-
-  .logout {
-    margin-top: 6rem;
-  }
-
+  
   @media (max-height: 800px) {
-    .logo {
+    ${Logo} {
       margin: 2rem auto;
     }
 
     .nav-container {
-      .nav-link {
+      ${NavWithIcon} {
         height: 3.5rem;
       }
     }

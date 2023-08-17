@@ -2,20 +2,25 @@ import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
 import OutlinedInput from 'components/atoms/OutlinedInput';
+import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 
 const StyledBookFilters = styled.form`
   display: flex;
   flex-direction: column;
-  padding-left: 1.5rem;
 
   ${InputWithIcon} {
     height: 3.5rem;
     margin-bottom: 1rem;
-    width: 80%;
+    max-width: 24rem;
+  }
+
+  .label {
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.secondary2};
+    margin-bottom: 0.2rem;
   }
 
   .release-year-filter {
-    font-size: 1.5rem;
     margin-bottom: 1rem;
 
     .release-year-input {
@@ -28,10 +33,6 @@ const StyledBookFilters = styled.form`
   }
 
   .genre-filter, .availability-filter {
-    p {
-      margin-bottom: 0.25rem;
-    }
-
     margin-bottom: 1rem;
   }
 
@@ -41,38 +42,35 @@ const StyledBookFilters = styled.form`
     font-size: 1.25rem;
   }
 
-  ${SubmitButton} {
-    margin-top: 2rem;
-    width: 50%;
-    height: 3rem;
-    font-size: 1.25rem;
-  }
   ${OutlinedInput} {
     max-width: 8rem;
   }
 
-  @media (max-width: 1300px) {
-    padding-left: 0.5rem;
+  ${LabeledCheckbox} {
+    margin-bottom: 0.2rem;
+  }
 
-    .release-year-filter {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+  ${SubmitButton} {
+    margin-top: 2rem;
+    max-width: 12rem;
+    font-size: 1.25rem;
+  }
 
-      .release-year-input {
-        margin-top: 0.25rem;
-        display: flex;
-        flex-direction: row;
-        height: 2rem;
-        font-size: 1.5rem;
+  @media (max-width: 1280px) {
+    ${InputWithIcon} {
+      max-width: 12rem;
 
-        
+      input {
+        font-size: 1rem;
       }
     }
 
-    ${SubmitButton} {
-      width: 65%;
+    ${OutlinedInput} {
+      max-width: 6rem;
     }
+    
   }
+}
 `;
 
 export default StyledBookFilters;

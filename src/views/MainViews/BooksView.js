@@ -6,8 +6,8 @@ import BookFilters from 'components/organisms/BookFilters/BookFilters';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import React from 'react';
 import useBookBrowser from 'hooks/useBookBrowser';
-import StyledContentSection from 'views/MainViews/BooksView/BooksView.styles';
 import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import TableViewTemplate from 'views/MainViews/TableViewTemplate';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'currentStatus'];
@@ -42,7 +42,7 @@ const BooksView = () => {
       <Navigation />
       <main>
         <Title>Book catalogue</Title>
-        <StyledContentSection>
+        <TableViewTemplate>
           {books.length > 0 ? (
             <Table
               columnNames={columnNames}
@@ -58,7 +58,7 @@ const BooksView = () => {
 
           <BookFilters errors={bookBrowserError?.formError} onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {books.length !== 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange}></Pagination> : ''}
-        </StyledContentSection>
+        </TableViewTemplate>
         {bookBrowserError?.dataProviderError ? <FloatingErrorMessage error={bookBrowserError.dataProviderError}/> : ''}
       </main>
     </MainViewTemplate>

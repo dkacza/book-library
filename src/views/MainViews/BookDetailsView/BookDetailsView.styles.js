@@ -15,7 +15,6 @@ const StyledContentSection = styled.section`
     padding-top: 2rem;
   }
   ${StyledLink}, ${BorderlessButton} {
-    font-size: 1.25rem;
     margin-right: 2rem;
   }
   .discard {

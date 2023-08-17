@@ -5,7 +5,7 @@ import Table from 'components/organisms/Table/Table';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import useHistory from 'hooks/useHistory';
 import HistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters';
-import StyledContentSection from 'views/MainViews/HistoryView/HistoryView.styles';
+import TableViewTemplate from 'views/MainViews/TableViewTemplate';
 
 const columnNames = ['Title', 'Name', 'Start date', 'Return date', 'Expiration', 'Status'];
 const columnCodes = ['title', 'fullName', 'startDate', 'returnDate', 'expirationDate', 'currentStatus'];
@@ -31,7 +31,7 @@ const HistoryView = () => {
       <Navigation />
       <main>
         <Title>History</Title>
-        <StyledContentSection>
+        <TableViewTemplate>
           <Table
             data={history}
             columnNames={columnNames}
@@ -48,7 +48,7 @@ const HistoryView = () => {
           ) : (
             ''
           )}
-        </StyledContentSection>
+        </TableViewTemplate>
       </main>
     </MainViewTemplate>
   );

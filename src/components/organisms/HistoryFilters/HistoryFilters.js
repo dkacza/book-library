@@ -10,22 +10,22 @@ import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props }) => {
   return (
-    <StyledHistoryFilters onSubmit={onSubmit}>
+    <StyledHistoryFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
-        Icon={BookIcon}
-        placeholder="search by book"
-        name="book-search"
         id="book-search"
+        name="book-search"
+        placeholder="search by book"
         type="text"
+        Icon={BookIcon}
         {...register('bookSearchQuery')}
       />
       {authorizedHistoryView ? (
         <InputWithIcon
-          Icon={UserIcon}
-          placeholder="search by user"
-          name="user-search"
           id="user-search"
+          name="user-search"
+          placeholder="search by user"
           type="text"
+          Icon={UserIcon}
           {...register('userSearchQuery')}
         />
       ) : (
@@ -33,11 +33,11 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
       )}
       <div className="date-filters">
         <div className="starting-date-filter date-filter">
-          <p className="label">Starting date between: </p>
+          <p className="label">Starting date between:</p>
           <div className="starting-date-input">
             <OutlinedInput type="date" {...register('startDateFrom')} />
             <p>-</p>
-            <OutlinedInput {...register('startDateTo')} />
+            <OutlinedInput type="date" {...register('startDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>
@@ -47,7 +47,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
           <div className="starting-date-input">
             <OutlinedInput type="date" {...register('returnDateFrom')} />
             <p>-</p>
-            <OutlinedInput {...register('returnDateTo')} />
+            <OutlinedInput type="date" {...register('returnDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>

@@ -12,6 +12,7 @@ const LIMIT_4K = 20;
 
 const processUser = (user) => {
   user.fullName = user.firstName + ' ' + user.lastName;
+  user.registrationDate = user.registrationDate.split('T')[0];
   return user;
 };
 

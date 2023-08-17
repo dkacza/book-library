@@ -11,29 +11,20 @@ import { ReactComponent as ManageIcon } from 'assets/icons/swap_horiz_FILL0_wght
 import { ReactComponent as UsersIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as SettingsIcon } from 'assets/icons/settings_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as LogoutIcon } from 'assets/icons/logout_FILL0_wght600_GRAD0_opsz48.svg';
-import { setCookie } from 'utils/cookies';
-import axios from 'api/axios';
 import styled from 'styled-components';
 
-const Navigation = ({...props}) => {
-  const { auth, setAuth } = useContext(AuthContext);
+const Navigation = ({ ...props }) => {
+  const { auth, sendLogoutRequest } = useContext(AuthContext);
 
   const handleLogout = (e) => {
     e.preventDefault();
-    axios
-      .get('/users/logout')
-      .then(() => console.log('Logged out'))
-      .catch(() => console.log('Error occurred while logging out'));
-    setCookie('user', 'LOGGED_OUT', 1);
-    setAuth({});
+    sendLogoutRequest();
   };
 
   return (
     <StyledNavigation className={props.className}>
-      <Logo>Municipal Library</Logo>
-
+      <Logo />
       <div className="user-name">{auth.firstName + ' ' + auth.lastName}</div>
-
       <div className="nav-container">
         <div className="public">
           <NavWithIcon name={'Books'} destination={'/books'} Icon={BooksIcon} />
@@ -51,7 +42,13 @@ const Navigation = ({...props}) => {
         )}
       </div>
 
-      <NavWithIcon onClick={handleLogout} className="logout" name={'Log out'} destination={'/login'} Icon={LogoutIcon} />
+      <NavWithIcon
+        onClick={handleLogout}
+        className="logout"
+        name={'Log out'}
+        destination={'/login'}
+        Icon={LogoutIcon}
+      />
     </StyledNavigation>
   );
 };
