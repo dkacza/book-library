@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UserData from 'components/molecules/UserData/UserData';
+import UserData from 'components/organisms/UserData/UserData';
 import Captions from 'components/molecules/Captions/Captions';
 import Returns from 'components/organisms/Returns/Returns';
 import Borrowings from 'components/organisms/Borrowings/Borrowings';

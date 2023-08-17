@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import UserDataLine from 'components/molecules/UserDataLine';
+import UserDataLine from 'components/organisms/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
-import StyledPersonalData from 'components/molecules/PersonalData/PersonalData.styles';
+import StyledPersonalData from 'components/organisms/PersonalData/PersonalData.styles';
 import styled from 'styled-components';
 import validationRegexes from 'utils/validationRegexes';
 import isEmptyObject from 'utils/isEmptyObject';

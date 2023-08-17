@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import UserDataLine from 'components/molecules/UserDataLine';
+import UserDataLine from 'components/organisms/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import styled from 'styled-components';
-import StyledAuthorizationData from 'components/molecules/AuthorizationData/AuthorizationData.styles';
+import StyledAuthorizationData from 'components/organisms/AuthorizationData/AuthorizationData.styles';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';

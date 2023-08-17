@@ -1,6 +1,6 @@
 import React from 'react';
 import Title from 'components/atoms/Title';
-import StyledUserData from 'components/molecules/UserData/UserData.styles';
+import StyledUserData from 'components/organisms/UserData/UserData.styles';
 import styled from 'styled-components';
 
 const UserData = ({ selectedUser }) => {

@@ -19,7 +19,15 @@ const InputWithIcon = React.forwardRef(({ name, id, type, Icon, error, placehold
       </div>
       <label htmlFor={id}></label>
       <input type={visible ? 'text' : 'password'} id={id} name={name} ref={ref} placeholder={placeholder} />
-      {id === 'password' ? <ToggleVisibilityButton className="icon-wrapper toggle-visibility" onClick={toggleVisibility} visible={visible} /> : ''}
+      {id === 'password' ? (
+        <ToggleVisibilityButton
+          className="icon-wrapper toggle-visibility"
+          onClick={toggleVisibility}
+          visible={visible}
+        />
+      ) : (
+        ''
+      )}
     </StyledInputWithIcon>
   );
 });

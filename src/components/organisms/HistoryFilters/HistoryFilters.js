@@ -3,7 +3,7 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as BookIcon } from 'assets/icons/book_FILL0_wght600_GRAD0_opsz48.svg';
 import BorderlessButton from 'components/atoms/BorderlessButton';
-import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
+import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledHistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters.styles';
 import OutlinedInput from 'components/atoms/OutlinedInput';

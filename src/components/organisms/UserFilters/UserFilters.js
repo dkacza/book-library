@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
-import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
+import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledUserFilters from 'components/organisms/UserFilters/UserFilter.styles';

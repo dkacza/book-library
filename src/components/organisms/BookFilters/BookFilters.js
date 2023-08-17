@@ -1,6 +1,6 @@
 import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
+import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledBookFilters from 'components/organisms/BookFilters/BookFilters.styles';
 import OutlinedInput from 'components/atoms/OutlinedInput';

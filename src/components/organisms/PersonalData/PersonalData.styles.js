@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import UserDataLine from 'components/molecules/UserDataLine';
+import UserDataLine from 'components/organisms/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import UnderlinedInput from 'components/atoms/UnderlinedInput';
 

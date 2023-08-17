@@ -6,7 +6,7 @@ import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_
 import { ReactComponent as PersonIcon } from 'assets/icons/person_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
 import SubmitButton from 'components/atoms/SubmitButton';
-import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
+import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 import StyledForm from 'components/organisms/RegisterForm/RegisterForm.styles';
 import { Navigate } from 'react-router-dom';
 import useRegister from 'hooks/useRegister';

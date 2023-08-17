@@ -1,13 +1,20 @@
 import styled from 'styled-components';
 
 const OutlinedInput = styled.input`
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-background-clip: text;
+  }
+
   border: 0.15rem solid ${({ theme }) => theme.colors.primary3};
   border-bottom: 0.20rem solid ${({ theme }) => theme.colors.primary3};
   border-radius: 0.25rem;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   max-width: 10rem;
-  
+
   outline: none;
   background-color: ${({ theme }) => theme.colors.primary1};
   color: ${({ theme }) => theme.colors.secondary2};

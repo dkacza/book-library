@@ -20,6 +20,9 @@ import SettingsView from 'views/MainViews/SettingsView/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 import BookDetailsView from 'views/MainViews/BookDetailsView/BookDetailsView';
 import UserDetailsView from 'views/MainViews/UserDetailsView/UserDetailsView';
+import { BookProvider } from 'providers/BookProvider';
+import { UsersProvider } from 'providers/UsersProvider';
+import { BorrowingsProvider } from 'providers/BorrowingsProvider';
 
 const Root = () => {
   const { setAuth, auth } = useContext(AuthContext);
@@ -51,34 +54,40 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {!authChecked ? (
-          <Spinner />
-        ) : (
-          <Routes>
-            <Route path="/" element={<Navigate to={auth ? '/books' : '/login'} />}></Route>
+        <BookProvider>
+          <UsersProvider>
+            <BorrowingsProvider>
+              {!authChecked ? (
+                <Spinner />
+              ) : (
+                <Routes>
+                  <Route path="/" element={<Navigate to={auth ? '/books' : '/login'} />}></Route>
 
-            {/*Publicly available routes*/}
-            <Route path="/reset-password" element={<ResetPasswordView />}></Route>
-            <Route path="/register" element={<RegisterView />}></Route>
-            <Route path="/login" element={<LoginView />}></Route>
+                  {/*Publicly available routes*/}
+                  <Route path="/reset-password" element={<ResetPasswordView />}></Route>
+                  <Route path="/register" element={<RegisterView />}></Route>
+                  <Route path="/login" element={<LoginView />}></Route>
 
-            {/*Routes for logged-in users*/}
-            <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
-              <Route path="/book/:id" element={<BookDetailsView />}></Route>
-              <Route path="/books" element={<BooksView />}></Route>
-              <Route path="/settings" element={<SettingsView />}></Route>
-              <Route path="/history" element={<HistoryView />}></Route>
-            </Route>
+                  {/*Routes for logged-in users*/}
+                  <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
+                    <Route path="/book/:id" element={<BookDetailsView />}></Route>
+                    <Route path="/books" element={<BooksView />}></Route>
+                    <Route path="/settings" element={<SettingsView />}></Route>
+                    <Route path="/history" element={<HistoryView />}></Route>
+                  </Route>
 
-            {/*Routes available for librarians and admins only*/}
-            <Route element={<PrivateRoutes permittedRoles={['librarian', 'admin']} />}>
-              <Route path="/user/:id" element={<UserDetailsView />}></Route>
-              <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
-              <Route path="/users" element={<UsersView />}></Route>
-              <Route path="/add-book" element={<AddBookView />}></Route>
-            </Route>
-          </Routes>
-        )}
+                  {/*Routes available for librarians and admins only*/}
+                  <Route element={<PrivateRoutes permittedRoles={['librarian', 'admin']} />}>
+                    <Route path="/user/:id" element={<UserDetailsView />}></Route>
+                    <Route path="/manage-borrowings" element={<ManageBorrowingsView />}></Route>
+                    <Route path="/users" element={<UsersView />}></Route>
+                    <Route path="/add-book" element={<AddBookView />}></Route>
+                  </Route>
+                </Routes>
+              )}
+            </BorrowingsProvider>
+          </UsersProvider>
+        </BookProvider>
       </ThemeProvider>
     </Router>
   );

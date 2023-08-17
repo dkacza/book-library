@@ -25,7 +25,7 @@ const StyledNavWithIcon = styled(NavLink)`
     margin-right: 1rem;
   }
 
-  p {
+  p.label {
     font-size: 1.4rem;
     font-family: 'Raleway', sans-serif;
   }

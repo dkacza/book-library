@@ -1,7 +1,7 @@
 import React from 'react';
 import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
-import LinkWithDescription from 'components/molecules/LinkWithDescrption';
+import LinkWithDescription from 'components/atoms/LinkWithDescrption';
 import RegisterForm from 'components/organisms/RegisterForm/RegisterForm';
 import Title from 'components/atoms/Title';
 

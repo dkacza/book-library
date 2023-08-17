@@ -1,6 +1,8 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import useWindowDimensions from 'hooks/useWindowDimensions';
 import axios from 'api/axios';
+import AuthContext from 'providers/AuthProvider';
+import isEmptyObject from 'utils/isEmptyObject';
 
 const BookContext = createContext({});
 
@@ -38,6 +40,7 @@ export const BookProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(INITIAL_BOOK_PAGE);
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
+  const {auth} = useContext(AuthContext);
 
   const [allBooksStatus, setAllBooksStatus] = useState(INITIAL_STATUS);
   const fetchAllBooks = (page) => {
@@ -153,8 +156,10 @@ export const BookProvider = ({ children }) => {
   // - Page is changed
   // Get the new book data (no query applied)
   useEffect(() => {
-    fetchAllBooks(currentPage);
-  }, [limitPerPage, bookQuery, currentPage]);
+    if (!isEmptyObject(auth)) {
+      fetchAllBooks(currentPage);
+    }
+  }, [limitPerPage, bookQuery, currentPage, auth]);
 
   return (
     <BookContext.Provider

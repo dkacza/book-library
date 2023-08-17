@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
 const UnderlinedInput = styled.input`
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-background-clip: text;
+  }
+  
   padding-bottom: 0.25rem;
   height: 100%;
   background: none;

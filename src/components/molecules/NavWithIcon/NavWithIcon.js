@@ -8,7 +8,7 @@ const NavWithIcon = ({destination, Icon, name, onClick, ...props}) => {
       <div className='icon-container'>
         <Icon></Icon>
       </div>
-      <p>{name}</p>
+      <p className="label">{name}</p>
     </StyledNavWithIcon>
   );
 }

@@ -7,7 +7,7 @@ const StyledCaptions = styled.div`
 
   button {
     background: ${({ theme }) => theme.colors.primary1};
-    border: 6px solid ${({ theme }) => theme.colors.primary3};
+    border: 0.4rem solid ${({ theme }) => theme.colors.primary3};
     border-bottom: none;
     border-radius: 0.5rem 0.5rem 0 0;
     position: relative;
