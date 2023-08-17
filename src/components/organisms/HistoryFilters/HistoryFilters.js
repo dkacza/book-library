@@ -40,7 +40,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('startDateFrom', {
-                validate: (val, formValues) => val <= formValues.startDateTo || !formValues.startDateFrom,
+                validate: (val, formValues) => val <= formValues.startDateTo || !formValues.startDateTo,
               })}
               className={errors?.startDateFrom ? 'error' : ''}
             />
@@ -48,7 +48,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('startDateTo', {
-                validate: (val, formValues) => val >= formValues.startDateFrom || !formValues.startDateTo,
+                validate: (val, formValues) => val >= formValues.startDateFrom || !formValues.startDateFrom,
               })}
               className={errors?.startDateTo ? 'error' : ''}
             />
@@ -62,7 +62,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('returnDateFrom', {
-                validate: (val, formValues) => val <= formValues.returnDateTo || !formValues.returnDateFrom,
+                validate: (val, formValues) => val <= formValues.returnDateTo || !formValues.returnDateTo,
               })}
               className={errors?.returnDateFrom ? 'error' : ''}
             />
@@ -70,7 +70,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('returnDateTo', {
-                validate: (val, formValues) => val >= formValues.returnDateFrom || !formValues.returnDateTo,
+                validate: (val, formValues) => val >= formValues.returnDateFrom || !formValues.returnDateFrom,
               })}
               className={errors?.returnDateTo ? 'error' : ''}
             />

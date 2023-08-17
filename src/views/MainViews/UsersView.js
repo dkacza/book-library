@@ -6,6 +6,8 @@ import Table from 'components/organisms/Table/Table';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import UserFilters from 'components/organisms/UserFilters/UserFilters';
 import TableViewTemplate from 'views/MainViews/TableViewTemplate';
+import React from 'react';
+import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
 
 const columnNames = ['Full name', 'Email address', 'Registration', 'Role', 'Eligible'];
 const columnCodes = ['fullName', 'email', 'registrationDate', 'role', 'eligible'];
@@ -21,7 +23,8 @@ const INITIAL_FORM_VALUES = {
 };
 
 const UsersView = () => {
-  const { users, paginationData, register, handlePageChange, submitWithPrevent } = useUsers(INITIAL_FORM_VALUES);
+  const { users, paginationData, register, handlePageChange, handleClearFields, submitWithPrevent, userListError } =
+    useUsers(INITIAL_FORM_VALUES);
 
   return (
     <MainViewTemplate>
@@ -29,16 +32,27 @@ const UsersView = () => {
       <main>
         <Title>Users</Title>
         <TableViewTemplate>
-          <Table
-            data={users}
-            columnNames={columnNames}
-            columnCodes={columnCodes}
-            columnproportions={columnProportions}
-            routePath={'/user'}
+          {users.length > 0 ? (
+            <Table
+              data={users}
+              columnNames={columnNames}
+              columnCodes={columnCodes}
+              columnproportions={columnProportions}
+              routePath={'/user'}
+            />
+          ) : (
+            <p className="empty-data-error-msg">No users matching current criteria found</p>
+          )}
+
+          <UserFilters
+            onSubmit={(e) => submitWithPrevent(e)}
+            register={register}
+            errors={userListError?.formError}
+            handleClearFields={handleClearFields}
           />
-          <UserFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
-          {users.length !== 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange} /> : ''}
+          {users.length > 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange} /> : ''}
         </TableViewTemplate>
+        {userListError?.dataProviderError ? <FloatingErrorMessage error={userListError.dataProviderError} /> : ''}
       </main>
     </MainViewTemplate>
   );

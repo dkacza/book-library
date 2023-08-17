@@ -27,7 +27,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
             placeholder="from"
             type="number"
             {...register('yearFrom', {
-              validate: (val, formValues) => val <= formValues.yearTo,
+              validate: (val, formValues) => val <= formValues.yearTo || !formValues.yearTo,
             })}
             className={errors?.yearFrom ? 'error' : ''}
           />
@@ -37,7 +37,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
             name="date-to"
             placeholder="to"
             {...register('yearTo', {
-              validate: (val, formValues) => val >= formValues.yearFrom,
+              validate: (val, formValues) => val >= formValues.yearFrom || !formValues.yearFrom,
             })}
             className={errors?.yearTo ? 'error' : ''}
           />

@@ -50,7 +50,7 @@ const HistoryView = () => {
               columnproportions={columnProportions}
             />
           ) : (
-            <p className="empty-data-error-msg">No history records found</p>
+            <p className="empty-data-error-msg">No history records matching current criteria found</p>
           )}
 
           <HistoryFilters

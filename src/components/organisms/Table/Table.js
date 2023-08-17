@@ -33,7 +33,7 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, routePath })
             return (
               <tr key={record._id} className={record.currentStatus} id={record._id} onClick={handleRecordSelect}>
                 {columnCodes.map((name) => {
-                  return <td key={`${record._id}-${name}`}>{record[name] || '-'}</td>;
+                  return <td key={`${record._id}-${name}`}>{record[name] ? record[name] === true ? 'Yes' : record[name] : 'No'}</td>;
                 })}
               </tr>
             );

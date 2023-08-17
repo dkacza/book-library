@@ -37,6 +37,12 @@ const StyledUserFilters = styled.form`
     }
   }
 
+  p.error-msg {
+    color: ${({ theme }) => theme.colors.error2};
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
   ${SubmitButton} {
     margin-top: 2rem;
     max-width: 12rem;

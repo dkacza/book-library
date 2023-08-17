@@ -42,10 +42,9 @@ const BooksView = () => {
               data={processedBooks}
               columnproportions={columnProportions}
               routePath={'/book'}
-              emptyDataMessage={'There are no books that match current criteria'}
             />
           ) : (
-            <p className="empty-data-error-msg">No books found</p>
+            <p className="empty-data-error-msg">No books matching current criteria found</p>
           )}
 
           <BookFilters
@@ -53,7 +52,7 @@ const BooksView = () => {
             onSubmit={(e) => submitWithPrevent(e)}
             register={register}
           />
-          {books.length !== 0 ? (
+          {books.length > 0 ? (
             <Pagination paginationData={paginationData} handlePageChange={handlePageChange}></Pagination>
           ) : (
             ''
