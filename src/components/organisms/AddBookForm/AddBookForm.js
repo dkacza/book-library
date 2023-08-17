@@ -65,17 +65,15 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
 
       <div className="photo-input">
         <p className="label">Cover image</p>
-        <FileInput handleImageSelection={handleImageSelection} file={file}/>
+        <FileInput handleImageSelection={handleImageSelection} file={file} />
         <BorderlessButton>clear photo selection</BorderlessButton>
       </div>
 
-
-      <div className='submission-wrapper'>
+      <div className="submission-wrapper">
         <SubmitButton type="submit">Add book</SubmitButton>
         {errorMsg ? <p className="error-msg">{errorMsg}</p> : ''}
         {successMsg ? <p className="success-msg">{successMsg}</p> : ''}
       </div>
-
     </StyledAddBookForm>
   );
 };

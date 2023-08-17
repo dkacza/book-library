@@ -1,56 +1,63 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BookContext from 'providers/BookProvider';
 
 const buildQuery = (data) => {
   let queryString = '';
-  // Set genre filter
+
   const { genre } = data;
   let genreString = 'genre=';
   let emptyGenre = true;
+  let fullGenre = true;
   for (const [key, value] of Object.entries(genre)) {
-    if (!value) continue;
+    if (!value) {
+      fullGenre = false;
+      continue;
+    }
     genreString += key + ',';
     emptyGenre = false;
   }
-  if (!emptyGenre) {
+  if (!emptyGenre && !fullGenre) {
     genreString = genreString.substring(0, genreString.length - 1);
     queryString += genreString + '&';
   }
 
-  // Set available only filter
   if (data.availableOnly) {
     queryString += 'currentStatus=available&';
   }
 
-  // Set year filter
-  const startDate = new Date();
-  startDate.setFullYear(data.yearFrom);
-  queryString += 'publicationDate[gte]=' + startDate.getFullYear() + '&';
-
-  const endDate = new Date();
-  endDate.setFullYear(data.yearTo);
-  queryString += 'publicationDate[lte]=' + endDate.getFullYear() + '&';
+  if (data.yearFrom) queryString += 'publicationDate[gte]=' + data.yearFrom + '&';
+  if (data.yearTo) queryString += 'publicationDate[lte]=' + data.yearTo + '&';
 
   if (data.searchQuery) {
     queryString += `search=${data.searchQuery}&`;
   }
-  return queryString;
+
+  return queryString.substring(0, queryString.length - 1);
 };
 
 const useBookBrowser = (initialFormValues) => {
-  const { register, handleSubmit, reset } = useForm({ defaultValues: initialFormValues });
-
-  const { books, paginationData, errorMsg, setBookQuery, setCurrentPage } = useContext(BookContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: initialFormValues });
+  const { books, allBooksStatus, paginationData, setBookQuery, setCurrentPage } = useContext(BookContext);
+  const [bookBrowserError, setBookBrowserError] = useState({});
 
   const onSubmit = (data) => {
     const newQuery = buildQuery(data);
     setBookQuery(newQuery);
+    setBookBrowserError({
+      ...bookBrowserError,
+      formError: '',
+    })
   };
-
-  // TODO - do something meaningfully here
   const onError = (err) => {
-    reset();
+    setBookBrowserError({
+      ...bookBrowserError,
+      formError: err,
+    });
   };
   const submitWithPrevent = (e) => {
     e.preventDefault();
@@ -61,12 +68,21 @@ const useBookBrowser = (initialFormValues) => {
     setCurrentPage(newPage);
   };
 
+  useEffect(() => {
+    setBookBrowserError({
+      ...bookBrowserError,
+      formError: errors,
+      dataProviderError: allBooksStatus.error,
+    });
+  }, [errors, allBooksStatus.error]);
+
   return {
     paginationData,
     books,
     register,
     handlePageChange,
     submitWithPrevent,
+    bookBrowserError,
   };
 };
 export default useBookBrowser;

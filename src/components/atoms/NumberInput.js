@@ -10,6 +10,11 @@ const StyledInput = styled.input`
   outline: none;
   background-color: ${({theme}) => theme.colors.primary1};
   color: ${({theme}) => theme.colors.secondary2};
+  
+  &.error {
+    border: 2px solid ${({theme}) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error1};
+  }
 `;
 
 const NumberInput = React.forwardRef(({ name, id, value, onChange, ...props }, ref) => {

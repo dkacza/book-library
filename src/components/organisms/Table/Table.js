@@ -41,8 +41,9 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, routePath })
         </tbody>
       </StyledTable>
 
-      <Navigate to={route}/>
+      <Navigate to={route} />
     </>
   );
 };
-export default styled(Table)``;
+export default styled(Table)`
+`;

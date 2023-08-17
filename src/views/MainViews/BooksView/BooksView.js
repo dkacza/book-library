@@ -7,11 +7,11 @@ import Pagination from 'components/molecules/Pagination/Pagination';
 import React from 'react';
 import useBookBrowser from 'hooks/useBookBrowser';
 import StyledContentSection from 'views/MainViews/BooksView/BooksView.styles';
+import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'currentStatus'];
 const columnProportions = [0.3, 0.3, 0.25, 0.15];
-const INITIAL_PAGE = 1;
 const INITIAL_FORM_VALUES = {
   genre: {
     fiction: true,
@@ -20,8 +20,6 @@ const INITIAL_FORM_VALUES = {
     children: true,
     poetry: true,
   },
-  yearFrom: 1800,
-  yearTo: new Date().getFullYear(),
 };
 
 const BooksView = () => {
@@ -30,37 +28,38 @@ const BooksView = () => {
     books,
     register,
     handlePageChange,
-    submitWithPrevent
+    submitWithPrevent,
+    bookBrowserError
   } = useBookBrowser(
     INITIAL_FORM_VALUES,
-    INITIAL_PAGE,
   );
   const processedBooks = books.map(book => ({
     ...book,
     authors: book.authors.map(author => author.name).join(', ')
   }))
-
   return (
     <MainViewTemplate>
       <Navigation />
       <main>
         <Title>Book catalogue</Title>
         <StyledContentSection>
-          {books.length !== 0 ? (
+          {books.length > 0 ? (
             <Table
               columnNames={columnNames}
               columnCodes={columnCodes}
               data={processedBooks}
               columnproportions={columnProportions}
               routePath={'/book'}
+              emptyDataMessage={'There are no books that match current criteria'}
             />
           ) : (
-            <p>There are no books that match current criteria</p>
+            <p className="empty-data-error-msg">No books found</p>
           )}
 
-          <BookFilters onSubmit={(e) => submitWithPrevent(e)} register={register} />
+          <BookFilters errors={bookBrowserError?.formError} onSubmit={(e) => submitWithPrevent(e)} register={register} />
           {books.length !== 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange}></Pagination> : ''}
         </StyledContentSection>
+        {bookBrowserError?.dataProviderError ? <FloatingErrorMessage error={bookBrowserError.dataProviderError}/> : ''}
       </main>
     </MainViewTemplate>
   );

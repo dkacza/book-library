@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import Title from 'components/atoms/Title';
+import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
 
 export const MainViewTemplate = styled.div`
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 
   nav {
     flex-basis: 14rem;
@@ -29,11 +31,18 @@ export const MainViewTemplate = styled.div`
       font-size: 3.5rem;
     }
 
+    ${FloatingErrorMessage} {
+      position: absolute;
+      top: 3rem;
+      right: 3rem;
+    }
+
     & > section {
       flex-grow: 1;
       overflow: hidden;
     }
   }
+
 
   @media (max-width: 1300px) {
     main {

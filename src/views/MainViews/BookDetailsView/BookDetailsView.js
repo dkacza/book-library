@@ -11,7 +11,6 @@ import useBookDetails from 'hooks/useBookDetails';
 
 const BookDetailsView = () => {
   const {book, handleImageSelection, updateSelected, auth, file, register, handleSelectUpdate, handleSave, setUpdateSelected} = useBookDetails();
-  console.log(book);
 
   return (
     <MainViewTemplate>

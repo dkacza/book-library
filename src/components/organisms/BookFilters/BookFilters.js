@@ -7,8 +7,9 @@ import SubmitButton from 'components/atoms/SubmitButton';
 import StyledBookFilters from 'components/organisms/BookFilters/BookFilters.styles';
 import NumberInput from 'components/atoms/NumberInput';
 import styled from 'styled-components';
+import isEmptyObject from 'utils/isEmptyObject';
 
-const BookFilters = ({ register, onSubmit, ...props }) => {
+const BookFilters = ({ register, onSubmit, errors, ...props }) => {
   return (
     <StyledBookFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
@@ -27,12 +28,20 @@ const BookFilters = ({ register, onSubmit, ...props }) => {
             id="date-from-input"
             placeholder="from"
             {...register('yearFrom', {
-              validate: (val, formValues) =>
-                val <= formValues.yearTo || 'Ending date must be greater or equal to starting date',
+              validate: (val, formValues) => val <= formValues.yearTo,
             })}
+            className={errors?.yearFrom ? 'error' : ''}
           />
           <p>-</p>
-          <NumberInput id="date-to-input" name="date-to" placeholder="to" {...register('yearTo')} />
+          <NumberInput
+            id="date-to-input"
+            name="date-to"
+            placeholder="to"
+            {...register('yearTo', {
+              validate: (val, formValues) => val >= formValues.yearFrom,
+            })}
+            className={errors?.yearTo ? 'error' : ''}
+          />
         </div>
       </div>
       <div className="genre-filter">
@@ -62,6 +71,7 @@ const BookFilters = ({ register, onSubmit, ...props }) => {
           {...register('availableOnly')}
         />
       </div>
+      {!errors || !isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly.</p> : ''}
       <SubmitButton type="submit">Apply filters</SubmitButton>
     </StyledBookFilters>
   );
