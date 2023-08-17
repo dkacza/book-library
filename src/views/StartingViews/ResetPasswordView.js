@@ -1,7 +1,7 @@
 import React from 'react';
 import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
-import { StyledLink } from 'components/atoms/StyledLink';
+import StyledLink from 'components/atoms/StyledLink';
 import ResetPasswordForm from 'components/organisms/ResetPasswordForm/ResetPasswordForm';
 import Title from 'components/atoms/Title';
 

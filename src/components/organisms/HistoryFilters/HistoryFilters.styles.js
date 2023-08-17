@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import DateInput from 'components/atoms/DateInput';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import SubmitButton from 'components/atoms/SubmitButton';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const StyledHistoryFilters = styled.form`
   margin-top: 1rem;
@@ -65,7 +65,7 @@ const StyledHistoryFilters = styled.form`
 
     .date-filters {
       .date-filter > div {
-        ${DateInput} {
+        ${OutlinedInput} {
           padding: 0.25rem 0.1rem;
           font-size: 0.58rem;
         }

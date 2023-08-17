@@ -8,8 +8,7 @@ export const StyledInputWithIcon = styled.div`
     -webkit-background-clip: text;
     transition: background-color 5000s ease-in-out 0s;
   }
-
-  height: 4rem;
+  
   display: flex;
   flex-direction: row;
   border: 3px solid ${({ theme }) => theme.colors.primary3};

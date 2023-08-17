@@ -6,7 +6,7 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledHistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters.styles';
-import DateInput from 'components/atoms/DateInput';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props }) => {
   return (
@@ -35,9 +35,9 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
         <div className="starting-date-filter date-filter">
           <p className="label">Starting date between: </p>
           <div className="starting-date-input">
-            <DateInput type="date" {...register('startDateFrom')} />
+            <OutlinedInput type="date" {...register('startDateFrom')} />
             <p>-</p>
-            <DateInput {...register('startDateTo')} />
+            <OutlinedInput {...register('startDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>
@@ -45,9 +45,9 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
         <div className="return-date-filter date-filter">
           <p className="label">Return date between: </p>
           <div className="starting-date-input">
-            <DateInput type="date" {...register('returnDateFrom')} />
+            <OutlinedInput type="date" {...register('returnDateFrom')} />
             <p>-</p>
-            <DateInput {...register('returnDateTo')} />
+            <OutlinedInput {...register('returnDateTo')} />
           </div>
           <BorderlessButton>clear</BorderlessButton>
         </div>

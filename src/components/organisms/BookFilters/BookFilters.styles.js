@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
-import NumberInput from 'components/atoms/NumberInput';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const StyledBookFilters = styled.form`
   display: flex;
@@ -47,6 +47,9 @@ const StyledBookFilters = styled.form`
     height: 3rem;
     font-size: 1.25rem;
   }
+  ${OutlinedInput} {
+    max-width: 8rem;
+  }
 
   @media (max-width: 1300px) {
     padding-left: 0.5rem;
@@ -62,9 +65,7 @@ const StyledBookFilters = styled.form`
         height: 2rem;
         font-size: 1.5rem;
 
-        ${NumberInput} {
-          width: 6rem;
-        }
+        
       }
     }
 

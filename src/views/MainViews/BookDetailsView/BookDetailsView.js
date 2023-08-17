@@ -2,7 +2,7 @@ import React from 'react';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
-import { StyledLink } from 'components/atoms/StyledLink';
+import StyledLink from 'components/atoms/StyledLink';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import BookTextData from 'components/organisms/BookTextData/BookTextData';
 import BookImage from 'components/organisms/BookImage/BookImage';

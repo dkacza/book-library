@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import StyledBookImage from 'components/organisms/BookImage/BookImage.styles';
+import FileInput from 'components/atoms/FileInput';
 
 const BookImage = ({ book, updateSelected, handleImageSelection, file, ...props }) => {
   return (
@@ -11,10 +12,7 @@ const BookImage = ({ book, updateSelected, handleImageSelection, file, ...props 
         alt="book cover"
       />
       {updateSelected ? (
-        <div className="file-input">
-          <input type="file" onChange={(e) => handleImageSelection(e)} />
-          <p className="label">{file ? file.name : 'Select file'}</p>
-        </div>
+        <FileInput handleImageSelection={handleImageSelection} file={file} />
       ) : (
         ''
       )}

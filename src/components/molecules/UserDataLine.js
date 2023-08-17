@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 import { ReactComponent as EditIcon } from 'assets/icons/edit_FILL0_wght600_GRAD0_opsz48.svg';
-import SimpleInput from 'components/atoms/SimpleInput';
+import UnderlinedInput from 'components/atoms/UnderlinedInput';
 
 const StyledUserDataLine = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const StyledUserDataLine = styled.div`
     }
   }
 
-  ${SimpleInput} {
+  ${UnderlinedInput} {
     font-size: 2rem;
   }
 `;
@@ -49,7 +49,7 @@ const UserDataLine = React.forwardRef(
       <StyledUserDataLine className={props.className}>
         <p className="label">{label}</p>
         {activeInput && updateSelected ? (
-          <SimpleInput
+          <UnderlinedInput
             type="text"
             name={fieldName}
             placeholder={placeholder}

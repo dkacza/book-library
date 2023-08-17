@@ -12,10 +12,10 @@ const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.colors.primary2};
   color: ${({ theme }) => theme.colors.secondary1};
   transition: 0.2s;
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary3};
-    cursor: pointer;
   }
 `;
 

@@ -10,7 +10,6 @@ const StyledFloatingErrorMessage = styled.div`
   position: relative;
   border-radius: 0.25rem;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-  
   transition: 0.2s;
   
   
@@ -23,7 +22,7 @@ const StyledFloatingErrorMessage = styled.div`
   }
   &.active {
     width: 320px;
-    height: 6rem;
+    height: min-content;
     button.open-modal {
       display: none;
     }

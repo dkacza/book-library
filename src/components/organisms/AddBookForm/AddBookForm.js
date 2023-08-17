@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SimpleInput from 'components/atoms/SimpleInput';
+import UnderlinedInput from 'components/atoms/UnderlinedInput';
 import validationRegexes from 'utils/validationRegexes';
 import TextArea from 'components/atoms/TextArea';
 import SubmitButton from 'components/atoms/SubmitButton';
@@ -13,12 +13,12 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
     <StyledAddBookForm onSubmit={(e) => submitWithPrevent(e)}>
       <div className="title">
         <p className="label">Title</p>
-        <SimpleInput {...register('title', { required: true })} className={errors.title ? 'error' : ''} />
+        <UnderlinedInput {...register('title', { required: true })} className={errors.title ? 'error' : ''} />
       </div>
 
       <div className="authors">
         <p className="label">Authors</p>
-        <SimpleInput
+        <UnderlinedInput
           {...register('authors', {
             required: true,
             validate: (val) => validationRegexes.authorsNamesRegex.test(val),
@@ -30,7 +30,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
 
       <div className="publication-date">
         <p className="label">Publication year</p>
-        <SimpleInput
+        <UnderlinedInput
           type="date"
           {...register('publicationDate', { required: true })}
           className={errors.publicationDate ? 'error' : ''}
@@ -39,7 +39,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
 
       <div className="isbn">
         <p className="label">ISBN</p>
-        <SimpleInput type="number" {...register('isbn', { required: true })} className={errors.isbn ? 'error' : ''} />
+        <UnderlinedInput type="number" {...register('isbn', { required: true })} className={errors.isbn ? 'error' : ''} />
       </div>
 
       <div className="genre">

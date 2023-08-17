@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SimpleInput from 'components/atoms/SimpleInput';
+import UnderlinedInput from 'components/atoms/UnderlinedInput';
 import SubmitButton from 'components/atoms/SubmitButton';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 
@@ -75,7 +75,7 @@ const StyledAddBookForm = styled.form`
     margin-bottom: 0.25rem;
   }
 
-  ${SimpleInput} {
+  ${UnderlinedInput} {
     font-size: 1.25rem;
     height: min-content;
   }

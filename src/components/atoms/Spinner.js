@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 const Spinner = styled.div`
   position: absolute;
-  top: calc(50% - 36px);
-  left: calc(50% - 36px);
-  width: 72px;
-  height: 72px;
-  border: 6px solid ${({theme}) => theme.colors.primary3};
+  top: calc(50% - 3rem);
+  left: calc(50% - 3rem);
+  width: 6rem;
+  height: 6rem;
+  border: 0.5rem solid ${({ theme }) => theme.colors.primary3};
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

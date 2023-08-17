@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SimpleInput from 'components/atoms/SimpleInput';
+import UnderlinedInput from 'components/atoms/UnderlinedInput';
 import TextArea from 'components/atoms/TextArea';
 
 const StyledBookTextData = styled.div`
@@ -15,7 +15,7 @@ const StyledBookTextData = styled.div`
     font-size: 1.5rem;
   }
   
-  ${SimpleInput} {
+  ${UnderlinedInput} {
     font-size: 1.5rem;
   }
   ${TextArea} {
@@ -32,7 +32,7 @@ const StyledBookTextData = styled.div`
     .data {
       font-size: 1rem;
     }
-    ${SimpleInput} {
+    ${UnderlinedInput} {
       font-size: 1rem;
     }
     ${TextArea} {

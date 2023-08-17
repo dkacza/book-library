@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SimpleInput from 'components/atoms/SimpleInput';
+import UnderlinedInput from 'components/atoms/UnderlinedInput';
 import TextArea from 'components/atoms/TextArea';
 import StyledBookTextData from 'components/organisms/BookTextData/BookTextData.styles';
 
@@ -10,7 +10,7 @@ const BookTextData = ({ updateSelected, register, book, ...props }) => {
       {updateSelected ? (
         <div className="title">
           <p className="label">Title</p>
-          <SimpleInput {...register('title')} />
+          <UnderlinedInput {...register('title')} />
         </div>
       ) : (
         ''
@@ -18,7 +18,7 @@ const BookTextData = ({ updateSelected, register, book, ...props }) => {
       <div className="authors">
         <p className="label">Authors</p>
         {updateSelected ? (
-          <SimpleInput {...register('authors')} />
+          <UnderlinedInput {...register('authors')} />
         ) : (
           <p className="data">{book?.authors?.map((author) => author.name)?.join(', ')}</p>
         )}
@@ -26,14 +26,14 @@ const BookTextData = ({ updateSelected, register, book, ...props }) => {
       <div className="publication-year">
         <p className="label">Publication year</p>
         {updateSelected ? (
-          <SimpleInput type="number" {...register('publicationDate')} />
+          <UnderlinedInput type="number" {...register('publicationDate')} />
         ) : (
           <p className="data">{book.publicationDate}</p>
         )}
       </div>
       <div className="isbn">
         <p className="label">ISBN</p>
-        {updateSelected ? <SimpleInput type="number" {...register('isbn')} /> : <p className="data">{book.isbn}</p>}
+        {updateSelected ? <UnderlinedInput type="number" {...register('isbn')} /> : <p className="data">{book.isbn}</p>}
       </div>
       <div className="description">
         <p className="label">Description</p>

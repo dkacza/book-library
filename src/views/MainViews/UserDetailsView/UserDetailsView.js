@@ -7,7 +7,7 @@ import authProvider from 'providers/AuthProvider';
 import axios from 'api/axios';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledContentSection from 'views/MainViews/UserDetailsView/UserDetailsView.styles';
-import { StyledLink } from 'components/atoms/StyledLink';
+import StyledLink from 'components/atoms/StyledLink';
 import UsersContext from 'providers/UsersProvider';
 
 const UserDetailsView = () => {

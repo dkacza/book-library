@@ -1,29 +1,21 @@
 import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-
-import { ReactComponent as MyIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledBookFilters from 'components/organisms/BookFilters/BookFilters.styles';
-import NumberInput from 'components/atoms/NumberInput';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 import styled from 'styled-components';
 import isEmptyObject from 'utils/isEmptyObject';
+import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 
 const BookFilters = ({ register, onSubmit, errors, ...props }) => {
   return (
     <StyledBookFilters className={props.className} onSubmit={onSubmit}>
-      <InputWithIcon
-        placeholder="search"
-        name="search"
-        id="search"
-        type="text"
-        Icon={MyIcon}
-        {...register('searchQuery')}
-      />
+      <InputWithIcon id="search" name="search" placeholder="search" Icon={SearchIcon} {...register('searchQuery')} />
       <div className="release-year-filter">
         <p>Release year:</p>
         <div className="release-year-input">
-          <NumberInput
+          <OutlinedInput
             type="number"
             id="date-from-input"
             placeholder="from"
@@ -33,7 +25,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
             className={errors?.yearFrom ? 'error' : ''}
           />
           <p>-</p>
-          <NumberInput
+          <OutlinedInput
             id="date-to-input"
             name="date-to"
             placeholder="to"
@@ -49,14 +41,14 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
         <LabeledCheckbox id="fiction" label="Fiction literature" name="fiction" {...register('genre.fiction')} />
         <LabeledCheckbox
           id="non-fiction"
-          label="Non-fiction literature"
           name="non-fiction"
+          label="Non-fiction literature"
           {...register('genre.nonFiction')}
         />
         <LabeledCheckbox
-          id="science"
-          label="Scientific literature"
+          id="scienctific"
           name="scientific"
+          label="Scientific literature"
           {...register('genre.scientific')}
         />
         <LabeledCheckbox id="children" label="Children literature" name="children" {...register('genre.children')} />
@@ -66,8 +58,8 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
         <p>Availability:</p>
         <LabeledCheckbox
           id="available"
-          label="Display only available books"
           name="available"
+          label="Display only available books"
           {...register('availableOnly')}
         />
       </div>

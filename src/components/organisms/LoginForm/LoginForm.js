@@ -7,7 +7,7 @@ import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_
 
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SubmitButton from 'components/atoms/SubmitButton';
-import { StyledLink } from 'components/atoms/StyledLink';
+import StyledLink from 'components/atoms/StyledLink';
 import LoadingDots from 'components/atoms/LoadingDots';
 import useLogin from 'hooks/useLogin';
 import styled from 'styled-components';

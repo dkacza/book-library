@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
-import DateInput from 'components/atoms/DateInput';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledUserFilters from 'components/organisms/UserFilters/UserFilter.styles';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const UserFilters = ({ onSubmit, register, ...props }) => {
   return (
@@ -22,9 +22,9 @@ const UserFilters = ({ onSubmit, register, ...props }) => {
       <div className="registration-date-filter">
         <p className="label">Registration date between:</p>
         <div className="registration-date-input">
-          <DateInput type="date" {...register('registrationDateFrom')} />
+          <OutlinedInput type="date" {...register('registrationDateFrom')} />
           <p>-</p>
-          <DateInput type="date" {...register('registrationDateTo')} />
+          <OutlinedInput type="date" {...register('registrationDateTo')} />
         </div>
         <BorderlessButton>clear</BorderlessButton>
       </div>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledLink } from 'components/atoms/StyledLink';
+import StyledLink from 'components/atoms/StyledLink';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const StyledContentSection = styled.section`

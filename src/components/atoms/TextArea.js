@@ -1,18 +1,18 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const TextArea = styled.textarea`
   background: none;
-  border: 2px solid ${({ theme }) => theme.colors.primary3};
+  border: 0.15rem solid ${({ theme }) => theme.colors.primary3};
   padding: 0.25rem;
-  
+  font-size: 1rem;
+
   &:focus-visible {
-    outline: none
+    outline: none;
   }
 
   &::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.6rem;
+    height: 0.6rem;
   }
 
   &::-webkit-scrollbar-track {

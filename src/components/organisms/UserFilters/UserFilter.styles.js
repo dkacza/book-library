@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import SubmitButton from 'components/atoms/SubmitButton';
-import DateInput from 'components/atoms/DateInput';
+import OutlinedInput from 'components/atoms/OutlinedInput';
 
 const StyledUserFilters = styled.form`
   margin-top: 1rem;
@@ -36,7 +36,7 @@ const StyledUserFilters = styled.form`
         margin-right: 0.5rem;
       }
 
-      ${DateInput} {
+      ${OutlinedInput} {
         font-size: 85%;
       }
     }
@@ -69,7 +69,7 @@ const StyledUserFilters = styled.form`
 
     .registration-date-filter {
       .registration-date-input {
-        ${DateInput} {
+        ${OutlinedInput} {
           padding: 0.25rem 0.1rem;
           font-size: 0.58rem;
         }

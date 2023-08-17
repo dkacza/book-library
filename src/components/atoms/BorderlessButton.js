@@ -4,11 +4,8 @@ const BorderlessButton = styled.button`
   font-size: 1.2rem;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.accept3};
   text-decoration: underline;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.accept3};
 `;
 export default BorderlessButton;

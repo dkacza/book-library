@@ -6,26 +6,22 @@ const StyledFileInput = styled.div`
     font-size: 0;
   }
 
-  .label {
-    font-size: 1rem;
-    margin-top: 0.3rem;
-    padding-left: 0.5rem;
-  }
-
   input::file-selector-button {
-    font-size: 1.25rem;
-    background: none;
-    outline: none;
-    border: 2px solid ${({ theme }) => theme.colors.primary3};
-    border-bottom: 3px solid ${({ theme }) => theme.colors.primary3};
-    border-radius: 0.3rem;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    border: 0.15rem solid ${({ theme }) => theme.colors.primary3};
+    border-bottom: 0.20rem solid ${({ theme }) => theme.colors.primary3};
+    border-radius: 0.25rem;
     margin-bottom: 0.25rem;
+    background: ${({ theme }) => theme.colors.primary2};
     color: ${({ theme }) => theme.colors.secondary2};
     font-family: 'Roboto Slab', serif;
+    cursor: pointer;
+  }
 
-    &:hover {
-      cursor: pointer;
-    }
+  p.selected-info {
+    font-size: 1rem;
+    font-style: italic;
   }
 `
 
