@@ -7,8 +7,10 @@ import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbo
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledHistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters.styles';
 import OutlinedInput from 'components/atoms/OutlinedInput';
+import isEmptyObject from 'utils/isEmptyObject';
+import React from 'react';
 
-const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props }) => {
+const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClearFields, errors, ...props }) => {
   return (
     <StyledHistoryFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
@@ -35,21 +37,47 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
         <div className="starting-date-filter date-filter">
           <p className="label">Starting date between:</p>
           <div className="starting-date-input">
-            <OutlinedInput type="date" {...register('startDateFrom')} />
+            <OutlinedInput
+              type="date"
+              {...register('startDateFrom', {
+                validate: (val, formValues) => val <= formValues.startDateTo || !formValues.startDateFrom,
+              })}
+              className={errors?.startDateFrom ? 'error' : ''}
+            />
             <p>-</p>
-            <OutlinedInput type="date" {...register('startDateTo')} />
+            <OutlinedInput
+              type="date"
+              {...register('startDateTo', {
+                validate: (val, formValues) => val >= formValues.startDateFrom || !formValues.startDateTo,
+              })}
+              className={errors?.startDateTo ? 'error' : ''}
+            />
           </div>
-          <BorderlessButton>clear</BorderlessButton>
+          <BorderlessButton onClick={() => handleClearFields(['startDateFrom', 'startDateTo'])}>clear</BorderlessButton>
         </div>
 
         <div className="return-date-filter date-filter">
           <p className="label">Return date between: </p>
           <div className="starting-date-input">
-            <OutlinedInput type="date" {...register('returnDateFrom')} />
+            <OutlinedInput
+              type="date"
+              {...register('returnDateFrom', {
+                validate: (val, formValues) => val <= formValues.returnDateTo || !formValues.returnDateFrom,
+              })}
+              className={errors?.returnDateFrom ? 'error' : ''}
+            />
             <p>-</p>
-            <OutlinedInput type="date" {...register('returnDateTo')} />
+            <OutlinedInput
+              type="date"
+              {...register('returnDateTo', {
+                validate: (val, formValues) => val >= formValues.returnDateFrom || !formValues.returnDateTo,
+              })}
+              className={errors?.returnDateTo ? 'error' : ''}
+            />
           </div>
-          <BorderlessButton>clear</BorderlessButton>
+          <BorderlessButton onClick={() => handleClearFields(['returnDateFrom', 'returnDateTo'])}>
+            clear
+          </BorderlessButton>
         </div>
       </div>
 
@@ -59,7 +87,7 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, ...props })
         <LabeledCheckbox label="Returned" id="returned" name="returned" {...register('status.returned')} />
         <LabeledCheckbox label="Lost" id="lost" name="lost" {...register('status.lost')} />
       </div>
-
+      {!isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly</p> : ''}
       <SubmitButton type="submit">Apply filters</SubmitButton>
     </StyledHistoryFilters>
   );
