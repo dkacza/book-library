@@ -59,7 +59,7 @@ export const UsersProvider = ({ children }) => {
         setSuccessStatus(setAllUsersStatus, 'Successfully fetched users');
       })
       .catch((err) => {
-        const errorMsgResponse = err.res.data.message;
+        const errorMsgResponse = err?.response?.data?.message;
         setErrorStatus(setAllUsersStatus, errorMsgResponse);
       });
   };
@@ -78,7 +78,7 @@ export const UsersProvider = ({ children }) => {
       setSuccessStatus(setUserByIdStatus, 'User successfully fetched');
       return processUser(userResponse.data.data.user);
     } catch (err) {
-      const errorMsgResponse = err.res.data.message;
+      const errorMsgResponse = err.response.data.message;
       setErrorStatus(setUserByIdStatus, errorMsgResponse);
       return {};
     }
@@ -95,7 +95,7 @@ export const UsersProvider = ({ children }) => {
         setSuccessStatus(setPersonalDataStatus, 'Successfully updated users data');
       })
       .catch((err) => {
-        const errorMsgResponse = err.res.data.message;
+        const errorMsgResponse = err.response.data.message;
         setErrorStatus(setPersonalDataStatus, errorMsgResponse);
       });
   };
@@ -111,7 +111,7 @@ export const UsersProvider = ({ children }) => {
         setSuccessStatus(setAuthenticationDataStatus, 'Users authentication data successfully patched');
       })
       .catch((err) => {
-        const errorMsgResponse = err.res.data.message;
+        const errorMsgResponse = err.response.data.message;
         setErrorStatus(setAuthenticationDataStatus, errorMsgResponse);
       });
   };

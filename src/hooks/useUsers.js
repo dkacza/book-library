@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import UsersContext from 'providers/UsersProvider';
+import { all } from 'axios';
 
 const buildQuery = (data) => {
   let query = '';
@@ -56,7 +57,7 @@ const useUsers = (initialFormValues) => {
     setUserListError({
       ...userListError,
       formError: errors,
-      dataProviderError: userListError.error,
+      dataProviderError: allUsersStatus.error,
     })
   }, [errors, allUsersStatus.error])
 
