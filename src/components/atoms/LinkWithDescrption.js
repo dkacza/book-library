@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const LinkWithDescription = ({ description, linkName, destination }) => {
   return (
     <div>
-      <p>{description}</p>
+      <p className="description">{description}</p>
       <StyledLink to={destination}>{linkName}</StyledLink>
     </div>
   );
