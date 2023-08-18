@@ -5,9 +5,10 @@ import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
 import StyledLink from 'components/atoms/StyledLink';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import BookTextData from 'components/organisms/BookTextData/BookTextData';
-import BookImage from 'components/organisms/BookImage/BookImage';
+import BookImage from 'components/molecules/BookImage/BookImage';
 import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetailsView.styles';
 import useBookDetails from 'hooks/useBookDetails';
+import BookDetailsLinkContainer from 'components/organisms/BookDetailsLinkContainer';
 
 const BookDetailsView = () => {
   const {book, handleImageSelection, updateSelected, auth, file, register, handleSelectUpdate, handleSave, setUpdateSelected} = useBookDetails();
@@ -18,7 +19,7 @@ const BookDetailsView = () => {
       <main>
         <Title>{book.title}</Title>
         <StyledContentSection>
-          <div className='book-data'>
+          <div className='book-data-container'>
             <BookImage
               updateSelected={updateSelected}
               book={book}
@@ -27,23 +28,13 @@ const BookDetailsView = () => {
             />
             <BookTextData updateSelected={updateSelected} register={register} book={book} />
           </div>
-          <div className='links-container'>
-            <StyledLink to={'/books'}>Back to the catalogue</StyledLink>
-            {auth.role === 'admin' || 'librarian' ? (
-              !updateSelected ? (
-                <BorderlessButton onClick={(e) => handleSelectUpdate(e)}>Update book details</BorderlessButton>
-              ) : (
-                <>
-                  <BorderlessButton onClick={(e) => handleSave(e)}>Save</BorderlessButton>
-                  <BorderlessButton className='discard' onClick={() => setUpdateSelected(false)}>
-                    Discard
-                  </BorderlessButton>
-                </>
-              )
-            ) : (
-              ''
-            )}
-          </div>
+          <BookDetailsLinkContainer
+            auth={auth}
+            updateSelected={updateSelected}
+            setUpdateSelected={setUpdateSelected}
+            handleSelectUpdate={handleSelectUpdate}
+            handleSave={handleSave}
+          />
         </StyledContentSection>
       </main>
     </MainViewTemplate>

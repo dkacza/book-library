@@ -5,6 +5,7 @@ import TextArea from 'components/atoms/TextArea';
 import StyledBookTextData from 'components/organisms/BookTextData/BookTextData.styles';
 
 const BookTextData = ({ updateSelected, register, book, ...props }) => {
+  const currentStatus = book.currentStatus;
   return (
     <StyledBookTextData className={props.className}>
       {updateSelected ? (
@@ -39,12 +40,16 @@ const BookTextData = ({ updateSelected, register, book, ...props }) => {
         <p className="label">Description</p>
         {updateSelected ? <TextArea {...register('description')} /> : <p className="data">{book.description}</p>}
       </div>
-      <div className="availability">
-        <p className="label">Availability</p>
-        <p className="data">
-          {book.currentStatus === 'available' ? 'Book is available' : 'Book currently is not available'}
-        </p>
-      </div>
+      {updateSelected ? (
+        ''
+      ) : (
+        <div className="availability">
+          <p className="label">Availability</p>
+          <p className={`data ${currentStatus}`}>
+            {currentStatus === 'available' ? 'Book is available' : 'Book currently is not available'}
+          </p>
+        </div>
+      )}
     </StyledBookTextData>
   );
 };

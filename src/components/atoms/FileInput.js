@@ -25,9 +25,9 @@ const StyledFileInput = styled.div`
   }
 `
 
-const FileInput = ({handleImageSelection, file}) => {
+const FileInput = ({handleImageSelection, file, ...props}) => {
   return (
-    <StyledFileInput>
+    <StyledFileInput className={props.className}>
       <input type="file" onChange={(e) => handleImageSelection(e)} />
       <p className="selected-info">{file ? file.name : 'Default photo will be applied'}</p>
     </StyledFileInput>

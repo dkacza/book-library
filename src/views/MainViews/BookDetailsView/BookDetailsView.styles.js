@@ -1,32 +1,26 @@
 import styled from 'styled-components';
-import StyledLink from 'components/atoms/StyledLink';
-import BorderlessButton from 'components/atoms/BorderlessButton';
-import BookImage from 'components/organisms/BookImage/BookImage';
+import BookDetailsLinkContainer from 'components/organisms/BookDetailsLinkContainer';
+import BookImage from 'components/molecules/BookImage/BookImage';
 
 const StyledContentSection = styled.section`
   display: flex;
   flex-direction: column;
-  .book-data {
-    flex-basis: 80%;
-    padding-top: 2rem;
-  }
-  .links-container {
-    flex-basis: 20%;
-    padding-top: 2rem;
-  }
-  ${StyledLink}, ${BorderlessButton} {
-    margin-right: 2rem;
-  }
-  .discard {
-    color: ${({theme}) => theme.colors.primary3}
-  }
-  .book-data {
+  margin-top: 3rem;
+
+  .book-data-container {
+    flex-basis: 90%;
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+    width: 100%;
     
     ${BookImage} {
       margin-right: 2rem;
     }
+  }
+
+  ${BookDetailsLinkContainer} {
+    flex-basis: 10%;
   }
 `;
 

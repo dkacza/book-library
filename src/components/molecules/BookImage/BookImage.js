@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import StyledBookImage from 'components/organisms/BookImage/BookImage.styles';
+import StyledBookImage from 'components/molecules/BookImage/BookImage.styles';
 import FileInput from 'components/atoms/FileInput';
 
 const BookImage = ({ book, updateSelected, handleImageSelection, file, ...props }) => {
