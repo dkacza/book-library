@@ -35,14 +35,12 @@ const Root = () => {
       setAuthChecked(true);
       return;
     }
-    console.log('sending login request')
     axios
       .get(`/users/me`)
       .then((res) => {
         const { user } = res.data.data;
         setAuth(user);
         setAuthChecked(true);
-        console.log('authorized');
       })
       .catch((err) => {
         console.log('Cannot retrieve authorization data');

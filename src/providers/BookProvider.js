@@ -40,7 +40,7 @@ export const BookProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(INITIAL_BOOK_PAGE);
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const { width, height } = useWindowDimensions();
-  const {auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   const [allBooksStatus, setAllBooksStatus] = useState(INITIAL_STATUS);
   const fetchAllBooks = (page) => {
@@ -102,13 +102,12 @@ export const BookProvider = ({ children }) => {
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        console.log(errorMsgResponse)
         setErrorStatus(setUpdateBookStatus, errorMsgResponse);
       });
   };
   const unsetUpdateBookStatus = () => {
     setUpdateBookStatus(INITIAL_STATUS);
-  }
+  };
 
   const [createBookStatus, setCreateBookStatus] = useState(INITIAL_STATUS);
   const postBook = (requestBody) => {
