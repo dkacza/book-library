@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import BorderlessButton from 'components/atoms/BorderlessButton';
 
 const StyledFileInput = styled.div`
   input {
@@ -23,13 +24,19 @@ const StyledFileInput = styled.div`
     font-size: 1rem;
     font-style: italic;
   }
+  
+  ${BorderlessButton} {
+    font-size: 0.9rem;
+    color: ${({theme}) => theme.colors.secondary1};
+  }
 `
 
-const FileInput = ({handleImageSelection, file, ...props}) => {
+const FileInput = ({handleImageSelection, setFile, file, ...props}) => {
   return (
     <StyledFileInput className={props.className}>
       <input type="file" onChange={(e) => handleImageSelection(e)} />
       <p className="selected-info">{file ? file.name : 'Default photo will be applied'}</p>
+      <BorderlessButton onClick={() => setFile(null)}>clear image selection</BorderlessButton>
     </StyledFileInput>
   );
 };

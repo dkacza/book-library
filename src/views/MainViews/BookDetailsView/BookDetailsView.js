@@ -2,16 +2,28 @@ import React from 'react';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
-import StyledLink from 'components/atoms/StyledLink';
-import BorderlessButton from 'components/atoms/BorderlessButton';
 import BookTextData from 'components/organisms/BookTextData/BookTextData';
 import BookImage from 'components/molecules/BookImage/BookImage';
 import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetailsView.styles';
 import useBookDetails from 'hooks/useBookDetails';
 import BookDetailsLinkContainer from 'components/organisms/BookDetailsLinkContainer';
+import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
 
 const BookDetailsView = () => {
-  const {book, handleImageSelection, updateSelected, auth, file, register, handleSelectUpdate, handleSave, setUpdateSelected} = useBookDetails();
+  const {
+    book,
+    handleImageSelection,
+    updateSelected,
+    auth,
+    file,
+    setFile,
+    register,
+    handleSelectUpdate,
+    handleDiscard,
+    handleSave,
+    setUpdateSelected,
+    bookDetailsError,
+  } = useBookDetails();
 
   return (
     <MainViewTemplate>
@@ -19,14 +31,20 @@ const BookDetailsView = () => {
       <main>
         <Title>{book.title}</Title>
         <StyledContentSection>
-          <div className='book-data-container'>
+          <div className="book-data-container">
             <BookImage
               updateSelected={updateSelected}
               book={book}
               handleImageSelection={handleImageSelection}
               file={file}
+              setFile={setFile}
             />
-            <BookTextData updateSelected={updateSelected} register={register} book={book} />
+            <BookTextData
+              updateSelected={updateSelected}
+              register={register}
+              book={book}
+              errors={bookDetailsError?.formError}
+            />
           </div>
           <BookDetailsLinkContainer
             auth={auth}
@@ -34,8 +52,10 @@ const BookDetailsView = () => {
             setUpdateSelected={setUpdateSelected}
             handleSelectUpdate={handleSelectUpdate}
             handleSave={handleSave}
+            handleDiscard={handleDiscard}
           />
         </StyledContentSection>
+        {bookDetailsError?.dataProviderError ? <FloatingErrorMessage error={bookDetailsError.dataProviderError} /> : ''}
       </main>
     </MainViewTemplate>
   );

@@ -23,31 +23,48 @@ const useBookDetails = () => {
   const { auth } = useContext(authProvider);
   const { id } = useParams();
 
-  const { books, getBookById, patchBookDetails, bookDetailsErrorMsg, setBookDetailsErrorMsg } = useContext(BookContext);
-
-  const { register, errors, handleSubmit, getValues, setValue, reset } = useForm();
+  const { books, getBookById, patchBookDetails, bookByIdStatus, updateBookStatus, unsetUpdateBookStatus } = useContext(BookContext);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+    setValue,
+    reset,
+  } = useForm();
   const [updateSelected, setUpdateSelected] = useState(false);
   const [book, setBook] = useState({});
   const [file, setFile] = useState();
+  const [bookDetailsError, setBookDetailsError] = useState();
 
   const onSubmit = async (data) => {
+
     const requestBody = buildRequestBody(data, book, file);
     patchBookDetails(id, requestBody);
+
   };
   const onError = (err) => {
-    setBookDetailsErrorMsg('Validation error');
+    setBookDetailsError({
+      ...bookDetailsError,
+      formError: err,
+    });
   };
   const handleSave = (e) => {
     e.preventDefault();
     const formValues = getValues();
     handleSubmit(onSubmit, onError)(formValues);
-    reset();
-    setUpdateSelected(false);
   };
   const handleSelectUpdate = (e) => {
     e.preventDefault();
+    reset();
     if (book) setFormValues();
     setUpdateSelected(true);
+  };
+  const handleDiscard = (e) => {
+    unsetUpdateBookStatus();
+    e.preventDefault();
+    reset();
+    setUpdateSelected(false);
   };
   const handleImageSelection = (e) => {
     setFile(e.target.files[0]);
@@ -75,16 +92,37 @@ const useBookDetails = () => {
     if (book) setFormValues();
   }, [book]);
 
+  useEffect(() => {
+    const newDataProviderError =
+      bookByIdStatus.error || updateBookStatus.error ? bookByIdStatus.error + '\n' + updateBookStatus.error : '';
+    setBookDetailsError({
+      ...bookDetailsError,
+      formError: '',
+      dataProviderError: newDataProviderError,
+    });
+  }, [errors, bookByIdStatus.error, updateBookStatus.error]);
+
+  useEffect(() => {
+    setBookDetailsError({
+      dataProviderError: updateBookStatus.error,
+      formError: '',
+    });
+    if (!updateBookStatus.error) setUpdateSelected(false);
+  }, [updateBookStatus]);
+
   return {
     book,
     handleImageSelection,
     updateSelected,
     auth,
     file,
+    setFile,
     register,
     handleSelectUpdate,
+    handleDiscard,
     handleSave,
     setUpdateSelected,
+    bookDetailsError,
   };
 };
 export default useBookDetails;

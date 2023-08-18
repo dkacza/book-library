@@ -102,9 +102,13 @@ export const BookProvider = ({ children }) => {
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
+        console.log(errorMsgResponse)
         setErrorStatus(setUpdateBookStatus, errorMsgResponse);
       });
   };
+  const unsetUpdateBookStatus = () => {
+    setUpdateBookStatus(INITIAL_STATUS);
+  }
 
   const [createBookStatus, setCreateBookStatus] = useState(INITIAL_STATUS);
   const postBook = (requestBody) => {
@@ -175,6 +179,7 @@ export const BookProvider = ({ children }) => {
         bookByIdStatus,
         patchBookDetails,
         updateBookStatus,
+        unsetUpdateBookStatus,
         postBook,
         createBookStatus,
         searchedBooksStatus,

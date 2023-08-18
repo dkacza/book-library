@@ -4,6 +4,8 @@ const validationRegexes = {
   phoneRegex: /^(?:(?:\+?\d{1,3}\s?)?(?:\(\d{1,}\)|\d{1,})[-.\s]?){1,}\d{1,}$/,
   passwordRegex: /^(?=.*[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż])(?=.*\d).{8,}$/,
   authorsNamesRegex: /^([A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+\s+[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)(,\s*[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+\s+[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)*$/,
+  isbnRegex: /^(?:\d{9}[\dXx]|\d{13})$/
+
 };
 
 export default validationRegexes;

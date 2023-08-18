@@ -18,17 +18,17 @@ const StyledBookTextData = styled.div`
   .data {
     font-size: 1.5rem;
   }
-  
+
   & > div {
     margin-bottom: 1rem;
   }
-  
+
   ${TextArea} {
     width: 28rem;
     min-height: 10rem;
     height: max-content;
   }
-  
+
   ${UnderlinedInput} {
     font-size: 1.25rem;
     height: max-content;
@@ -37,13 +37,20 @@ const StyledBookTextData = styled.div`
   ${TextArea} {
     font-size: 1rem;
   }
+
   .available {
-    color: ${({theme}) => theme.colors.accept3};
+    color: ${({ theme }) => theme.colors.accept3};
   }
+
   .borrowed {
-     color: ${({theme}) => theme.colors.error2};
-   }
-  
+    color: ${({ theme }) => theme.colors.error2};
+  }
+  p.error-msg {
+    margin-top: 2rem;
+    font-weight: bold;
+    color: ${({theme}) => theme.colors.error2};
+  }
+
 
   @media (max-width: 1300px) {
     & > div {
