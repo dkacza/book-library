@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Title from 'components/atoms/Title';
-import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 export const MainViewTemplate = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ export const MainViewTemplate = styled.div`
       font-size: 3.5rem;
     }
 
-    ${FloatingErrorMessage} {
+    ${FloatingMessage} {
       position: absolute;
       top: 3rem;
       right: 3rem;

@@ -6,7 +6,7 @@ import Pagination from 'components/molecules/Pagination/Pagination';
 import useHistory from 'hooks/useHistory';
 import HistoryFilters from 'components/organisms/HistoryFilters/HistoryFilters';
 import TableViewTemplate from 'views/MainViews/TableViewTemplate';
-import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import FloatingErrorMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 import React from 'react';
 
 const columnNames = ['Title', 'Name', 'Start date', 'Return date', 'Expiration', 'Status'];

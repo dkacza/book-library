@@ -6,9 +6,9 @@ import TextArea from 'components/atoms/TextArea';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledAddBookForm from 'components/organisms/AddBookForm/AddBookForm.styles';
 import FileInput from 'components/atoms/FileInput';
-import BorderlessButton from 'components/atoms/BorderlessButton';
+import isEmptyObject from 'utils/isEmptyObject';
 
-const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSelection, errorMsg, successMsg }) => {
+const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection, file, setFile, successMsg }) => {
   return (
     <StyledAddBookForm onSubmit={(e) => submitWithPrevent(e)}>
       <div className="title">
@@ -39,7 +39,11 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
 
       <div className="isbn">
         <p className="label">ISBN</p>
-        <UnderlinedInput type="number" {...register('isbn', { required: true })} className={errors.isbn ? 'error' : ''} />
+        <UnderlinedInput
+          type="number"
+          {...register('isbn', { required: true })}
+          className={errors.isbn ? 'error' : ''}
+        />
       </div>
 
       <div className="genre">
@@ -65,14 +69,12 @@ const AddBookForm = ({ submitWithPrevent, register, errors, file, handleImageSel
 
       <div className="photo-input">
         <p className="label">Cover image</p>
-        <FileInput handleImageSelection={handleImageSelection} file={file} />
-        <BorderlessButton>clear photo selection</BorderlessButton>
+        <FileInput handleImageSelection={handleImageSelection} file={file} setFile={setFile} />
       </div>
 
       <div className="submission-wrapper">
         <SubmitButton type="submit">Add book</SubmitButton>
-        {errorMsg ? <p className="error-msg">{errorMsg}</p> : ''}
-        {successMsg ? <p className="success-msg">{successMsg}</p> : ''}
+        {!isEmptyObject(errors) ? <p className="error">Validation rules violated</p> : ''}
       </div>
     </StyledAddBookForm>
   );

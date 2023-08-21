@@ -7,7 +7,7 @@ import BookImage from 'components/molecules/BookImage/BookImage';
 import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetailsView.styles';
 import useBookDetails from 'hooks/useBookDetails';
 import BookDetailsLinkContainer from 'components/organisms/BookDetailsLinkContainer';
-import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import FloatingErrorMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const BookDetailsView = () => {
   const {

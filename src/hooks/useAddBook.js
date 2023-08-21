@@ -1,10 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useContext, useEffect, useState } from 'react';
-import axios from 'api/axios';
 import BookContext from 'providers/BookProvider';
 
 const buildRequestBody = (data, file) => {
-  // process authors
   const newAuthors = data.authors.split(',').map((author) => ({ name: author }));
   const requestBody = {
     ...data,
@@ -13,32 +11,32 @@ const buildRequestBody = (data, file) => {
   if (file) requestBody.bookCoverPhoto = file;
 
   return requestBody;
-}
+};
 
 const useAddBook = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-    getValues,
   } = useForm();
   const [file, setFile] = useState();
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
-  const {postBook, postBookErrorMsg, postBookConfirmationMsg} = useContext(BookContext);
-
+  const { postBook, postBookStatus } = useContext(BookContext);
+  const [addBookError, setAddBookError] = useState();
+  const [addBookSuccess, setAddBookSuccess] = useState();
 
   const onSubmit = (data) => {
     const requestBody = buildRequestBody(data);
     postBook(requestBody);
   };
   const onError = (err) => {
-    setErrorMsg('Validation rules violated');
+    console.log(err);
+    setAddBookError({
+      ...addBookError,
+      formError: err,
+    });
   };
   const submitWithPrevent = (e) => {
     e.preventDefault();
-    setSuccessMsg('');
-    setErrorMsg('');
     handleSubmit(onSubmit, onError)();
   };
   const handleImageSelection = (e) => {
@@ -46,10 +44,21 @@ const useAddBook = () => {
   };
 
   useEffect(() => {
-    setSuccessMsg('');
-    setErrorMsg('');
-  }, []);
+    setAddBookError({
+      ...addBookError,
+      formError: errors,
+      dataProviderError: postBookStatus?.error,
+    });
+    setAddBookSuccess({
+      message: postBookStatus?.success,
+    });
+  }, [errors, postBookStatus]);
 
-  return { submitWithPrevent, register, errors, file, handleImageSelection, errorMsg, successMsg };
+  useEffect(() => {
+    setAddBookError({});
+    setAddBookSuccess({});
+  }, [])
+
+  return { submitWithPrevent, register, errors, file, setFile, handleImageSelection, addBookError, addBookSuccess };
 };
 export default useAddBook;

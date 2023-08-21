@@ -109,9 +109,9 @@ export const BookProvider = ({ children }) => {
     setUpdateBookStatus(INITIAL_STATUS);
   };
 
-  const [createBookStatus, setCreateBookStatus] = useState(INITIAL_STATUS);
+  const [postBookStatus, setPostBookStatus] = useState(INITIAL_STATUS);
   const postBook = (requestBody) => {
-    setCreateBookStatus(INITIAL_STATUS);
+    setPostBookStatus(INITIAL_STATUS);
     axios
       .post(`books`, requestBody, {
         headers: {
@@ -119,11 +119,11 @@ export const BookProvider = ({ children }) => {
         },
       })
       .then((res) => {
-        setSuccessStatus(setCreateBookStatus, 'Book successfully created');
+        setSuccessStatus(setPostBookStatus, 'Book successfully created');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setCreateBookStatus, errorMsgResponse);
+        setErrorStatus(setPostBookStatus, errorMsgResponse);
       });
   };
 
@@ -180,7 +180,7 @@ export const BookProvider = ({ children }) => {
         updateBookStatus,
         unsetUpdateBookStatus,
         postBook,
-        createBookStatus,
+        postBookStatus,
         searchedBooksStatus,
         searchForBook,
       }}

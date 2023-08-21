@@ -3,9 +3,11 @@ import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import AddBookForm from 'components/organisms/AddBookForm/AddBookForm';
 import useAddBook from 'hooks/useAddBook';
+import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const AddBookView = () => {
-  const {submitWithPrevent, register, errors, file,handleImageSelection, errorMsg, successMsg} = useAddBook();
+  const { submitWithPrevent, register, errors, file, setFile, handleImageSelection, addBookError, addBookSuccess } =
+    useAddBook();
 
   return (
     <MainViewTemplate>
@@ -18,9 +20,10 @@ const AddBookView = () => {
           errors={errors}
           file={file}
           handleImageSelection={handleImageSelection}
-          errorMsg={errorMsg}
-          successMsg={successMsg}
+          setFile={setFile}
         />
+        {addBookError?.dataProviderError ? <FloatingMessage error={addBookError.dataProviderError} /> : ''}
+        {addBookSuccess?.message ? <FloatingMessage success={addBookSuccess.message} /> : ''}
       </main>
     </MainViewTemplate>
   );

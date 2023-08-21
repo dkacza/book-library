@@ -6,7 +6,7 @@ import BookFilters from 'components/organisms/BookFilters/BookFilters';
 import Pagination from 'components/molecules/Pagination/Pagination';
 import React from 'react';
 import useBookBrowser from 'hooks/useBookBrowser';
-import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import FloatingErrorMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 import TableViewTemplate from 'views/MainViews/TableViewTemplate';
 
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];

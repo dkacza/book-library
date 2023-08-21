@@ -3,8 +3,14 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from 'assets/icons/close_FILL0_wght600_GRAD0_opsz48.svg';
 import { ReactComponent as ErrorIcon } from 'assets/icons/error_FILL0_wght600_GRAD0_opsz48.svg';
 
-const StyledFloatingErrorMessage = styled.div`
-  background-color: ${({ theme }) => theme.colors.error1};
+const StyledFloatingMessage = styled.div`
+  &.error {
+    background-color: ${({ theme }) => theme.colors.error1};
+  }
+  &.success {
+    background-color: ${({ theme }) => theme.colors.accept2};
+  }
+  
   color: ${({ theme }) => theme.colors.primary1};
   padding: 1rem;
   position: relative;
@@ -16,7 +22,7 @@ const StyledFloatingErrorMessage = styled.div`
   &.hidden {
     width: 4rem;
     height: 4rem;
-    p.error-title, p.error-msg, button.close-modal {
+    p.title, p.msg, button.close-modal {
       display: none;
     }
   }
@@ -28,7 +34,7 @@ const StyledFloatingErrorMessage = styled.div`
     }
   }
 
-  p.error-title {
+  p.title {
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
@@ -52,19 +58,20 @@ const StyledFloatingErrorMessage = styled.div`
     right: 1rem;
   }
 `;
-const FloatingErrorMessage = ({ error, ...props }) => {
+const FloatingMessage = ({ error, success, ...props }) => {
   const [active, setActive] = useState(true);
+  const status = error ? 'error' : success ? 'success' : 'hidden';
   return (
-    <StyledFloatingErrorMessage className={`${props.className} ${active ? 'active' : 'hidden'}`}>
-      <p className='error-title'>Service Error</p>
-      <p className='error-msg'>{error}</p>
+    <StyledFloatingMessage className={`${status}  ${props.className} ${active ? 'active' : 'hidden'}`}>
+      <p className='title'>{success ? 'Success' : 'Service error'}</p>
+      <p className='msg'>{error || success}</p>
       <button className='close-modal' onClick={() => setActive(false)}>
         <CloseIcon></CloseIcon>
       </button>
       <button className="open-modal" onClick={() => setActive(true)}>
         <ErrorIcon></ErrorIcon>
       </button>
-    </StyledFloatingErrorMessage>
+    </StyledFloatingMessage>
   );
 };
-export default styled(FloatingErrorMessage)``;
+export default styled(FloatingMessage)``;

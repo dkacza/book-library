@@ -7,7 +7,7 @@ import Pagination from 'components/molecules/Pagination/Pagination';
 import UserFilters from 'components/organisms/UserFilters/UserFilters';
 import TableViewTemplate from 'views/MainViews/TableViewTemplate';
 import React from 'react';
-import FloatingErrorMessage from 'components/molecules/FloatingErrorMessage/FloatingErrorMessage';
+import FloatingErrorMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const columnNames = ['Full name', 'Email address', 'Registration', 'Role', 'Eligible'];
 const columnCodes = ['fullName', 'email', 'registrationDate', 'role', 'eligible'];

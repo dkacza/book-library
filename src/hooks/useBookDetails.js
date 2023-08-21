@@ -92,6 +92,7 @@ const useBookDetails = () => {
     if (book) setFormValues();
   }, [book]);
 
+  // When errors appear or dissapear set new external error message
   useEffect(() => {
     const newDataProviderError =
       bookByIdStatus.error || updateBookStatus.error ? bookByIdStatus.error + '\n' + updateBookStatus.error : '';
@@ -102,6 +103,7 @@ const useBookDetails = () => {
     });
   }, [errors, bookByIdStatus.error, updateBookStatus.error]);
 
+  // When book status is updated, clear form errors
   useEffect(() => {
     setBookDetailsError({
       dataProviderError: updateBookStatus.error,
