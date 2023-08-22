@@ -6,8 +6,9 @@ import useAddBook from 'hooks/useAddBook';
 import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const AddBookView = () => {
-  const { submitWithPrevent, register, errors, file, setFile, handleImageSelection, addBookError, addBookSuccess } =
+  const { submitWithPrevent, register, file, setFile, handleImageSelection, addBookError, addBookSuccess } =
     useAddBook();
+
 
   return (
     <MainViewTemplate>
@@ -17,7 +18,7 @@ const AddBookView = () => {
         <AddBookForm
           submitWithPrevent={submitWithPrevent}
           register={register}
-          errors={errors}
+          errors={addBookError?.formError}
           file={file}
           handleImageSelection={handleImageSelection}
           setFile={setFile}

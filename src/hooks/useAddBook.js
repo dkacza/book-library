@@ -8,6 +8,7 @@ const buildRequestBody = (data, file) => {
     ...data,
     authors: newAuthors,
   };
+  console.log(file);
   if (file) requestBody.bookCoverPhoto = file;
 
   return requestBody;
@@ -18,6 +19,7 @@ const useAddBook = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
   const [file, setFile] = useState();
   const { postBook, postBookStatus } = useContext(BookContext);
@@ -25,11 +27,10 @@ const useAddBook = () => {
   const [addBookSuccess, setAddBookSuccess] = useState();
 
   const onSubmit = (data) => {
-    const requestBody = buildRequestBody(data);
+    const requestBody = buildRequestBody(data, file);
     postBook(requestBody);
   };
   const onError = (err) => {
-    console.log(err);
     setAddBookError({
       ...addBookError,
       formError: err,
@@ -43,21 +44,25 @@ const useAddBook = () => {
     setFile(e.target.files[0]);
   };
 
+  // When status from context changes, set according error or success messages on this view
   useEffect(() => {
     setAddBookError({
-      ...addBookError,
       formError: errors,
       dataProviderError: postBookStatus?.error,
     });
-    setAddBookSuccess({
-      message: postBookStatus?.success,
-    });
-  }, [errors, postBookStatus]);
+    if (postBookStatus?.success) {
+      setAddBookSuccess({
+        message: postBookStatus.success,
+      });
+      reset();
+    }
+  }, [postBookStatus]);
 
+  // Clear success and error messages on page load
   useEffect(() => {
     setAddBookError({});
     setAddBookSuccess({});
-  }, [])
+  }, []);
 
   return { submitWithPrevent, register, errors, file, setFile, handleImageSelection, addBookError, addBookSuccess };
 };

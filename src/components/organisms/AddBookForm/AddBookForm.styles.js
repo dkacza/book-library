@@ -61,11 +61,9 @@ const StyledAddBookForm = styled.form`
   }
 
   .error-msg {
+    font-size: 1.25rem;
+    font-weight: bold;
     color: ${({ theme }) => theme.colors.error2};
-  }
-
-  .success-msg {
-    color: ${({ theme }) => theme.colors.accept3};
   }
 
   .label {

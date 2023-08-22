@@ -7,14 +7,14 @@ const UnderlinedInput = styled.input`
   &:-webkit-autofill:active {
     -webkit-background-clip: text;
   }
-  
+
   padding-bottom: 0.25rem;
   height: 100%;
   background: none;
 
   border: none;
   border-bottom: 0.2rem solid ${({ theme }) => theme.colors.primary3};
-  
+
   &::-webkit-input-placeholder {
     color: ${({ theme }) => theme.colors.secondary1};
   }

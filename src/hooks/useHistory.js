@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import AuthContext from 'providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import BorrowingsContext from 'providers/BorrowingsProvider';
 

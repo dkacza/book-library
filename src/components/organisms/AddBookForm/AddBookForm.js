@@ -13,7 +13,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
     <StyledAddBookForm onSubmit={(e) => submitWithPrevent(e)}>
       <div className="title">
         <p className="label">Title</p>
-        <UnderlinedInput {...register('title', { required: true })} className={errors.title ? 'error' : ''} />
+        <UnderlinedInput {...register('title', { required: true })} className={errors?.title ? 'error' : ''} />
       </div>
 
       <div className="authors">
@@ -23,7 +23,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
             required: true,
             validate: (val) => validationRegexes.authorsNamesRegex.test(val),
           })}
-          className={errors.authors ? 'error' : ''}
+          className={errors?.authors ? 'error' : ''}
         />
         <p className="hint">Separate different authors with "," sign</p>
       </div>
@@ -33,7 +33,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <UnderlinedInput
           type="date"
           {...register('publicationDate', { required: true })}
-          className={errors.publicationDate ? 'error' : ''}
+          className={errors?.publicationDate ? 'error' : ''}
         />
       </div>
 
@@ -41,8 +41,8 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <p className="label">ISBN</p>
         <UnderlinedInput
           type="number"
-          {...register('isbn', { required: true })}
-          className={errors.isbn ? 'error' : ''}
+          {...register('isbn', { required: true, validate: (val) => validationRegexes.isbnRegex.test(val) })}
+          className={errors?.isbn ? 'error' : ''}
         />
       </div>
 
@@ -52,7 +52,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
           name="genre"
           id="genre"
           {...register('genre', { required: true })}
-          className={errors.genre ? 'error' : ''}
+          className={errors?.genre ? 'error' : ''}
         >
           <option value="fiction">Fiction</option>
           <option value="nonFiction">Non-fiction</option>
@@ -74,7 +74,11 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
 
       <div className="submission-wrapper">
         <SubmitButton type="submit">Add book</SubmitButton>
-        {!isEmptyObject(errors) ? <p className="error">Validation rules violated</p> : ''}
+        {!isEmptyObject(errors) ? (
+          <p className="error-msg">Validation rules violated. Please fill the form correctly.</p>
+        ) : (
+          ''
+        )}
       </div>
     </StyledAddBookForm>
   );
