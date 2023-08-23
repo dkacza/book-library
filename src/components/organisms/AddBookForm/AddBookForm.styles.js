@@ -15,6 +15,7 @@ const StyledAddBookForm = styled.form`
   "isbn ."
   "genre ."
   "submission-wrapper .";
+  margin-top: 3rem;
 
   .title {
     grid-area: title;
@@ -57,7 +58,7 @@ const StyledAddBookForm = styled.form`
   ${SubmitButton} {
     margin-top: 2rem;
     margin-bottom: 2rem;
-    width: 55%;
+    width: 40%;
   }
 
   .error-msg {

@@ -5,8 +5,9 @@ import UnderlinedInput from 'components/atoms/UnderlinedInput';
 
 const StyledPersonalData = styled.div`
   margin-top: 3rem;
+  
   ${UserDataLine} {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     max-height: 2rem;
     ${UnderlinedInput} {
       width: 22rem;
@@ -14,7 +15,7 @@ const StyledPersonalData = styled.div`
     }
   }
   ${BorderlessButton} {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin-right: 2rem;
   }
   ${BorderlessButton}.discard {

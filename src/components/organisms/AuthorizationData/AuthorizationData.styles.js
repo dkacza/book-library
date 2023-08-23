@@ -4,14 +4,14 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 
 const StyledAuthorizationData = styled.div`
-  margin-top: 3rem;
+  margin-top: 1.5rem;
 
   ${UserDataLine} {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   ${BorderlessButton} {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin-right: 2rem;
   }
 
@@ -28,14 +28,17 @@ const StyledAuthorizationData = styled.div`
 
   p.password-info {
     margin-bottom: 1rem;
+    font-size: 1rem;
   }
   p.error-msg {
     color: ${({theme}) => theme.colors.error2};
     margin-bottom: 1rem;
+    font-size: 1rem;
   }
   p.success-msg {
     color: ${({theme}) => theme.colors.accept3};
     margin-bottom: 1rem;
+    font-size: 1rem;
   }
 
   @media (max-width: 1600px) {
