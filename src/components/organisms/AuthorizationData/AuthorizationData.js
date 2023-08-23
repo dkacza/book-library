@@ -9,29 +9,30 @@ import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FIL
 import validationRegexes from 'utils/validationRegexes';
 import useAuthorizationData from 'hooks/useAuthorizationData';
 import AuthContext from 'providers/AuthProvider';
+import isEmptyObject from 'utils/isEmptyObject';
 
 const AuthorizationData = () => {
   const { auth } = useContext(AuthContext);
   const {
     updateSelected,
-    errors,
+    setUpdateSelected,
     register,
-    errorMessage,
     handleSave,
     handleDiscard,
-    successMessage,
-    setUpdateSelected,
+    authorizationDataError,
+    authorizationDataSuccess,
   } = useAuthorizationData();
+
   return (
     <StyledAuthorizationData>
-      <UserDataLine data={auth.passwordChangedAt.substring(0, 10)} label={'Last password change date:'} />
+      <UserDataLine data={auth?.passwordChangedAt?.substring(0, 10)} label={'Last password change date:'} />
       {updateSelected ? (
         <>
           <InputWithIcon
             id="current-password"
             Icon={PasswordIcon}
             placeholder="current password"
-            error={errors.currentPassword}
+            error={authorizationDataError?.formError?.currentPassword}
             {...register('currentPassword', {
               required: true,
             })}
@@ -40,7 +41,7 @@ const AuthorizationData = () => {
             id="password"
             Icon={PasswordIcon}
             placeholder="new password"
-            error={errors.newPassword}
+            error={authorizationDataError?.formError?.newPassword}
             {...register('newPassword', {
               required: true,
               validate: (val) => validationRegexes.passwordRegex.test(val),
@@ -50,14 +51,24 @@ const AuthorizationData = () => {
             id="password-confirm"
             Icon={PasswordConfirmIcon}
             placeholder="confirm new password"
-            error={errors.newPasswordConfirm}
+            error={authorizationDataError?.formError?.newPasswordConfirm}
             {...register('newPasswordConfirm', {
               required: true,
-              validate: (val, formValues) => val === formValues.newPassword,
+              validate: (val, formValues) =>
+                val === formValues.newPassword && validationRegexes.passwordRegex.test(val),
             })}
           ></InputWithIcon>
           <p className="password-info">Password should contain at least 8 characters, including letters and digits.</p>
-          {errorMessage ? <p className="error-msg">{errorMessage}</p> : ''}
+          {!isEmptyObject(authorizationDataError?.formError) ? (
+            <p className="error-msg">Please fill the password inputs correctly</p>
+          ) : (
+            ''
+          )}
+          {authorizationDataError?.dataProviderError ? (
+            <p className="error-msg">{authorizationDataError?.dataProviderError}</p>
+          ) : (
+            ''
+          )}
 
           <BorderlessButton onClick={handleSave}>Submit new password</BorderlessButton>
           <BorderlessButton className="discard" onClick={handleDiscard}>
@@ -66,7 +77,7 @@ const AuthorizationData = () => {
         </>
       ) : (
         <>
-          {successMessage ? <p className="success-msg">{successMessage}</p> : ''}
+          {authorizationDataSuccess?.message ? <p className="success-msg">{authorizationDataSuccess.message}</p> : ''}
           <BorderlessButton onClick={() => setUpdateSelected(true)}>Update password</BorderlessButton>
         </>
       )}

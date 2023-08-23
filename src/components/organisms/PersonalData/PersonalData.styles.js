@@ -21,12 +21,12 @@ const StyledPersonalData = styled.div`
     color: ${({theme}) => theme.colors.primary3};
   }
   p.error-msg {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: ${({theme}) => theme.colors.error2};
     margin-bottom: 1rem;
   }
   p.success-msg {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: ${({theme}) => theme.colors.accept3};
     margin-bottom: 1rem;
   }

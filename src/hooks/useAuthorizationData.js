@@ -1,15 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
 import UsersContext from 'providers/UsersProvider';
-import AuthContext from 'providers/AuthProvider';
 
 const useAuthorizationData = () => {
-  const {auth ,setAuth} = useContext(AuthContext);
-  const [initialLoad, setInitialLoad] = useState(true);
   const [updateSelected, setUpdateSelected] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [authorizationDataError, setAuthorizationDataError] = useState({});
+  const [authorizationDataSuccess, setAuthorizationDataSuccess] = useState({});
   const {
     register,
     handleSubmit,
@@ -18,23 +14,7 @@ const useAuthorizationData = () => {
     formState: { errors },
   } = useForm();
 
-  const {patchCurrentUserAuthenticationData, authenticationSettingsErrorMsg} = useContext(UsersContext)
-
-  const sendPasswordPatch = (data) => {
-    axios
-      .patch('users/changePassword', data)
-      .then((res) => {
-        setSuccessMessage('Password has been successfully changed');
-        setErrorMessage('');
-        reset();
-        setUpdateSelected(false);
-      })
-      .catch((err) => {
-        const message = err.response.data.message;
-        setErrorMessage(message);
-        setSuccessMessage('');
-      });
-  };
+  const { patchAuthenticationData, authenticationDataStatus, unsetAuthenticationDataStatus } = useContext(UsersContext);
 
   const handleDiscard = (e) => {
     e.preventDefault();
@@ -42,45 +22,57 @@ const useAuthorizationData = () => {
     setUpdateSelected(false);
   };
   const onSubmit = async (data) => {
-    sendPasswordPatch(data);
+    patchAuthenticationData(data);
+    reset();
   };
   const onError = (err) => {
-    setErrorMessage('Provided passwords are not the same or they are not meeting the requirements');
+    setAuthorizationDataError({
+      ...authorizationDataError,
+      formError: err,
+    });
   };
   const handleSave = (e) => {
     e.preventDefault();
-    setErrorMessage('');
-    setSuccessMessage('');
+    setAuthorizationDataSuccess({});
+    setAuthorizationDataError({});
     const formValues = getValues();
     handleSubmit(onSubmit, onError)(formValues);
   };
 
+  // Unset messages when updating is activated
   useEffect(() => {
-    setErrorMessage('');
-  }, []);
+    if (!updateSelected) {return}
+    unsetAuthenticationDataStatus();
+  }, [updateSelected]);
+  // Unset every message on component load
+  useEffect(() => {
+    unsetAuthenticationDataStatus();
+  }, [])
 
-  // Display success message when password is updated
+  // Display success or error message when password request is done
+  // Close the update mode if successfully updated the password
   useEffect(() => {
-    if (initialLoad) {
-      setInitialLoad(false);
-      return;
+    setAuthorizationDataError({
+      formError: errors,
+      dataProviderError: authenticationDataStatus?.error,
+    });
+    setAuthorizationDataSuccess({
+      message: authenticationDataStatus?.success,
+    });
+    if (authenticationDataStatus?.success) {
+      reset();
+      setUpdateSelected(false);
     }
-    setErrorMessage('');
-    setSuccessMessage('Password has been successfully changed');
-    reset();
-    setUpdateSelected(false);
-
-  }, [auth.passwordChangedAt])
+  }, [authenticationDataStatus]);
 
   return {
     updateSelected,
-    errors,
+    setUpdateSelected,
     register,
-    errorMessage,
     handleSave,
     handleDiscard,
-    successMessage,
-    setUpdateSelected,
+    authorizationDataError,
+    authorizationDataSuccess,
   };
 };
 export default useAuthorizationData;

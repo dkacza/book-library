@@ -15,8 +15,8 @@ const usePersonalData = () => {
     formState: { errors },
   } = useForm();
   const { patchPersonalData, personalDataStatus, unsetPersonalDataStatus } = useContext(UsersContext);
-  const [personalDataError, setPersonalDataError] = useState('');
-  const [personalDataSuccess, setPersonalDataSuccess] = useState('');
+  const [personalDataError, setPersonalDataError] = useState({});
+  const [personalDataSuccess, setPersonalDataSuccess] = useState({});
 
   const setFormValues = () => {
     setValue('firstName', auth.firstName);
@@ -47,16 +47,14 @@ const usePersonalData = () => {
     setUpdateSelected(false);
   };
 
+  // Reset the messages when user selects the update
   useEffect(() => {
+    reset();
     setFormValues();
     unsetPersonalDataStatus();
-    setPersonalDataError({});
   }, [updateSelected]);
 
-  useEffect(() => {
-    unsetPersonalDataStatus();
-  }, []);
-
+  // Set new messages when status from data context changes
   useEffect(() => {
     setPersonalDataError({
       formError: errors,

@@ -101,7 +101,7 @@ export const UsersProvider = ({ children }) => {
   };
   const unsetPersonalDataStatus = () => {
     setPersonalDataStatus(INITIAL_STATUS);
-  }
+  };
 
   const [authenticationDataStatus, setAuthenticationDataStatus] = useState(INITIAL_STATUS);
   const patchAuthenticationData = (requestBody) => {
@@ -117,6 +117,9 @@ export const UsersProvider = ({ children }) => {
         const errorMsgResponse = err.response.data.message;
         setErrorStatus(setAuthenticationDataStatus, errorMsgResponse);
       });
+  };
+  const unsetAuthenticationDataStatus = () => {
+    setAuthenticationDataStatus(INITIAL_STATUS);
   };
 
   const [roleStatus, setRoleStatus] = useState(INITIAL_STATUS);
@@ -142,7 +145,7 @@ export const UsersProvider = ({ children }) => {
   };
   const unsetRoleStatus = () => {
     setRoleStatus(INITIAL_STATUS);
-  }
+  };
 
   const [searchedUsersStatus, setSearchedUsersStatus] = useState(INITIAL_STATUS);
   const searchUsers = async (searchQuery) => {
@@ -183,7 +186,6 @@ export const UsersProvider = ({ children }) => {
         setUsersQuery,
         setCurrentPage,
         users,
-
         allUsersStatus,
         userByIdStatus,
         getUserById,
@@ -192,6 +194,7 @@ export const UsersProvider = ({ children }) => {
         patchPersonalData,
         authenticationDataStatus,
         patchAuthenticationData,
+        unsetAuthenticationDataStatus,
         roleStatus,
         patchRole,
         unsetRoleStatus,
