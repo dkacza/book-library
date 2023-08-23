@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import StyledLink from 'components/atoms/StyledLink';
 import BorderlessButton from 'components/atoms/BorderlessButton';
+import UserDetailsRole from 'components/organisms/UserDetailsRole/UserDetailsRole';
 
 const StyledContentSection = styled.section`
   margin-top: 3rem;
@@ -9,7 +10,7 @@ const StyledContentSection = styled.section`
   flex-wrap: wrap;
 
   & > div {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .label {
@@ -22,24 +23,26 @@ const StyledContentSection = styled.section`
     font-size: 1.5rem;
   }
 
-  .role {
-    margin-bottom: 2rem;
-  }
-  .promotion {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  ${UserDetailsRole} {
+    margin-bottom: 3rem;
 
-    .role-label {
-      font-weight: bold;
-      font-size: 1.25rem;
-      color: ${({ theme }) => theme.colors.secondary1};
+    .promotion {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .role-label {
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: ${({ theme }) => theme.colors.secondary1};
+      }
     }
   }
 
+
   ${BorderlessButton} {
-    font-size: 1rem;
+    font-size: 1.25rem;
 
     &.demote {
       color: ${({ theme }) => theme.colors.error2};
@@ -49,9 +52,9 @@ const StyledContentSection = styled.section`
   ${StyledLink} {
     color: ${({ theme }) => theme.colors.secondary1};
     font-size: 1.25rem;
-
   }
-  p.errorMsg {
+
+  p.error-msg {
     font-weight: bold;
     color: ${({ theme }) => theme.colors.error2};
     font-size: 1.5rem;
@@ -68,6 +71,17 @@ const StyledContentSection = styled.section`
     }
 
     .data {
+      font-size: 1rem;
+    }
+
+    ${UserDetailsRole} {
+      ${BorderlessButton} {
+        font-size: 1rem;
+      }
+    }
+
+    ${StyledLink} {
+      color: ${({ theme }) => theme.colors.secondary1};
       font-size: 1rem;
     }
   }

@@ -8,10 +8,17 @@ import isEmptyObject from 'utils/isEmptyObject';
 import AuthContext from 'providers/AuthProvider';
 import usePersonalData from 'hooks/usePersonalData';
 
-
 const PersonalData = () => {
-  const {auth} = useContext(AuthContext);
-  const {updateSelected, errors, register, handleSave, handleDiscard, setUpdateSelected} = usePersonalData();
+  const { auth } = useContext(AuthContext);
+  const {
+    updateSelected,
+    setUpdateSelected,
+    register,
+    handleSave,
+    handleDiscard,
+    personalDataError,
+    personalDataSuccess,
+  } = usePersonalData();
 
   return (
     <StyledPersonalData>
@@ -24,7 +31,7 @@ const PersonalData = () => {
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
-        error={errors.firstName}
+        error={personalDataError.formError?.firstName}
       />
       <UserDataLine
         data={auth.lastName}
@@ -35,7 +42,7 @@ const PersonalData = () => {
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
-        error={errors.lastName}
+        error={personalDataError.formError?.lastName}
       />
       <UserDataLine
         data={auth.email}
@@ -46,7 +53,7 @@ const PersonalData = () => {
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.emailRegex.test(val) || val === undefined}
         register={register}
-        error={errors.email}
+        error={personalDataError.formError?.email}
       />
       <UserDataLine
         data={auth.phoneNumber}
@@ -57,15 +64,20 @@ const PersonalData = () => {
         canBeUpdated={true}
         validationFunction={(val) => validationRegexes.phoneRegex.test(val) || val === undefined}
         register={register}
-        error={errors.phoneNumber}
+        error={personalDataError.formError?.phoneNumber}
       />
-      <UserDataLine
-        data={auth.registrationDate.substring(0, 10)}
-        label={'Registration date:'}
-        updateSelected={updateSelected}
-        canBeUpdated={false}
-      />
-      {!isEmptyObject(errors) ? <p className='error-msg'>Please provide the updated data in correct form</p> : ''}
+      <UserDataLine data={auth.registrationDate.substring(0, 10)} label={'Registration date:'} updateSelected={false} />
+      {!isEmptyObject(personalDataError?.formError) ? (
+        <p className="error-msg">Please provide the updated data in correct form</p>
+      ) : (
+        ''
+      )}
+      {!isEmptyObject(personalDataSuccess) ? <p className="success-msg">{personalDataSuccess.message}</p> : ''}
+      {!isEmptyObject(personalDataError?.dataProviderError) ? (
+        <p className="error-msg">{personalDataError.dataProviderError}</p>
+      ) : (
+        ''
+      )}
 
       {updateSelected ? (
         <>

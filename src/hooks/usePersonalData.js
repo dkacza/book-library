@@ -4,7 +4,7 @@ import AuthContext from 'providers/AuthProvider';
 import UsersContext from 'providers/UsersProvider';
 
 const usePersonalData = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const [updateSelected, setUpdateSelected] = useState(false);
   const {
     register,
@@ -14,29 +14,32 @@ const usePersonalData = () => {
     reset,
     formState: { errors },
   } = useForm();
-
-  const { patchCurrentUserPersonalData, personalSettingsErrorMsg } = useContext(UsersContext);
+  const { patchPersonalData, personalDataStatus, unsetPersonalDataStatus } = useContext(UsersContext);
+  const [personalDataError, setPersonalDataError] = useState('');
+  const [personalDataSuccess, setPersonalDataSuccess] = useState('');
 
   const setFormValues = () => {
     setValue('firstName', auth.firstName);
     setValue('lastName', auth.lastName);
     setValue('email', auth.email);
     setValue('phoneNumber', auth.phoneNumber);
-  }
+  };
 
   const onSubmit = (data) => {
-    patchCurrentUserPersonalData(data);
+    patchPersonalData(data);
     reset();
     setUpdateSelected(false);
   };
   const onError = (err) => {
-    reset();
+    setPersonalDataError({
+      ...personalDataError,
+      formError: err,
+    });
   };
   const handleSave = (e) => {
     e.preventDefault();
     const formData = getValues();
     handleSubmit(onSubmit, onError)(formData);
-    reset();
   };
   const handleDiscard = (e) => {
     e.preventDefault();
@@ -46,8 +49,32 @@ const usePersonalData = () => {
 
   useEffect(() => {
     setFormValues();
-  }, [updateSelected])
+    unsetPersonalDataStatus();
+    setPersonalDataError({});
+  }, [updateSelected]);
 
-  return { updateSelected, errors, register, handleSave, handleDiscard, setUpdateSelected };
+  useEffect(() => {
+    unsetPersonalDataStatus();
+  }, []);
+
+  useEffect(() => {
+    setPersonalDataError({
+      formError: errors,
+      dataProviderError: personalDataStatus?.error,
+    });
+    setPersonalDataSuccess({
+      message: personalDataStatus?.success,
+    });
+  }, [personalDataStatus]);
+
+  return {
+    updateSelected,
+    setUpdateSelected,
+    register,
+    personalDataError,
+    personalDataSuccess,
+    handleSave,
+    handleDiscard,
+  };
 };
 export default usePersonalData;

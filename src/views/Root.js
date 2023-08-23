@@ -16,7 +16,7 @@ import BooksView from 'views/MainViews/BooksView';
 import AddBookView from 'views/MainViews/AddBookView';
 import HistoryView from 'views/MainViews/HistoryView';
 import UsersView from 'views/MainViews/UsersView';
-import SettingsView from 'views/MainViews/SettingsView/SettingsView';
+import SettingsView from 'views/MainViews/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 import BookDetailsView from 'views/MainViews/BookDetailsView/BookDetailsView';
 import UserDetailsView from 'views/MainViews/UserDetailsView/UserDetailsView';

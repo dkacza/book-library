@@ -86,7 +86,7 @@ export const UsersProvider = ({ children }) => {
 
   const [personalDataStatus, setPersonalDataStatus] = useState(INITIAL_STATUS);
   const patchPersonalData = (requestBody) => {
-    setPersonalDataStatus(INITIAL_STATUS);
+    unsetPersonalDataStatus();
     axios
       .patch(`users/me`, requestBody)
       .then((res) => {
@@ -99,6 +99,9 @@ export const UsersProvider = ({ children }) => {
         setErrorStatus(setPersonalDataStatus, errorMsgResponse);
       });
   };
+  const unsetPersonalDataStatus = () => {
+    setPersonalDataStatus(INITIAL_STATUS);
+  }
 
   const [authenticationDataStatus, setAuthenticationDataStatus] = useState(INITIAL_STATUS);
   const patchAuthenticationData = (requestBody) => {
@@ -118,7 +121,7 @@ export const UsersProvider = ({ children }) => {
 
   const [roleStatus, setRoleStatus] = useState(INITIAL_STATUS);
   const patchRole = (id, requestBody) => {
-    setRoleStatus(INITIAL_STATUS);
+    unsetRoleStatus();
     axios
       .patch(`users/promote/${id}`, requestBody)
       .then((res) => {
@@ -137,6 +140,9 @@ export const UsersProvider = ({ children }) => {
         setErrorStatus(setRoleStatus, errorMsgResponse);
       });
   };
+  const unsetRoleStatus = () => {
+    setRoleStatus(INITIAL_STATUS);
+  }
 
   const [searchedUsersStatus, setSearchedUsersStatus] = useState(INITIAL_STATUS);
   const searchUsers = async (searchQuery) => {
@@ -177,15 +183,18 @@ export const UsersProvider = ({ children }) => {
         setUsersQuery,
         setCurrentPage,
         users,
+
         allUsersStatus,
         userByIdStatus,
         getUserById,
         personalDataStatus,
+        unsetPersonalDataStatus,
         patchPersonalData,
         authenticationDataStatus,
         patchAuthenticationData,
         roleStatus,
         patchRole,
+        unsetRoleStatus,
         searchedUsersStatus,
         searchUsers,
       }}
