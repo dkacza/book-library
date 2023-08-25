@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import BookContext from 'providers/BookProvider';
 import BorrowingsContext from 'providers/BorrowingsProvider';
+import UsersContext from 'providers/UsersProvider';
 
 const API_CALL_DELAY = 600;
 
@@ -25,6 +26,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     createBorrowingStatus,
     unsetCreateBorrowingStatus,
   } = useContext(BorrowingsContext);
+  const {updateArrayWithNewUser} = useContext(UsersContext);
 
   const getBooksFromProvider = async () => {
     const searchResult = await searchForBook(bookSearchQuery);
@@ -47,6 +49,9 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
 
+    // TODO replace the all users array
+    updateArrayWithNewUser(modifiedSelectedUser);
+
     getBooksFromProvider();
   };
 
@@ -59,6 +64,8 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     };
     modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
+
+    updateArrayWithNewUser(modifiedSelectedUser);
   };
   const handleQueryChange = (e) => {
     e.preventDefault();

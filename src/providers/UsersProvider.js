@@ -147,6 +147,15 @@ export const UsersProvider = ({ children }) => {
     setRoleStatus(INITIAL_STATUS);
   };
 
+  const updateArrayWithNewUser = (newUser) => {
+    const modifiedUsers = users.map((user) => {
+      if (user._id !== newUser._id) {
+        return user;
+      }
+      return newUser;
+    });
+    setUsers(modifiedUsers);
+  };
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -184,6 +193,7 @@ export const UsersProvider = ({ children }) => {
         roleStatus,
         patchRole,
         unsetRoleStatus,
+        updateArrayWithNewUser,
       }}
     >
       {children}
