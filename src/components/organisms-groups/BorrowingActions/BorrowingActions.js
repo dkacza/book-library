@@ -28,16 +28,19 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
       </BorderlessButton>
       <div className="management">
         <Captions toggleAction={toggleAction} returnSelected={returnSelected} />
-        {returnSelected ? (
-          <Returns currentBorrowings={currentBorrowings} handleBookReturn={handleBookReturn} />
-        ) : (
-          <Borrowings
-            handleQueryChange={handleQueryChange}
-            bookSearchQuery={bookSearchQuery}
-            booksSearchResult={booksSearchResult}
-            handleBookBorrow={handleBookBorrow}
-          />
-        )}
+
+        <div className='action-container'>
+          {returnSelected ? (
+            <Returns currentBorrowings={currentBorrowings} handleBookReturn={handleBookReturn} />
+          ) : (
+            <Borrowings
+              handleQueryChange={handleQueryChange}
+              bookSearchQuery={bookSearchQuery}
+              booksSearchResult={booksSearchResult}
+              handleBookBorrow={handleBookBorrow}
+            />
+          )}
+        </div>
       </div>
     </StyledBorrowingActions>
   );

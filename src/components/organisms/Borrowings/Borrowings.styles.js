@@ -3,18 +3,30 @@ import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 
 const StyledBorrowings = styled.div`
-  
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   ${InputWithIcon} {
-    height: 3.5rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    height: 3rem;
+    width: 24rem;
+    flex-shrink: 0;
+  }
+  .tip {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: ${({theme}) => theme.colors.secondary1};
   }
 
   .book-list {
+    height: 100%;
+    width: 100%;
     list-style: none;
-    max-height: 22vh;
     overflow-y: scroll;
-    
+
     &::-webkit-scrollbar {
       width: 0.5rem;
       height: 0.5rem;
@@ -37,27 +49,23 @@ const StyledBorrowings = styled.div`
       display: none;
     }
 
+    .list-headings {
+      display: flex;
+      position: sticky;
+      top: 0;
+      left: 0;
+      background-color: ${({ theme }) => theme.colors.primary1};
+      font-weight: bold;
+      font-size: 1.25rem;
+      // Prevent the text showing through the top border
+      transform: translateY(-1px);
+    }
+
     li {
       display: flex;
       flex-direction: row;
       border-bottom: 1px solid ${({ theme }) => theme.colors.secondary1};
       align-items: center;
-      margin-right: 2rem;
-
-      p:nth-child(1) {
-        width: 14rem;
-        margin-right: 2rem;
-      }
-
-      p:nth-child(2) {
-        width: 11rem;
-        margin-right: 2rem;
-      }
-
-      p:nth-child(3) {
-        width: 12rem;
-        margin-right: 2rem;
-      }
 
       ${SquareTileButton} {
         margin-top: 0.5rem;
@@ -65,13 +73,17 @@ const StyledBorrowings = styled.div`
         margin-right: 1rem;
       }
     }
-  }
-  @media(max-height: 730px) {
-    .icon-input {
-      height: 2.75rem;
+    p:nth-child(1) {
+      flex-basis: 14rem;
     }
-    .book-list {
-      max-height: 18vh;
+    p:nth-child(2) {
+      flex-basis: 10rem;
+    }
+    p:nth-child(3) {
+      flex-basis: 8rem;
+    }
+    ${SquareTileButton} {
+      margin: 0 0.75rem 0.75rem 2rem;
     }
   }
 `;

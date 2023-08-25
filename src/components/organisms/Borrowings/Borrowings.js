@@ -2,11 +2,11 @@ import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
 import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import SquareTileButton from 'components/atoms/SquareTileButton';
-import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.svg';
+import { ReactComponent as BookBorrowIcon } from 'assets/icons/book-borrow-icon.svg';
 import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
 import styled from 'styled-components';
 
-const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow , ...props}) => {
+const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow, ...props }) => {
   return (
     <StyledBorrowings className={props.className}>
       <InputWithIcon
@@ -18,16 +18,30 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, han
         value={bookSearchQuery}
         onChange={handleQueryChange}
       ></InputWithIcon>
-      {booksSearchResult ? booksSearchResult.length > 0 ? <ul className="book-list">
-        {booksSearchResult.map(book => (
-          <li key={book._id}>
-            <p>{book.title}</p>
-            <p>{book.authors?.map(author => author.name)?.join(', ')}</p>
-            <p>{book.isbn}</p>
-            <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={BookBorrowIcon}/>
-          </li>
-        ))}
-      </ul> : <p>No books found</p> : <p>Search for a book by title or ISBN</p>}
+      <p className='tip'>Search by title, isbn or author</p>
+      {booksSearchResult ? (
+        booksSearchResult.length > 0 ? (
+          <ul className="book-list">
+            <div className="list-headings">
+              <p>Title</p>
+              <p>Authors</p>
+              <p>ISBN</p>
+            </div>
+            {booksSearchResult.map((book) => (
+              <li key={book._id}>
+                <p>{book.title}</p>
+                <p>{book.authors?.map((author) => author.name)?.join(', ')}</p>
+                <p>{book.isbn}</p>
+                <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={BookBorrowIcon} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No books found</p>
+        )
+      ) : (
+        <p>Search for a book by title or ISBN</p>
+      )}
     </StyledBorrowings>
   );
 };

@@ -20,7 +20,7 @@ const StyledCaptions = styled.div`
     font-weight: bold;
     height: 3rem;
     margin-right: 0.25rem;
-    transform: translateY(6px);
+    transform: translateY(0.4rem);
   }
 
   button:nth-child(2) {

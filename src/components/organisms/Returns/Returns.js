@@ -8,7 +8,7 @@ const Returns = ({ currentBorrowings, handleBookReturn, ...props }) => {
   return (
     <StyledReturns className={props.className}>
       {currentBorrowings.length > 0 ? (
-        <>
+        <ul>
           <div className='list-headings'>
             <p>Title</p>
             <p>Date of borrowing</p>
@@ -22,7 +22,7 @@ const Returns = ({ currentBorrowings, handleBookReturn, ...props }) => {
               <SquareTileButton onClick={(e) => handleBookReturn(e, borrowing._id)} Icon={ReturnIcon} />
             </li>
           ))}
-        </>
+        </ul>
       ) : (
         <p className='no-books-info'>User has no currently borrowed books</p>
       )}

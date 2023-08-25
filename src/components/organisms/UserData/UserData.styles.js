@@ -3,7 +3,7 @@ import Title from 'components/atoms/Title';
 
 const StyledUserData = styled.div`
   p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
   .not-eligible {
@@ -12,12 +12,19 @@ const StyledUserData = styled.div`
   }
 
   ${Title} {
-    margin-top: 2.5rem;
-    margin-bottom: 0;
-    font-size: 3rem;
+    font-size: 2rem;
   }
 
   margin-bottom: 2rem;
+  @media(max-height: 800px) {
+    ${Title}.user-name {
+      font-size: 2rem;
+      margin-bottom: 0;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export default StyledUserData;

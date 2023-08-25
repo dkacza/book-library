@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import SquareTileButton from 'components/atoms/SquareTileButton';
 
-const StyledReturns = styled.ul`
-  max-height: 22vh;
+const StyledReturns = styled.div`
+  height: 100%;
   overflow-y: scroll;
-
   &::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
@@ -28,9 +27,14 @@ const StyledReturns = styled.ul`
   }
   .list-headings {
     display: flex;
-    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: ${({theme}) => theme.colors.primary1};
     font-weight: bold;
     font-size: 1.25rem;
+    // Prevent the text showing through the top border
+    transform: translateY(-1px);
   }
   li {
     list-style: none;
@@ -38,11 +42,15 @@ const StyledReturns = styled.ul`
     flex-direction: row;
     align-items: center;
     margin-bottom: 1rem;
-    border-bottom: 1px solid ${({theme}) => theme.colors.secondary1};
+    border-bottom: 0.1rem solid ${({theme}) => theme.colors.secondary1};
     margin-right: 2rem;
     width: fit-content;
   }
-  
+  p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
   p:nth-child(1) {
     width: 16rem;
   }
@@ -54,9 +62,7 @@ const StyledReturns = styled.ul`
   }
   
   ${SquareTileButton} {
-    margin-bottom: 0.75rem;
-    margin-left: 2rem;
-    margin-right: 0.75rem;
+    margin: 0 0.75rem 0.75rem 2rem;
   }
 `;
 

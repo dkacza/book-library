@@ -8,13 +8,28 @@ const StyledUserSelection = styled.div`
   }
   ${Table} {
     width: 65%;
-    height: 500px;
+    height: 40rem;
   }
   .tip {
     margin-top: 0.25rem;
-    font-size: 1.1rem;
     margin-bottom: 2rem;
     color: ${({theme}) => theme.colors.secondary1};
+  }
+  
+  @media(max-height: 800px) {
+    ${InputWithIcon} {
+      height: 2.5rem;
+      max-width: 24rem;
+      input {
+        font-size: 1rem;
+      }
+    }
+    ${Table} {
+      height: 20rem;
+    }
+    .tip {
+      max-width: 30rem;
+    }
   }
 `;
 
