@@ -147,20 +147,6 @@ export const UsersProvider = ({ children }) => {
     setRoleStatus(INITIAL_STATUS);
   };
 
-  const [searchedUsersStatus, setSearchedUsersStatus] = useState(INITIAL_STATUS);
-  const searchUsers = async (searchQuery) => {
-    setSearchedUsersStatus(INITIAL_STATUS);
-    try {
-      const response = await axios.get(`/users?search=${searchQuery}`);
-      const usersResponse = response.data.data.users;
-      setSuccessStatus(setSearchedUsersStatus, 'Users found');
-      return usersResponse;
-    } catch (err) {
-      const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setSearchedUsersStatus, errorMsgResponse);
-      return [];
-    }
-  };
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -198,8 +184,6 @@ export const UsersProvider = ({ children }) => {
         roleStatus,
         patchRole,
         unsetRoleStatus,
-        searchedUsersStatus,
-        searchUsers,
       }}
     >
       {children}

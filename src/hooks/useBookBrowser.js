@@ -68,6 +68,12 @@ const useBookBrowser = (initialFormValues) => {
     setCurrentPage(newPage);
   };
 
+  const handleRecordSelect = (e, setRoute) => {
+    e.preventDefault();
+    const id = e.currentTarget.id;
+    setRoute(`/book/${id}`);
+  };
+
   useEffect(() => {
     setBookBrowserError({
       ...bookBrowserError,
@@ -81,6 +87,7 @@ const useBookBrowser = (initialFormValues) => {
     books,
     register,
     handlePageChange,
+    handleRecordSelect,
     submitWithPrevent,
     bookBrowserError,
   };

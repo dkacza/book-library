@@ -23,12 +23,14 @@ const INITIAL_FORM_VALUES = {
 };
 
 const BooksView = () => {
-  const { paginationData, books, register, handlePageChange, submitWithPrevent, bookBrowserError } =
+  const { paginationData, books, register, handlePageChange, handleRecordSelect, submitWithPrevent, bookBrowserError } =
     useBookBrowser(INITIAL_FORM_VALUES);
   const processedBooks = books.map((book) => ({
     ...book,
     authors: book.authors.map((author) => author.name).join(', '),
   }));
+
+  console.log(handleRecordSelect);
   return (
     <MainViewTemplate>
       <Navigation />
@@ -41,7 +43,7 @@ const BooksView = () => {
               columnCodes={columnCodes}
               data={processedBooks}
               columnproportions={columnProportions}
-              routePath={'/book'}
+              actionOnSelect={handleRecordSelect}
             />
           ) : (
             <p className="empty-data-error-msg">No books matching current criteria found</p>

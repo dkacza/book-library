@@ -1,34 +1,36 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import UsersContext from 'providers/UsersProvider';
 
 const API_CALL_DELAY = 600;
 
 const useUserSelection = (setSelectedUser) => {
-  const [users, setUsers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const { searchUsers, searchUsersErrorMsg, searchUsersConfirmationMsg } = useContext(UsersContext);
+  const { fetchAllUsers, setUsersQuery, usersQuery, users, paginationData, setCurrentPage } = useContext(UsersContext);
 
   const getUsersFromProvider = () => {
-    if (searchQuery === '') return;
-    (async () => {
-      const foundUsers = await searchUsers(searchQuery);
-      setUsers(foundUsers);
-    })();
+    fetchAllUsers();
   };
 
-  useDebounce(getUsersFromProvider, API_CALL_DELAY, [searchQuery]);
+  useDebounce(getUsersFromProvider, API_CALL_DELAY, [usersQuery]);
   const handleQueryChange = (e) => {
-    setSearchQuery(e.target.value);
-    if (e.target.value === '') setUsers([]);
+    let query = ``;
+    if (e.target.value) {
+      query = `search=${e.target.value}`;
+    }
+    setUsersQuery(query);
+  };
+  const handlePageChange = (newPage) => {
+    if (newPage > paginationData.totalPages || newPage < 1) return;
+    setCurrentPage(newPage);
   };
 
   const handleUserSelect = (e) => {
     const { id } = e.currentTarget;
+    console.log(e);
     const selectedUser = users.find((user) => user._id === id);
     setSelectedUser(selectedUser);
   };
 
-  return { searchQuery, users, handleUserSelect, handleQueryChange };
+  return { usersQuery, users, handleUserSelect, handleQueryChange, paginationData, handlePageChange, setCurrentPage };
 };
 export default useUserSelection;
