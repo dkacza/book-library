@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import UsersContext from 'providers/UsersProvider';
-import { all } from 'axios';
 
 const buildQuery = (data) => {
   let query = '';
@@ -21,7 +20,12 @@ const buildQuery = (data) => {
 };
 
 const useUsers = (initialFormValues) => {
-  const { register, handleSubmit, setValue, formState: {errors} } = useForm({ defaultValues: initialFormValues });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ defaultValues: initialFormValues });
   const { users, allUsersStatus, paginationData, setUsersQuery, setCurrentPage } = useContext(UsersContext);
   const [userListError, setUserListError] = useState('');
   const onSubmit = (data) => {
@@ -53,15 +57,36 @@ const useUsers = (initialFormValues) => {
     setCurrentPage(newPage);
   };
 
+  const handleRecordSelect = (e, setRoute) => {
+    e.preventDefault();
+    const id = e.currentTarget.id;
+    setRoute(`/user/${id}`);
+  };
+
+  // Unset query on component mount
+  // The query is also modified by manage borrowings view, so it needs to be unset
+  useEffect(() => {
+    setUsersQuery('');
+  }, [])
+
   useEffect(() => {
     setUserListError({
       ...userListError,
       formError: errors,
       dataProviderError: allUsersStatus.error,
-    })
-  }, [errors, allUsersStatus.error])
+    });
+  }, [errors, allUsersStatus.error]);
 
-  return { users, paginationData, register, userListError, handlePageChange, handleClearFields, submitWithPrevent };
+  return {
+    users,
+    paginationData,
+    register,
+    userListError,
+    handlePageChange,
+    handleRecordSelect,
+    handleClearFields,
+    submitWithPrevent,
+  };
 };
 
 export default useUsers;

@@ -9,12 +9,15 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, actionOnSele
   useEffect(() => {
     setRoute('');
   }, []);
+  const selectableClass = actionOnSelect ? 'selectable' : '';
+  actionOnSelect = actionOnSelect || (() => {});
+
 
   return (
     <>
       <StyledTable
         $columnproportions={columnproportions}
-        className={`${props.className} ${actionOnSelect ? 'selectable' : ''}`}
+        className={`${props.className} ${selectableClass}`}
       >
         <thead>
           <tr>

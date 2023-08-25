@@ -23,7 +23,7 @@ const INITIAL_FORM_VALUES = {
 };
 
 const UsersView = () => {
-  const { users, paginationData, register, handlePageChange, handleClearFields, submitWithPrevent, userListError } =
+  const { users, paginationData, register, handlePageChange, handleClearFields, handleRecordSelect, submitWithPrevent, userListError } =
     useUsers(INITIAL_FORM_VALUES);
 
   return (
@@ -38,7 +38,7 @@ const UsersView = () => {
               columnNames={columnNames}
               columnCodes={columnCodes}
               columnproportions={columnProportions}
-              routePath={'/user'}
+              actionOnSelect={handleRecordSelect}
             />
           ) : (
             <p className="empty-data-error-msg">No users matching current criteria found</p>
