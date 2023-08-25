@@ -26,7 +26,6 @@ const useUserSelection = (setSelectedUser) => {
 
   const handleUserSelect = (e) => {
     const { id } = e.currentTarget;
-    console.log(e);
     const selectedUser = users.find((user) => user._id === id);
     setSelectedUser(selectedUser);
   };

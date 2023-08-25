@@ -7,6 +7,7 @@ import Borrowings from 'components/organisms/Borrowings/Borrowings';
 import useBorrowingManager from 'hooks/useBorrowingManager';
 import StyledBorrowingActions from 'components/organisms-groups/BorrowingActions/BorrowingAction.styles';
 import BorderlessButton from 'components/atoms/BorderlessButton';
+import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) => {
   const {
@@ -18,6 +19,8 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
     bookSearchQuery,
     handleQueryChange,
     returnSelected,
+    borrowingManagerError,
+    borrowingManagerSuccess,
   } = useBorrowingManager(selectedUser, setSelectedUser);
 
   return (
@@ -38,10 +41,13 @@ const BorrowingActions = ({ selectedUser, setSelectedUser, handleUserUnset }) =>
               bookSearchQuery={bookSearchQuery}
               booksSearchResult={booksSearchResult}
               handleBookBorrow={handleBookBorrow}
+              eligible={selectedUser.eligible}
             />
           )}
         </div>
       </div>
+      {borrowingManagerError ? <FloatingMessage error={borrowingManagerError} />  : ''}
+      {borrowingManagerSuccess ? <FloatingMessage success={borrowingManagerSuccess} />  : ''}
     </StyledBorrowingActions>
   );
 };

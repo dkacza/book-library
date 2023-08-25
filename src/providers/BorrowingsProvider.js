@@ -91,7 +91,7 @@ export const BorrowingsProvider = ({ children }) => {
 
   const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(INITIAL_STATUS);
   const getBorrowingById = async (borrowingId) => {
-    setBorrowingByIdStatus(INITIAL_STATUS);
+    unsetBorrowingByIdStatus();
     let borrowing = history.find((borrowing) => borrowing._id === borrowingId);
     if (borrowing) {
       setSuccessStatus(setBorrowingByIdStatus, 'Borrowing found');
@@ -108,20 +108,26 @@ export const BorrowingsProvider = ({ children }) => {
       return {};
     }
   };
+  const unsetBorrowingByIdStatus = () => {
+    setBorrowingByIdStatus(INITIAL_STATUS);
+  };
 
-  const [returnedBorrowingsStatus, setReturnedBorrowingsStatus] = useState(INITIAL_STATUS);
+  const [returnedBorrowingStatus, setReturnedBorrowingStatus] = useState(INITIAL_STATUS);
   const patchBorrowingAsReturned = async (borrowingId) => {
-    setReturnedBorrowingsStatus(INITIAL_STATUS);
+    unsetReturnedBorrowingStatus();
     try {
       const response = await axios.patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' });
-      setSuccessStatus(setReturnedBorrowingsStatus, 'Book successfully returned');
+      setSuccessStatus(setReturnedBorrowingStatus, 'Book successfully returned');
       return processBorrowing(response.data.data.rental);
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setReturnedBorrowingsStatus, errorMsgResponse);
+      setErrorStatus(setReturnedBorrowingStatus, errorMsgResponse);
       return {};
     }
   };
+  const unsetReturnedBorrowingStatus = () => {
+    setReturnedBorrowingStatus(INITIAL_STATUS);
+  }
 
   const [createBorrowingStatus, setCreateBorrowingStatus] = useState(INITIAL_STATUS);
   const postBorrowing = async (bookId, userId) => {
@@ -135,6 +141,9 @@ export const BorrowingsProvider = ({ children }) => {
       return {};
     }
   };
+  const unsetCreateBorrowingStatus = () => {
+    setCreateBorrowingStatus(INITIAL_STATUS);
+  }
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -175,12 +184,18 @@ export const BorrowingsProvider = ({ children }) => {
 
         history,
         borrowingsListStatus,
+
         getBorrowingById,
         borrowingByIdStatus,
+        unsetBorrowingByIdStatus,
+
         patchBorrowingAsReturned,
-        returnedBorrowingsStatus,
+        returnedBorrowingStatus,
+        unsetReturnedBorrowingStatus,
+
         postBorrowing,
         createBorrowingStatus,
+        unsetCreateBorrowingStatus,
       }}
     >
       {children}

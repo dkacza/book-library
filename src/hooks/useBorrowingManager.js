@@ -8,11 +8,24 @@ const API_CALL_DELAY = 600;
 const UseBorrowingManager = (selectedUser, setSelectedUser) => {
   const [currentBorrowings, setCurrentBorrowings] = useState([]);
   const [returnSelected, setReturnSelected] = useState(true);
-  const [booksSearchResult, setBooksSearchResult] = useState([]);
+  const [booksSearchResult, setBooksSearchResult] = useState(undefined);
   const [bookSearchQuery, setBookSearchQuery] = useState('');
+  const [borrowingManagerError, setBorrowingManagerError] = useState('');
+  const [borrowingManagerSuccess, setBorrowingManagerSuccess] = useState('');
 
-  const { searchForBook } = useContext(BookContext);
-  const { getBorrowingById, patchBorrowingAsReturned, postBorrowing } = useContext(BorrowingsContext);
+  const { searchForBook, searchedBookStatus, unsetSearchedBookStatus } = useContext(BookContext);
+  const {
+    getBorrowingById,
+    borrowingByIdStatus,
+    unsetBorrowingByIdStatus,
+    patchBorrowingAsReturned,
+    returnedBorrowingStatus,
+    unsetReturnedBorrowingStatus,
+    postBorrowing,
+    createBorrowingStatus,
+    unsetCreateBorrowingStatus,
+  } = useContext(BorrowingsContext);
+
   const getBooksFromProvider = async () => {
     const searchResult = await searchForBook(bookSearchQuery);
     setBooksSearchResult(searchResult);
@@ -23,6 +36,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
   const toggleAction = () => {
     const newAction = !returnSelected;
     setReturnSelected(newAction);
+    setBooksSearchResult(undefined);
   };
   const handleBookBorrow = async (e, bookId) => {
     const newBorrowing = await postBorrowing(bookId, selectedUser._id);
@@ -30,26 +44,64 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
       ...selectedUser,
       rentals: [...selectedUser.rentals, newBorrowing._id],
     };
-    console.log(modifiedSelectedUser);
+    modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
 
     getBooksFromProvider();
-
   };
 
   const handleBookReturn = async (e, borrowingId) => {
     e.preventDefault();
     const result = await patchBorrowingAsReturned(borrowingId, selectedUser._id);
-    console.log(result);
     const modifiedSelectedUser = {
       ...selectedUser,
       rentals: selectedUser.rentals.filter((rentalId) => rentalId !== borrowingId),
     };
+    modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
+  };
+  const handleQueryChange = (e) => {
+    e.preventDefault();
+    if (!e.target.value) {
+      setBooksSearchResult(undefined);
+      return;
+    }
+    setBookSearchQuery(e.target.value);
   };
 
   useEffect(() => {
-    console.log(selectedUser);
+    const errorMessages = [];
+    const successMessages = [];
+
+    // get borrowing by id -> error
+    if (borrowingByIdStatus.error) errorMessages.push(borrowingByIdStatus.error);
+    // create borrowing -> error, success
+    if (createBorrowingStatus.error) errorMessages.push(createBorrowingStatus.error);
+    if (createBorrowingStatus.success) successMessages.push(createBorrowingStatus.success);
+    // return borrowing -> success, error
+    if (returnedBorrowingStatus.error) errorMessages.push(returnedBorrowingStatus.error);
+    if (returnedBorrowingStatus.success) successMessages.push(returnedBorrowingStatus.success);
+
+    // searched books -> error
+    if (searchedBookStatus?.error) errorMessages.push(searchedBookStatus.error);
+
+    const errorMsg = errorMessages.join('\n');
+    const successMsg = successMessages.join('\n');
+
+    setBorrowingManagerError(errorMsg);
+    setBorrowingManagerSuccess(successMsg);
+  }, [borrowingByIdStatus, createBorrowingStatus, returnedBorrowingStatus, searchedBookStatus]);
+
+  // Reset data statuses on component load
+  useEffect(() => {
+    unsetBorrowingByIdStatus();
+    unsetCreateBorrowingStatus();
+    unsetReturnedBorrowingStatus();
+    unsetSearchedBookStatus();
+  }, [returnSelected]);
+
+  // Get the borrowed books data when component mounts or user changes
+  useEffect(() => {
     const rentalIdArray = selectedUser.rentals;
     (async () => {
       const promises = rentalIdArray.map(getBorrowingById);
@@ -57,15 +109,6 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
       setCurrentBorrowings(borrowings);
     })();
   }, [selectedUser]);
-
-  const handleQueryChange = (e) => {
-    e.preventDefault();
-    if (e.target.value?.length < 3) {
-      setBooksSearchResult([]);
-      return;
-    }
-    setBookSearchQuery(e.target.value);
-  };
 
   return {
     booksSearchResult,
@@ -76,6 +119,8 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     bookSearchQuery,
     handleQueryChange,
     returnSelected,
+    borrowingManagerError,
+    borrowingManagerSuccess,
   };
 };
 

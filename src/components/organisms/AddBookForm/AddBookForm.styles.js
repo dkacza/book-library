@@ -97,5 +97,19 @@ const StyledAddBookForm = styled.form`
       border: 2px solid ${({ theme }) => theme.colors.primary3};
     }
   }
+  @media(max-height: 800px) {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(5, 5rem) 1fr;
+    ${SubmitButton} {
+      margin-top: 3rem;
+    }
+    .label {
+      font-size: 1.25rem;
+    }
+    ${UnderlinedInput} {
+      font-size: 1rem;
+      height: min-content;
+    }
+  }
 `;
 export default StyledAddBookForm;

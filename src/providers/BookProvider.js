@@ -129,7 +129,7 @@ export const BookProvider = ({ children }) => {
 
   const [searchedBooksStatus, setSearchedBooksStatus] = useState(INITIAL_STATUS);
   const searchForBook = async (searchQuery) => {
-    setSearchedBooksStatus(INITIAL_STATUS);
+    unsetSearchedBookStatus();
     try {
       const response = await axios.get(`/books?currentStatus=available&search=${searchQuery}`);
       setSuccessStatus(setSearchedBooksStatus, 'Books found');
@@ -140,6 +140,9 @@ export const BookProvider = ({ children }) => {
       return [];
     }
   };
+  const unsetSearchedBookStatus = () => {
+    setSearchedBooksStatus(INITIAL_STATUS);
+  }
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -176,12 +179,16 @@ export const BookProvider = ({ children }) => {
         allBooksStatus,
         getBookById,
         bookByIdStatus,
+
         patchBookDetails,
         updateBookStatus,
         unsetUpdateBookStatus,
+
         postBook,
         postBookStatus,
+
         searchedBooksStatus,
+        unsetSearchedBookStatus,
         searchForBook,
       }}
     >

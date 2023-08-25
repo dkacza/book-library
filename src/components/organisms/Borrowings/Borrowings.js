@@ -6,7 +6,7 @@ import { ReactComponent as BookBorrowIcon } from 'assets/icons/book-borrow-icon.
 import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
 import styled from 'styled-components';
 
-const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow, ...props }) => {
+const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow, eligible, ...props }) => {
   return (
     <StyledBorrowings className={props.className}>
       <InputWithIcon
@@ -18,7 +18,7 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, han
         value={bookSearchQuery}
         onChange={handleQueryChange}
       ></InputWithIcon>
-      <p className='tip'>Search by title, isbn or author</p>
+      <p className="tip">Search by title, isbn or author</p>
       {booksSearchResult ? (
         booksSearchResult.length > 0 ? (
           <ul className="book-list">
@@ -32,7 +32,14 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, han
                 <p>{book.title}</p>
                 <p>{book.authors?.map((author) => author.name)?.join(', ')}</p>
                 <p>{book.isbn}</p>
-                <SquareTileButton onClick={(e) => handleBookBorrow(e, book._id)} Icon={BookBorrowIcon} />
+                <SquareTileButton
+                  className={eligible ? 'eligible' : 'not-eligible'}
+                  onClick={(e) => {
+                    if (!eligible) return;
+                    handleBookBorrow(e, book._id);
+                  }}
+                  Icon={BookBorrowIcon}
+                />
               </li>
             ))}
           </ul>
@@ -40,7 +47,7 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, han
           <p>No books found</p>
         )
       ) : (
-        <p>Search for a book by title or ISBN</p>
+        ''
       )}
     </StyledBorrowings>
   );

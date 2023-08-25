@@ -85,7 +85,11 @@ const StyledBorrowings = styled.div`
     ${SquareTileButton} {
       margin: 0 0.75rem 0.75rem 2rem;
     }
-  }
+    ${SquareTileButton}.not-eligible {
+      background-color: ${({theme}) => theme.colors.error1};
+      color: ${({theme}) => theme.colors.primary1};
+    }
+   }
 `;
 
 export default StyledBorrowings;

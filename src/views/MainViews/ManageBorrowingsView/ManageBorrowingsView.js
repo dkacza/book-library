@@ -29,6 +29,7 @@ const ManageBorrowings = () => {
             <UserSelection setSelectedUser={setSelectedUser} />
           )}
         </StyledContentSection>
+        {}
       </main>
     </MainViewTemplate>
   );

@@ -8,7 +8,8 @@ const StyledUserSelection = styled.div`
   }
   ${Table} {
     width: 65%;
-    height: 40rem;
+    height: 28rem;
+    margin-bottom: 2rem;
   }
   .tip {
     margin-top: 0.25rem;
@@ -26,6 +27,7 @@ const StyledUserSelection = styled.div`
     }
     ${Table} {
       height: 20rem;
+      margin-bottom: 0;
     }
     .tip {
       max-width: 30rem;
