@@ -13,8 +13,9 @@ import useLogin from 'hooks/useLogin';
 import styled from 'styled-components';
 
 const LoginForm = ({ ...props }) => {
-  const { errors, register, handleLoginSubmit, isLoading, errorMessage, navigate } = useLogin();
+  const { register, handleLoginSubmit, isLoading, loginError, navigate } = useLogin();
 
+  console.log(loginError);
   return (
     <StyledForm className={props.className} onSubmit={handleLoginSubmit}>
       <InputWithIcon
@@ -24,7 +25,7 @@ const LoginForm = ({ ...props }) => {
         name={'email'}
         placeholder={'email'}
         Icon={EmailIcon}
-        error={errors.email}
+        error={loginError?.formError?.email}
       />
 
       <InputWithIcon
@@ -34,7 +35,7 @@ const LoginForm = ({ ...props }) => {
         name={'password'}
         placeholder={'password'}
         Icon={PasswordIcon}
-        error={errors.password}
+        error={loginError?.formError?.password}
       />
 
       <StyledLink to="/reset-password">Forgot the password?</StyledLink>
@@ -43,7 +44,8 @@ const LoginForm = ({ ...props }) => {
 
       <div className="message-section">
         {isLoading ? <LoadingDots /> : ''}
-        {errorMessage ? <p className="error">{errorMessage}</p> : ''}
+        {loginError?.formError ? <p className="error">Email and password are required to log in</p> : ''}
+        {loginError?.dataProviderError ? <p className="error">{loginError.dataProviderError}</p> : ''}
       </div>
 
       {navigate ? <Navigate to="/books" /> : ''}

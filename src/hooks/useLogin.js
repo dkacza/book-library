@@ -5,10 +5,10 @@ import axios from 'api/axios';
 import { setCookie } from 'utils/cookies';
 
 const useLogin = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { sendLoginRequest, loginStatus, unsetLoginStatus} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState();
   const [navigate, setNavigate] = useState(false);
+  const [loginError, setLoginError] = useState({ });
   const {
     register,
     handleSubmit,
@@ -16,32 +16,29 @@ const useLogin = () => {
     formState: { errors },
   } = useForm();
 
+  // Send login request when form is successfully submitted
   const onSubmit = (data) => {
     setIsLoading(true);
-    setErrorMessage('');
-    axios
-      .post('/users/login', {
-        email: data.email,
-        password: data.password,
-      })
-      .then((res) => {
-        const userData = res.data.data.user;
-        setAuth(userData);
-        const cookieVal = userData._id;
-        setCookie('user', cookieVal, 1);
-        setErrorMessage('');
-        setNavigate(true);
-      })
-      .catch((err) => {
-        const message = err?.response?.data?.message || 'Connection error';
-        setErrorMessage(message);
-      })
-      .finally(() => setIsLoading(false));
-  };
-  const onError = (err) => {
-    setErrorMessage('Email and password are required to sign in');
+    setLoginError({});
+    const requestBody = {
+      email: data.email,
+      password: data.password,
+    }
+    sendLoginRequest(requestBody)
   };
 
+  // Set an error message when user fills the login form wrong
+  const onError = (err) => {
+    console.log(err);
+    setLoginError({
+      ...loginError,
+      formError: err
+    });
+  };
+
+  // When component mounts:
+  // 1. Add the event listener for submitting login with enter key
+  // 2. Set focus on email input
   useEffect(() => {
     const listener = (e) => {
       if (e.code !== 'Enter') return;
@@ -55,12 +52,25 @@ const useLogin = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (loginStatus.success) {
+      setNavigate(true);
+      unsetLoginStatus();
+      return;
+    }
+    setLoginError({
+      ...loginError,
+      dataProviderError: loginStatus.error,
+    })
+    setIsLoading(false);
+  }, [loginStatus])
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
   };
 
-  return { handleSubmit, errors, register, handleLoginSubmit, isLoading, errorMessage, navigate };
+  return { handleSubmit, register, handleLoginSubmit, isLoading, loginError, navigate };
 };
 
 export default useLogin;
