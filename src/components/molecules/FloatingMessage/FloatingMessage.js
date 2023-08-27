@@ -18,7 +18,6 @@ const StyledFloatingMessage = styled.div`
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
   transition: 0.2s;
   
-  
   &.hidden {
     width: 4rem;
     height: 4rem;
@@ -32,6 +31,11 @@ const StyledFloatingMessage = styled.div`
     button.open-modal {
       display: none;
     }
+  }
+  
+  &.hidden.success {
+    display: none;
+    position: absolute;
   }
 
   p.title {
