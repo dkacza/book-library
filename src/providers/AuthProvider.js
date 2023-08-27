@@ -40,11 +40,12 @@ export const AuthProvider = ({ children }) => {
     setAuth({});
   };
 
-  const [loginStatus, setLoginStatus] = useState({});
+  const [loginStatus, setLoginStatus] = useState(INITIAL_STATUS);
   const unsetLoginStatus = () => {
     setLoginStatus(INITIAL_STATUS);
-  }
+  };
   const sendLoginRequest = (requestBody) => {
+    unsetLoginStatus();
     axios
       .post('users/login', requestBody)
       .then((res) => {
@@ -52,12 +53,31 @@ export const AuthProvider = ({ children }) => {
         setAuth(userData);
         const cookieVal = userData._id;
         setCookie('user', cookieVal, DAYS_TO_EXPIRE);
-        setSuccessStatus(setLoginStatus, 'Successfully logged in.')
+        setSuccessStatus(setLoginStatus, 'Successfully logged in.');
       })
       .catch((err) => {
-        const errorMsgResponse = err.response.data.message || 'Connection error';
-        setErrorStatus(setLoginStatus, errorMsgResponse );
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        setErrorStatus(setLoginStatus, errorMsgResponse);
+      });
+  };
+
+  const [refreshAuthorizationStatus, setRefreshAuthorizationStatus] = useState(INITIAL_STATUS);
+  const unsetRefreshAuthorizationStatus = () => {
+    setRefreshAuthorizationStatus(INITIAL_STATUS);
+  };
+  const refreshAuthorization = () => {
+    unsetRefreshAuthorizationStatus();
+    axios
+      .get('/users/me')
+      .then((res) => {
+        const currentUser = res.data.data.user;
+        setAuth(currentUser);
+        setSuccessStatus(setRefreshAuthorizationStatus, 'Authorization data received');
       })
+      .catch((err) => {
+        const errorMsgResponse = err?.response?.data?.message || 'Cannot retrieve authorization data';
+        setErrorStatus(setRefreshAuthorizationStatus, errorMsgResponse);
+      });
   };
 
   useEffect(() => {
@@ -73,10 +93,15 @@ export const AuthProvider = ({ children }) => {
         sendLogoutRequest,
         redirectionMessage,
         redirectionError,
+        setRedirectionError,
 
         sendLoginRequest,
         loginStatus,
         unsetLoginStatus,
+
+        refreshAuthorization,
+        refreshAuthorizationStatus,
+        unsetRefreshAuthorizationStatus,
       }}
     >
       {children}

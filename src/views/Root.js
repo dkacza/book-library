@@ -25,9 +25,10 @@ import { UsersProvider } from 'providers/UsersProvider';
 import { BorrowingsProvider } from 'providers/BorrowingsProvider';
 
 const Root = () => {
-  const { setAuth, auth } = useContext(AuthContext);
+  const { auth, refreshAuthorization, refreshAuthoriziatonStatus } = useContext(AuthContext);
   const [authChecked, setAuthChecked] = useState(false);
 
+  // TODO refactor with use memo
   useEffect(() => {
     setAuthChecked(false);
     const user = getCookie('user');
@@ -35,20 +36,11 @@ const Root = () => {
       setAuthChecked(true);
       return;
     }
-    axios
-      .get(`/users/me`)
-      .then((res) => {
-        const { user } = res.data.data;
-        setAuth(user);
-        setAuthChecked(true);
-      })
-      .catch((err) => {
-        console.log('Cannot retrieve authorization data');
-      })
-      .finally(() => {
-        setAuthChecked(true);
-      });
+    refreshAuthorization();
   }, []);
+  useEffect(() => {
+    setAuthChecked(true);
+  }, [refreshAuthoriziatonStatus])
 
   return (
     <Router>
