@@ -15,7 +15,6 @@ const useLogin = () => {
     setFocus,
     formState: { errors },
   } = useForm();
-  const location = useLocation();
 
   // Send login request when form is successfully submitted
   const onSubmit = (data) => {
@@ -59,6 +58,7 @@ const useLogin = () => {
     if (loginStatus.success) {
       setNavigate(true);
       unsetLoginStatus();
+      setIsLoading(false);
       return;
     }
     setLoginError({

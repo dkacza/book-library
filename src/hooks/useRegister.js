@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from 'providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
-import { setCookie } from 'utils/cookies';
 
 const useRegister = () => {
-  const { setAuth } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { setAuth, sendSignupRequest, signupStatus, unsetSignupStatus } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [navigate, setNavigate] = useState(false);
+  const [registerError, setRegisterError] = useState({});
   const {
     register,
     handleSubmit,
@@ -15,45 +14,50 @@ const useRegister = () => {
     formState: { errors },
   } = useForm();
 
+  // Send signup request when form is successfully submitted
   const onSubmit = (data) => {
-    setErrorMessage('');
-    axios
-      .post('/users/signup', {
-        firstName: data['first-name'],
-        lastName: data['last-name'],
-        email: data['email'],
-        password: data['password'],
-        phoneNumber: data['phone'],
-      })
-      .then((res) => {
-        const userData = res.data.data.user;
-        setAuth(userData);
-        const cookieVal = userData._id;
-        setCookie('user', cookieVal, 1);
-        setErrorMessage('');
-        setNavigate(true);
-      })
-      .catch((err) => {
-        const { message } = err?.response?.data;
-        setErrorMessage(message);
-      });
+    setIsLoading(true);
+    setRegisterError({});
+    sendSignupRequest(data);
   };
 
+  // Set an appropriate error message
   const onError = (err) => {
-    setErrorMessage('');
-    if (err?.agreement) {
-      setErrorMessage('You have to accept the terms of service in order to register');
-      return;
-    }
+    console.log(err);
+    let formValidationMessage = '';
+
+    formValidationMessage = 'Make sure, that values you have passed are in correct form.';
     for (const [, value] of Object.entries(err)) {
       if (value.type === 'required') {
-        setErrorMessage('Please fill all the fields in the form');
-        return;
+        formValidationMessage = 'Please fill all the fields in the form.';
+        break;
       }
     }
-    setErrorMessage('Make sure, that values you have passed are in correct form.');
+    if (err?.agreement) {
+      formValidationMessage = 'You have to accept the terms of service in order to register.';
+    }
+    setRegisterError({
+      ...registerError,
+      formError: err,
+      validationMessage: formValidationMessage,
+    });
   };
 
+  useEffect(() => {
+    if (signupStatus.success) {
+      setNavigate(true);
+      unsetSignupStatus();
+      setIsLoading(false);
+      return;
+    }
+    setRegisterError({
+      ...registerError,
+      dataProviderError: signupStatus.error,
+    });
+    setIsLoading(false);
+  }, [signupStatus]);
+
+  // Mount event listeners and set focuses
   useEffect(() => {
     const listener = (e) => {
       if (e.code !== 'Enter') return;
@@ -70,13 +74,13 @@ const useRegister = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     return handleSubmit(onSubmit, onError)();
-  }
+  };
 
   return {
     register,
     handleRegister,
-    errors,
-    errorMessage,
+    registerError,
+    isLoading,
     navigate,
   };
 };

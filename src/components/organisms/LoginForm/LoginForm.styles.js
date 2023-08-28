@@ -22,6 +22,7 @@ export const StyledForm = styled.form`
   div.message-section {
     margin-top: 1.25rem;
     margin-bottom: 1rem;
+    height: 4rem;
 
     p.error {
       color: ${({ theme }) => theme.colors.error1};

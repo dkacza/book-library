@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   const [loginStatus, setLoginStatus] = useState({});
   const unsetLoginStatus = () => {
     setLoginStatus(INITIAL_STATUS);
-  }
+  };
   const sendLoginRequest = (requestBody) => {
     axios
       .post('users/login', requestBody)
@@ -52,12 +52,33 @@ export const AuthProvider = ({ children }) => {
         setAuth(userData);
         const cookieVal = userData._id;
         setCookie('user', cookieVal, DAYS_TO_EXPIRE);
-        setSuccessStatus(setLoginStatus, 'Successfully logged in.')
+        setSuccessStatus(setLoginStatus, 'Successfully logged in.');
       })
       .catch((err) => {
         const errorMsgResponse = err.response.data.message || 'Connection error';
-        setErrorStatus(setLoginStatus, errorMsgResponse );
+        setErrorStatus(setLoginStatus, errorMsgResponse);
+      });
+  };
+
+  const [signupStatus, setSignupStatus] = useState(INITIAL_STATUS);
+  const unsetSignupStatus = () => {
+    setSignupStatus(INITIAL_STATUS);
+  };
+  const sendSignupRequest = (requestBody) => {
+    unsetSignupStatus();
+    axios
+      .post('/users/signup', requestBody)
+      .then((res) => {
+        const userData = res.data.data.user;
+        setAuth(userData);
+        const cookieVal = userData._id;
+        setCookie('user', cookieVal, 1);
+        setSuccessStatus(setSignupStatus, 'User successfully signed up');
       })
+      .catch((err) => {
+        const errorMsgResponse = err?.response?.data || 'Connection error';
+        setErrorStatus(setSignupStatus, errorMsgResponse);
+      });
   };
 
   useEffect(() => {
@@ -79,6 +100,10 @@ export const AuthProvider = ({ children }) => {
         sendLoginRequest,
         loginStatus,
         unsetLoginStatus,
+
+        sendSignupRequest,
+        signupStatus,
+        unsetSignupStatus,
       }}
     >
       {children}

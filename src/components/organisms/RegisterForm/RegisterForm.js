@@ -12,33 +12,34 @@ import { Navigate } from 'react-router-dom';
 import useRegister from 'hooks/useRegister';
 import styled from 'styled-components';
 import validationRegexes from 'utils/validationRegexes';
+import LoadingDots from 'components/atoms/LoadingDots';
 
 const RegisterForm = () => {
-  const { register, handleRegister, errors, errorMessage, navigate } = useRegister();
+  const { register, handleRegister, registerError, isLoading, errorMessage, navigate } = useRegister();
 
   return (
     <StyledForm onSubmit={handleRegister}>
       <InputWithIcon
-        {...register('first-name', {
+        {...register('firstName', {
           required: true,
           validate: (val) => validationRegexes.nameRegex.test(val),
         })}
         type={'text'}
         id={'first-name'}
-        name={'first-name'}
+        name={'firstName'}
         placeholder={'first name'}
         Icon={PersonIcon}
-        error={errors['first-name']}
+        error={registerError?.formError?.firstName}
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('last-name', { required: true, validate: (val) => validationRegexes.nameRegex.test(val) })}
+        {...register('lastName', { required: true, validate: (val) => validationRegexes.nameRegex.test(val) })}
         type={'text'}
         id={'last-name'}
-        name={'last-name'}
+        name={'lastName'}
         placeholder={'last name'}
         Icon={PersonIcon}
-        error={errors['last-name']}
+        error={registerError?.formError?.lastName}
       ></InputWithIcon>
 
       <InputWithIcon
@@ -48,17 +49,17 @@ const RegisterForm = () => {
         name={'email'}
         placeholder={'email address'}
         Icon={EmailIcon}
-        error={errors.email}
+        error={registerError?.formError?.email}
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('phone', { required: true, validate: (val) => validationRegexes.phoneRegex.test(val) })}
+        {...register('phoneNumber', { required: true, validate: (val) => validationRegexes.phoneRegex.test(val) })}
         type={'text'}
-        id={'phone'}
-        name={'phone'}
+        id={'phone-number'}
+        name={'phoneNumber'}
         placeholder={'phone number'}
         Icon={PhoneIcon}
-        error={errors.phone}
+        error={registerError?.formError?.phoneNumber}
       ></InputWithIcon>
 
       <InputWithIcon
@@ -68,20 +69,20 @@ const RegisterForm = () => {
         name={'password'}
         placeholder={'password'}
         Icon={PasswordIcon}
-        error={errors.password}
+        error={registerError?.formError?.password}
       ></InputWithIcon>
 
       <InputWithIcon
-        {...register('password-confirm', {
+        {...register('passwordConfirm', {
           required: true,
           validate: (val, formValues) => val === formValues.password,
         })}
         type={'password'}
         id={'password-confirm'}
-        name={'password-confirm'}
+        name={'passwordConfirm'}
         placeholder={'confirm password'}
         Icon={PasswordConfirmIcon}
-        error={errors['password-confirm']}
+        error={registerError?.formError?.passwordConfirm}
       ></InputWithIcon>
 
       <p className="password-info">Password should contain at least 8 characters, including letters and digits.</p>
@@ -95,7 +96,11 @@ const RegisterForm = () => {
 
       <SubmitButton type="submit">Register</SubmitButton>
 
-      <p className={`error-message ${errorMessage ? '' : 'hidden'}`}>{errorMessage}</p>
+      <div className="message-section">
+        {isLoading ? <LoadingDots /> : ''}
+        {registerError?.validationMessage ? <p className="error">{registerError.validationMessage}</p> : ''}
+        {registerError?.dataProviderError ? <p className="error">{registerError.dataProviderError}</p> : ''}
+      </div>
 
       {navigate ? <Navigate to="/books" /> : ''}
     </StyledForm>
