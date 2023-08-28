@@ -1,20 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from 'providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import axios from 'api/axios';
-import { setCookie } from 'utils/cookies';
+import { useLocation } from 'react-router-dom';
 
 const useLogin = () => {
-  const { sendLoginRequest, loginStatus, unsetLoginStatus} = useContext(AuthContext);
+  const { sendLoginRequest, loginStatus, unsetLoginStatus, setRedirectionMessage, setRedirectionError } =
+    useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [navigate, setNavigate] = useState(false);
-  const [loginError, setLoginError] = useState({ });
+  const [loginError, setLoginError] = useState({});
   const {
     register,
     handleSubmit,
     setFocus,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
 
   // Send login request when form is successfully submitted
   const onSubmit = (data) => {
@@ -23,8 +24,8 @@ const useLogin = () => {
     const requestBody = {
       email: data.email,
       password: data.password,
-    }
-    sendLoginRequest(requestBody)
+    };
+    sendLoginRequest(requestBody);
   };
 
   // Set an error message when user fills the login form wrong
@@ -32,7 +33,7 @@ const useLogin = () => {
     console.log(err);
     setLoginError({
       ...loginError,
-      formError: err
+      formError: err,
     });
   };
 
@@ -49,6 +50,8 @@ const useLogin = () => {
     setFocus('email');
     return () => {
       document.removeEventListener('keydown', listener);
+      setRedirectionMessage('');
+      setRedirectionError('');
     };
   }, []);
 
@@ -61,9 +64,9 @@ const useLogin = () => {
     setLoginError({
       ...loginError,
       dataProviderError: loginStatus.error,
-    })
+    });
     setIsLoading(false);
-  }, [loginStatus])
+  }, [loginStatus]);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();

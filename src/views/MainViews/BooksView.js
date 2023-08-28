@@ -30,7 +30,6 @@ const BooksView = () => {
     authors: book.authors.map((author) => author.name).join(', '),
   }));
 
-  console.log(handleRecordSelect);
   return (
     <MainViewTemplate>
       <Navigation />

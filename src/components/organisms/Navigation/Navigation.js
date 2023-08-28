@@ -48,6 +48,7 @@ const Navigation = ({ ...props }) => {
         name={'Log out'}
         destination={'/login'}
         Icon={LogoutIcon}
+        state={{ redirectionMessage: '' }}
       />
     </StyledNavigation>
   );

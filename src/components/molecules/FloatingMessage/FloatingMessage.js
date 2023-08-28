@@ -7,32 +7,36 @@ const StyledFloatingMessage = styled.div`
   &.error {
     background-color: ${({ theme }) => theme.colors.error1};
   }
+
   &.success {
     background-color: ${({ theme }) => theme.colors.accept2};
   }
-  
+
   color: ${({ theme }) => theme.colors.primary1};
   padding: 1rem;
   position: relative;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
   transition: 0.2s;
-  
+
   &.hidden {
     width: 4rem;
     height: 4rem;
+
     p.title, p.msg, button.close-modal {
       display: none;
     }
   }
+
   &.active {
     width: 320px;
     height: min-content;
+
     button.open-modal {
       display: none;
     }
   }
-  
+
   &.hidden.success {
     display: none;
     position: absolute;

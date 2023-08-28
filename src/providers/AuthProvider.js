@@ -92,6 +92,7 @@ export const AuthProvider = ({ children }) => {
         setAuth,
         sendLogoutRequest,
         redirectionMessage,
+        setRedirectionMessage,
         redirectionError,
         setRedirectionError,
 
