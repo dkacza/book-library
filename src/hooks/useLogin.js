@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from 'providers/AuthProvider';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 const useLogin = () => {
   const { sendLoginRequest, loginStatus, unsetLoginStatus, setRedirectionMessage, setRedirectionError } =
@@ -14,6 +15,7 @@ const useLogin = () => {
     setFocus,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
 
   // Send login request when form is successfully submitted
   const onSubmit = (data) => {

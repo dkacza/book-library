@@ -33,6 +33,9 @@ const StyledFloatingMessage = styled.div`
       display: none;
     }
   }
+  &.hidden.success {
+    display: none;
+  }
 
   p.title {
     font-weight: bold;
