@@ -14,8 +14,6 @@ import styled from 'styled-components';
 
 const LoginForm = ({ ...props }) => {
   const { register, handleLoginSubmit, isLoading, loginError, navigate } = useLogin();
-
-  console.log(loginError);
   return (
     <StyledForm className={props.className} onSubmit={handleLoginSubmit}>
       <InputWithIcon
