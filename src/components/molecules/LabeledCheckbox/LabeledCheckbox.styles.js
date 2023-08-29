@@ -13,7 +13,7 @@ const StyledLabeledCheckbox = styled.div`
     color: currentColor;
     width: 1.5rem;
     height: 1.5rem;
-    border: 0.15rem solid ${({ theme }) => theme.colors.primary3};
+    border: 0.15rem solid ${({theme}) => theme.colors.primary3};
 
     display: grid;
     place-content: center;
@@ -27,7 +27,7 @@ const StyledLabeledCheckbox = styled.div`
     border-radius: 0.15rem;
     transform: scale(0);
     transition: 80ms transform ease-in-out;
-    box-shadow: inset 1em 1em ${({ theme }) => theme.colors.secondary1};
+    box-shadow: inset 1em 1em ${({theme}) => theme.colors.secondary1};
   }
 
   input[type='checkbox']:checked::before {

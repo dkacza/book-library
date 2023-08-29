@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const StyledNavWithIcon = styled(NavLink)`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 1rem 0.75rem;
-  color: ${({ theme }) => theme.colors.secondary2};
+  color: ${({theme}) => theme.colors.secondary2};
   text-decoration: none;
   position: relative;
   z-index: 1;
@@ -40,10 +40,10 @@ const StyledNavWithIcon = styled(NavLink)`
       left: 0;
       animation-name: slideIn;
       animation-duration: 0.2s;
-      content: "";
+      content: '';
       width: 100%;
       height: 100%;
-      background-color: ${({ theme }) => theme.colors.primary3};
+      background-color: ${({theme}) => theme.colors.primary3};
       z-index: -1;
     }
   }

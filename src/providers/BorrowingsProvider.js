@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 import useWindowDimensions from 'hooks/useWindowDimensions';
 import axios from 'api/axios';
 import AuthContext from 'providers/AuthProvider';
+import providerHelpers from 'utils/providerHelpers';
 
 const BorrowingsContext = createContext({});
 
@@ -10,25 +11,7 @@ const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
 
-const INITIAL_STATUS = {
-  error: '',
-  confirm: '',
-};
-
-const setSuccessStatus = (setter, message) => {
-  setter({
-    error: '',
-    success: message,
-  });
-};
-const setErrorStatus = (setter, message) => {
-  setter({
-    error: message,
-    success: '',
-  });
-};
-
-const processBorrowing = (borrowing) => {
+const processBorrowing = borrowing => {
   if (borrowing.firstName && borrowing.lastName) {
     borrowing.fullName = borrowing.firstName + ' ' + borrowing.lastName;
   }
@@ -40,110 +23,158 @@ const processBorrowing = (borrowing) => {
   return borrowing;
 };
 
-export const BorrowingsProvider = ({ children }) => {
-  const { auth } = useContext(AuthContext);
+export const BorrowingsProvider = ({children}) => {
+  const {auth} = useContext(AuthContext);
 
   const [history, setHistory] = useState([]);
   const [historyQuery, setHistoryQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_HISTORY_PAGE);
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const [authorizedHistory, setAuthorizedHistory] = useState(false);
 
-  const [borrowingsListStatus, setBorrowingsListStatus] = useState(INITIAL_STATUS);
-  const fetchLoggedInUsersBorrowings = (page) => {
-    setBorrowingsListStatus(INITIAL_STATUS);
+  const [borrowingsListStatus, setBorrowingsListStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetBorrowingsListStatus = () => {
+    setBorrowingsListStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const fetchLoggedInUsersBorrowings = page => {
+    unsetBorrowingsListStatus();
     axios
-      .get(`users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`)
-      .then((res) => {
+      .get(
+        `users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`,
+      )
+      .then(res => {
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        setSuccessStatus(setBorrowingsListStatus, 'Borrowings successfully fetched');
+        providerHelpers.setSuccessStatus(
+          setBorrowingsListStatus,
+          'Borrowings successfully fetched',
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
+        providerHelpers.setErrorStatus(
+          setBorrowingsListStatus,
+          errorMsgResponse,
+        );
       });
   };
-  const fetchAllBorrowings = (page) => {
-    setBorrowingsListStatus(INITIAL_STATUS);
+  const fetchAllBorrowings = page => {
+    unsetBorrowingsListStatus();
     axios
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
-      .then((res) => {
+      .then(res => {
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        setSuccessStatus(setBorrowingsListStatus, 'Borrowings successfully fetched');
+        providerHelpers.setSuccessStatus(
+          setBorrowingsListStatus,
+          'Borrowings successfully fetched',
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
+        providerHelpers.setErrorStatus(
+          setBorrowingsListStatus,
+          errorMsgResponse,
+        );
       });
   };
 
-  const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(INITIAL_STATUS);
-  const getBorrowingById = async (borrowingId) => {
+  const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetBorrowingByIdStatus = () => {
+    setBorrowingByIdStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const getBorrowingById = async borrowingId => {
     unsetBorrowingByIdStatus();
-    let borrowing = history.find((borrowing) => borrowing._id === borrowingId);
+    let borrowing = history.find(borrowing => borrowing._id === borrowingId);
     if (borrowing) {
-      setSuccessStatus(setBorrowingByIdStatus, 'Borrowing found');
+      providerHelpers.setSuccessStatus(
+        setBorrowingByIdStatus,
+        'Borrowing found',
+      );
       return borrowing;
     }
     try {
       const response = await axios.get(`/rentals/${borrowingId}`);
       const borrowing = processBorrowing(response.data.data.rental);
-      setSuccessStatus(setBorrowingByIdStatus, 'Borrowing fetched successfully');
+      providerHelpers.setSuccessStatus(
+        setBorrowingByIdStatus,
+        'Borrowing fetched successfully',
+      );
       return borrowing;
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setBorrowingByIdStatus, errorMsgResponse);
+      providerHelpers.setErrorStatus(setBorrowingByIdStatus, errorMsgResponse);
       return {};
     }
   };
-  const unsetBorrowingByIdStatus = () => {
-    setBorrowingByIdStatus(INITIAL_STATUS);
-  };
 
-  const [returnedBorrowingStatus, setReturnedBorrowingStatus] = useState(INITIAL_STATUS);
-  const patchBorrowingAsReturned = async (borrowingId) => {
+  const [returnedBorrowingStatus, setReturnedBorrowingStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetReturnedBorrowingStatus = () => {
+    setReturnedBorrowingStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const patchBorrowingAsReturned = async borrowingId => {
     unsetReturnedBorrowingStatus();
     try {
-      const response = await axios.patch(`/rentals/${borrowingId}`, { currentStatus: 'returned' });
-      setSuccessStatus(setReturnedBorrowingStatus, 'Book successfully returned');
+      const response = await axios.patch(`/rentals/${borrowingId}`, {
+        currentStatus: 'returned',
+      });
+      providerHelpers.setSuccessStatus(
+        setReturnedBorrowingStatus,
+        'Book successfully returned',
+      );
       return processBorrowing(response.data.data.rental);
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setReturnedBorrowingStatus, errorMsgResponse);
+      providerHelpers.setErrorStatus(
+        setReturnedBorrowingStatus,
+        errorMsgResponse,
+      );
       return {};
     }
   };
-  const unsetReturnedBorrowingStatus = () => {
-    setReturnedBorrowingStatus(INITIAL_STATUS);
-  }
 
-  const [createBorrowingStatus, setCreateBorrowingStatus] = useState(INITIAL_STATUS);
+  const [createBorrowingStatus, setCreateBorrowingStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetCreateBorrowingStatus = () => {
+    setCreateBorrowingStatus(providerHelpers.INITIAL_STATUS);
+  };
   const postBorrowing = async (bookId, userId) => {
     try {
-      const response = await axios.post('/rentals', { user: userId, book: bookId });
-      setSuccessStatus(setCreateBorrowingStatus, 'Borrowing successfully indexed');
+      const response = await axios.post('/rentals', {
+        user: userId,
+        book: bookId,
+      });
+      providerHelpers.setSuccessStatus(
+        setCreateBorrowingStatus,
+        'Borrowing successfully indexed',
+      );
       return processBorrowing(response.data.data.rental);
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setCreateBorrowingStatus, errorMsgResponse);
+      providerHelpers.setErrorStatus(
+        setCreateBorrowingStatus,
+        errorMsgResponse,
+      );
       return {};
     }
   };
-  const unsetCreateBorrowingStatus = () => {
-    setCreateBorrowingStatus(INITIAL_STATUS);
-  }
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -184,6 +215,7 @@ export const BorrowingsProvider = ({ children }) => {
 
         history,
         borrowingsListStatus,
+        unsetBorrowingsListStatus,
 
         getBorrowingById,
         borrowingByIdStatus,

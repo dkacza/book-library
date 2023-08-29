@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 import useWindowDimensions from 'hooks/useWindowDimensions';
 import axios from 'api/axios';
 import AuthContext from 'providers/AuthProvider';
 import isEmptyObject from 'utils/isEmptyObject';
+import providerHelpers from 'utils/providerHelpers';
 
 const BookContext = createContext({});
 
@@ -11,138 +12,162 @@ const LIMIT_1080P = 10;
 const LIMIT_1440P = 15;
 const LIMIT_4K = 20;
 
-const INITIAL_STATUS = {
-  error: '',
-  confirm: '',
-};
-
-const setSuccessStatus = (setter, message) => {
-  setter({
-    error: '',
-    success: message,
-  });
-};
-const setErrorStatus = (setter, message) => {
-  setter({
-    error: message,
-    success: '',
-  });
-};
-const processBook = (book) => {
+const processBook = book => {
   book.publicationDate = book.publicationDate.split('T')[0];
   return book;
 };
 
-export const BookProvider = ({ children }) => {
+export const BookProvider = ({children}) => {
   const [books, setBooks] = useState([]);
   const [bookQuery, setBookQuery] = useState('');
   const [paginationData, setPaginationData] = useState({});
   const [currentPage, setCurrentPage] = useState(INITIAL_BOOK_PAGE);
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
-  const { width, height } = useWindowDimensions();
-  const { auth } = useContext(AuthContext);
+  const {width, height} = useWindowDimensions();
+  const {auth} = useContext(AuthContext);
 
-  const [allBooksStatus, setAllBooksStatus] = useState(INITIAL_STATUS);
-  const fetchAllBooks = (page) => {
-    setAllBooksStatus(INITIAL_STATUS);
+  const [allBooksStatus, setAllBooksStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetAllBookStatus = () => {
+    setAllBooksStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const fetchAllBooks = page => {
+    unsetAllBookStatus();
     axios
       .get(`/books?page=${page}&limit=${limitPerPage}&${bookQuery}`)
-      .then((res) => {
+      .then(res => {
         const booksResponse = res.data.data.books;
         setBooks(booksResponse.map(processBook));
 
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        setSuccessStatus(setAllBooksStatus, 'Books successfully fetched');
+        providerHelpers.setSuccessStatus(
+          setAllBooksStatus,
+          'Books successfully fetched',
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setAllBooksStatus, errorMsgResponse);
+        providerHelpers.setErrorStatus(setAllBooksStatus, errorMsgResponse);
       });
   };
 
   // Return a book from the currently loaded ones
   // If it cannot be found, fetch it
-  const [bookByIdStatus, setBookByIdStatus] = useState(INITIAL_STATUS);
-  const getBookById = async (id) => {
-    setBookByIdStatus(INITIAL_STATUS);
-    let book = books.find((book) => book._id === id);
+  const [bookByIdStatus, setBookByIdStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetBookByIdStatus = () => {
+    setBookByIdStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const getBookById = async id => {
+    unsetBookByIdStatus();
+    let book = books.find(book => book._id === id);
     if (book) {
-      setSuccessStatus(setBookByIdStatus, 'Book successfully selected');
+      providerHelpers.setSuccessStatus(
+        setBookByIdStatus,
+        'Book successfully selected',
+      );
       return book;
     }
 
     try {
       const bookResponse = await axios.get(`books/${id}`);
-      setSuccessStatus(setBookByIdStatus, 'Book successfully fetched');
+      providerHelpers.setSuccessStatus(
+        setBookByIdStatus,
+        'Book successfully fetched',
+      );
       return processBook(bookResponse.data.data.book);
     } catch (err) {
-      setErrorStatus(setBookByIdStatus, err.response.data.message);
+      providerHelpers.setErrorStatus(
+        setBookByIdStatus,
+        err.response.data.message,
+      );
       return {};
     }
   };
 
-  const [updateBookStatus, setUpdateBookStatus] = useState(INITIAL_STATUS);
+  const [updateBookStatus, setUpdateBookStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetUpdateBookStatus = () => {
+    setUpdateBookStatus(providerHelpers.INITIAL_STATUS);
+  };
   const patchBookDetails = async (id, requestBody) => {
+    unsetUpdateBookStatus();
     axios
       .patch(`books/${id}`, requestBody, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => {
+      .then(res => {
         const updatedBookResponse = res.data.data.book;
         const updatedBooks = [...books];
         for (let i = 0; i < updatedBooks.length; i++) {
-          if (updatedBooks[i]._id === id) updatedBooks[i] = processBook(updatedBookResponse);
+          if (updatedBooks[i]._id === id)
+            updatedBooks[i] = processBook(updatedBookResponse);
         }
         setBooks(updatedBooks);
-        setSuccessStatus(setUpdateBookStatus, 'Book details successfully updated');
+        providerHelpers.setSuccessStatus(
+          setUpdateBookStatus,
+          'Book details successfully updated',
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setUpdateBookStatus, errorMsgResponse);
+        providerHelpers.setErrorStatus(setUpdateBookStatus, errorMsgResponse);
       });
   };
-  const unsetUpdateBookStatus = () => {
-    setUpdateBookStatus(INITIAL_STATUS);
-  };
 
-  const [postBookStatus, setPostBookStatus] = useState(INITIAL_STATUS);
-  const postBook = (requestBody) => {
-    setPostBookStatus(INITIAL_STATUS);
+  const [postBookStatus, setPostBookStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetPostBookStatus = () => {
+    setPostBookStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const postBook = requestBody => {
+    unsetPostBookStatus();
     axios
       .post(`books`, requestBody, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => {
-        setSuccessStatus(setPostBookStatus, 'Book successfully created');
+      .then(res => {
+        providerHelpers.setSuccessStatus(
+          setPostBookStatus,
+          'Book successfully created',
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         const errorMsgResponse = err.response.data.message;
-        setErrorStatus(setPostBookStatus, errorMsgResponse);
+        providerHelpers.setErrorStatus(setPostBookStatus, errorMsgResponse);
       });
   };
 
-  const [searchedBooksStatus, setSearchedBooksStatus] = useState(INITIAL_STATUS);
-  const searchForBook = async (searchQuery) => {
+  const [searchedBooksStatus, setSearchedBooksStatus] = useState(
+    providerHelpers.INITIAL_STATUS,
+  );
+  const unsetSearchedBookStatus = () => {
+    setSearchedBooksStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const searchForBook = async searchQuery => {
     unsetSearchedBookStatus();
     try {
-      const response = await axios.get(`/books?currentStatus=available&search=${searchQuery}`);
-      setSuccessStatus(setSearchedBooksStatus, 'Books found');
+      const response = await axios.get(
+        `/books?currentStatus=available&search=${searchQuery}`,
+      );
+      providerHelpers.setSuccessStatus(setSearchedBooksStatus, 'Books found');
       return response.data.data.books.map(processBook);
     } catch (err) {
       const errorMsgResponse = err.response.data.message;
-      setErrorStatus(setSearchedBooksStatus, errorMsgResponse);
+      providerHelpers.setErrorStatus(setSearchedBooksStatus, errorMsgResponse);
       return [];
     }
   };
-  const unsetSearchedBookStatus = () => {
-    setSearchedBooksStatus(INITIAL_STATUS);
-  }
 
   // Set limit per page on render and widow resize
   useEffect(() => {
@@ -177,8 +202,11 @@ export const BookProvider = ({ children }) => {
 
         books,
         allBooksStatus,
+        unsetAllBookStatus,
+
         getBookById,
         bookByIdStatus,
+        unsetBookByIdStatus,
 
         patchBookDetails,
         updateBookStatus,
@@ -186,10 +214,11 @@ export const BookProvider = ({ children }) => {
 
         postBook,
         postBookStatus,
+        unsetPostBookStatus,
 
+        searchForBook,
         searchedBooksStatus,
         unsetSearchedBookStatus,
-        searchForBook,
       }}
     >
       {children}

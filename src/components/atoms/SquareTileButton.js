@@ -9,13 +9,13 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
-  background-color: ${({ theme }) => theme.colors.primary2};
-  color: ${({ theme }) => theme.colors.secondary1};
+  background-color: ${({theme}) => theme.colors.primary2};
+  color: ${({theme}) => theme.colors.secondary1};
   transition: 0.2s;
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary3};
+    background-color: ${({theme}) => theme.colors.primary3};
   }
 `;
 
@@ -24,7 +24,7 @@ const SquareTileButton = ({Icon, onClick, ...props}) => {
     <StyledButton className={props.className} onClick={onClick}>
       <Icon></Icon>
     </StyledButton>
-  )
-}
+  );
+};
 
 export default styled(SquareTileButton)``;

@@ -2,7 +2,7 @@ import React from 'react';
 import StyledLink from 'components/atoms/StyledLink';
 import styled from 'styled-components';
 
-const LinkWithDescription = ({ description, linkName, destination }) => {
+const LinkWithDescription = ({description, linkName, destination}) => {
   return (
     <div>
       <p className="description">{description}</p>

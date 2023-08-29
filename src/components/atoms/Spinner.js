@@ -6,7 +6,7 @@ const Spinner = styled.div`
   left: calc(50% - 3rem);
   width: 6rem;
   height: 6rem;
-  border: 0.5rem solid ${({ theme }) => theme.colors.primary3};
+  border: 0.5rem solid ${({theme}) => theme.colors.primary3};
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -20,6 +20,7 @@ const Spinner = styled.div`
     100% {
       transform: rotate(360deg);
     }
-  } `
+  }
+`;
 
 export default Spinner;

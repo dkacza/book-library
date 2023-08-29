@@ -6,15 +6,14 @@ const StyledBookImage = styled.div`
   flex-direction: column;
   width: fit-content;
   flex-basis: 12rem;
-  
+
   img {
     align-self: flex-start;
   }
-  
+
   ${FileInput} {
     margin-top: 2rem;
   }
-  
 `;
 
 export default StyledBookImage;

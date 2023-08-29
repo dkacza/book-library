@@ -6,6 +6,6 @@ const BorderlessButton = styled.button`
   background: none;
   text-decoration: underline;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.accept3};
+  color: ${({theme}) => theme.colors.accept3};
 `;
 export default BorderlessButton;

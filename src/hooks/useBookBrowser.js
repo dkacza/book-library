@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BookContext from 'providers/BookProvider';
-
 const buildQuery = (data) => {
   let queryString = '';
 
