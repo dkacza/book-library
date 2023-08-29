@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) => {
   const [auth, setAuth] = useState({});
   const [redirectionMessage, setRedirectionMessage] = useState('');
   const [redirectionError, setRedirectionError] = useState('');
+  const [authChecked, setAuthChecked] = useState(false);
   const sendLogoutRequest = () => {
     axios
       .get('/users/logout')
@@ -35,21 +36,15 @@ export const AuthProvider = ({children}) => {
         setAuth(userData);
         const cookieVal = userData._id;
         setCookie('user', cookieVal, DAYS_TO_EXPIRE);
-        providerHelpers.setSuccessStatus(
-          setLoginStatus,
-          'Successfully logged in.',
-        );
+        providerHelpers.setSuccessStatus(setLoginStatus, 'Successfully logged in.');
       })
       .catch(err => {
-        const errorMsgResponse =
-          err.response.data.message || 'Connection error';
+        const errorMsgResponse = err?.response?.data || 'Connection error';
         providerHelpers.setErrorStatus(setLoginStatus, errorMsgResponse);
       });
   };
 
-  const [signupStatus, setSignupStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [signupStatus, setSignupStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetSignupStatus = () => {
     setSignupStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -62,14 +57,27 @@ export const AuthProvider = ({children}) => {
         setAuth(userData);
         const cookieVal = userData._id;
         setCookie('user', cookieVal, 1);
-        providerHelpers.setSuccessStatus(
-          setSignupStatus,
-          'User successfully signed up',
-        );
+        providerHelpers.setSuccessStatus(setSignupStatus, 'User successfully signed up');
       })
       .catch(err => {
         const errorMsgResponse = err?.response?.data || 'Connection error';
         providerHelpers.setErrorStatus(setSignupStatus, errorMsgResponse);
+      });
+  };
+
+  const refreshUserData = () => {
+    axios
+      .get(`/users/me`)
+      .then(res => {
+        const {user} = res.data.data;
+        setAuth(user);
+        setAuthChecked(true);
+      })
+      .catch(err => {
+        alert('Connection error. Cannot retrieve authorization data');
+      })
+      .finally(() => {
+        setAuthChecked(true);
       });
   };
 
@@ -97,6 +105,10 @@ export const AuthProvider = ({children}) => {
         sendSignupRequest,
         signupStatus,
         unsetSignupStatus,
+
+        refreshUserData,
+        authChecked,
+        setAuthChecked,
       }}
     >
       {children}

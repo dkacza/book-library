@@ -26,9 +26,7 @@ export const BookProvider = ({children}) => {
   const {width, height} = useWindowDimensions();
   const {auth} = useContext(AuthContext);
 
-  const [allBooksStatus, setAllBooksStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [allBooksStatus, setAllBooksStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetAllBookStatus = () => {
     setAllBooksStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -43,22 +41,17 @@ export const BookProvider = ({children}) => {
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        providerHelpers.setSuccessStatus(
-          setAllBooksStatus,
-          'Books successfully fetched',
-        );
+        providerHelpers.setSuccessStatus(setAllBooksStatus, 'Books successfully fetched');
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setAllBooksStatus, errorMsgResponse);
       });
   };
 
   // Return a book from the currently loaded ones
   // If it cannot be found, fetch it
-  const [bookByIdStatus, setBookByIdStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [bookByIdStatus, setBookByIdStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetBookByIdStatus = () => {
     setBookByIdStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -66,32 +59,22 @@ export const BookProvider = ({children}) => {
     unsetBookByIdStatus();
     let book = books.find(book => book._id === id);
     if (book) {
-      providerHelpers.setSuccessStatus(
-        setBookByIdStatus,
-        'Book successfully selected',
-      );
+      providerHelpers.setSuccessStatus(setBookByIdStatus, 'Book successfully selected');
       return book;
     }
 
     try {
       const bookResponse = await axios.get(`books/${id}`);
-      providerHelpers.setSuccessStatus(
-        setBookByIdStatus,
-        'Book successfully fetched',
-      );
+      providerHelpers.setSuccessStatus(setBookByIdStatus, 'Book successfully fetched');
       return processBook(bookResponse.data.data.book);
     } catch (err) {
-      providerHelpers.setErrorStatus(
-        setBookByIdStatus,
-        err.response.data.message,
-      );
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+      providerHelpers.setErrorStatus(setBookByIdStatus, errorMsgResponse);
       return {};
     }
   };
 
-  const [updateBookStatus, setUpdateBookStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [updateBookStatus, setUpdateBookStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetUpdateBookStatus = () => {
     setUpdateBookStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -107,24 +90,18 @@ export const BookProvider = ({children}) => {
         const updatedBookResponse = res.data.data.book;
         const updatedBooks = [...books];
         for (let i = 0; i < updatedBooks.length; i++) {
-          if (updatedBooks[i]._id === id)
-            updatedBooks[i] = processBook(updatedBookResponse);
+          if (updatedBooks[i]._id === id) updatedBooks[i] = processBook(updatedBookResponse);
         }
         setBooks(updatedBooks);
-        providerHelpers.setSuccessStatus(
-          setUpdateBookStatus,
-          'Book details successfully updated',
-        );
+        providerHelpers.setSuccessStatus(setUpdateBookStatus, 'Book details successfully updated');
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setUpdateBookStatus, errorMsgResponse);
       });
   };
 
-  const [postBookStatus, setPostBookStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [postBookStatus, setPostBookStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetPostBookStatus = () => {
     setPostBookStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -137,33 +114,26 @@ export const BookProvider = ({children}) => {
         },
       })
       .then(res => {
-        providerHelpers.setSuccessStatus(
-          setPostBookStatus,
-          'Book successfully created',
-        );
+        providerHelpers.setSuccessStatus(setPostBookStatus, 'Book successfully created');
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setPostBookStatus, errorMsgResponse);
       });
   };
 
-  const [searchedBooksStatus, setSearchedBooksStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [searchedBooksStatus, setSearchedBooksStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetSearchedBookStatus = () => {
     setSearchedBooksStatus(providerHelpers.INITIAL_STATUS);
   };
   const searchForBook = async searchQuery => {
     unsetSearchedBookStatus();
     try {
-      const response = await axios.get(
-        `/books?currentStatus=available&search=${searchQuery}`,
-      );
+      const response = await axios.get(`/books?currentStatus=available&search=${searchQuery}`);
       providerHelpers.setSuccessStatus(setSearchedBooksStatus, 'Books found');
       return response.data.data.books.map(processBook);
     } catch (err) {
-      const errorMsgResponse = err.response.data.message;
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
       providerHelpers.setErrorStatus(setSearchedBooksStatus, errorMsgResponse);
       return [];
     }

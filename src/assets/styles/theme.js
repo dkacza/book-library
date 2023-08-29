@@ -12,4 +12,3 @@ export const theme = {
     error2: '#FF0000',
   },
 };
-

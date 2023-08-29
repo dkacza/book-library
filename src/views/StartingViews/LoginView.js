@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import StartingViewTemplate from 'views/StartingViews/StartingViewTemplate';
 import AsidePhoto from 'components/organisms/AsidePhoto/AsidePhoto';
 import LoginForm from 'components/organisms/LoginForm/LoginForm';
@@ -21,8 +21,8 @@ const LoginView = () => {
           destination={'/register'}
         ></LinkWithDescription>
       </main>
-      {redirectionMessage ? <FloatingMessage success={redirectionMessage}/> : ''}
-      {redirectionError ? <FloatingMessage error={redirectionError}/> : ''}
+      {redirectionMessage ? <FloatingMessage success={redirectionMessage} /> : ''}
+      {redirectionError ? <FloatingMessage error={redirectionError} /> : ''}
     </StartingViewTemplate>
   );
 };

@@ -11,8 +11,7 @@ const Pagination = ({paginationData, handlePageChange, ...props}) => {
   return (
     <StyledPagination className={props.className}>
       <p className="page-info">
-        {paginationData.currentStart} - {paginationData.currentEnd} of{' '}
-        {paginationData.total} items{' '}
+        {paginationData.currentStart} - {paginationData.currentEnd} of {paginationData.total} items{' '}
       </p>
       <div className="page-control-buttons">
         <SquareTileButton

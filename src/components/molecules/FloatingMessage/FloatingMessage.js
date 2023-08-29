@@ -67,9 +67,7 @@ const FloatingMessage = ({error, success, ...props}) => {
   const status = error ? 'error' : success ? 'success' : 'hidden';
   return (
     <StyledFloatingMessage
-      className={`${status}  ${props.className} ${
-        active ? 'active' : 'hidden'
-      }`}
+      className={`${status}  ${props.className} ${active ? 'active' : 'hidden'}`}
     >
       <p className="title">{success ? 'Success' : 'Service error'}</p>
       <p className="msg">{error || success}</p>

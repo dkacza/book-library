@@ -3,14 +3,7 @@ import styled from 'styled-components';
 import StyledBookImage from 'components/molecules/BookImage/BookImage.styles';
 import FileInput from 'components/atoms/FileInput';
 
-const BookImage = ({
-  book,
-  updateSelected,
-  handleImageSelection,
-  setFile,
-  file,
-  ...props
-}) => {
+const BookImage = ({book, updateSelected, handleImageSelection, setFile, file, ...props}) => {
   return (
     <StyledBookImage className={props.className}>
       <img
@@ -23,11 +16,7 @@ const BookImage = ({
         alt="book cover"
       />
       {updateSelected ? (
-        <FileInput
-          handleImageSelection={handleImageSelection}
-          file={file}
-          setFile={setFile}
-        />
+        <FileInput handleImageSelection={handleImageSelection} file={file} setFile={setFile} />
       ) : (
         ''
       )}

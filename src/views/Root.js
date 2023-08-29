@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import {useContext, useEffect, useState} from 'react';
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import axios from 'api/axios';
-import { getCookie } from 'utils/cookies';
-import { ThemeProvider } from 'styled-components';
-import { theme } from 'assets/styles/theme';
-import { GlobalStyle } from 'assets/styles/GlobalStyle';
+import {getCookie} from 'utils/cookies';
+import {ThemeProvider} from 'styled-components';
+import {theme} from 'assets/styles/theme';
+import {GlobalStyle} from 'assets/styles/GlobalStyle';
 import 'assets/styles/fonts.css';
 import ResetPasswordView from 'views/StartingViews/ResetPasswordView';
 import RegisterView from 'views/StartingViews/RegisterView';
@@ -20,14 +20,14 @@ import SettingsView from 'views/MainViews/SettingsView';
 import ManageBorrowingsView from 'views/MainViews/ManageBorrowingsView/ManageBorrowingsView';
 import BookDetailsView from 'views/MainViews/BookDetailsView/BookDetailsView';
 import UserDetailsView from 'views/MainViews/UserDetailsView/UserDetailsView';
-import { BookProvider } from 'providers/BookProvider';
-import { UsersProvider } from 'providers/UsersProvider';
-import { BorrowingsProvider } from 'providers/BorrowingsProvider';
+import {BookProvider} from 'providers/BookProvider';
+import {UsersProvider} from 'providers/UsersProvider';
+import {BorrowingsProvider} from 'providers/BorrowingsProvider';
 
 const Root = () => {
-  const { setAuth, auth } = useContext(AuthContext);
-  const [authChecked, setAuthChecked] = useState(false);
+  const {auth, refreshUserData, authChecked, setAuthChecked} = useContext(AuthContext);
 
+  // Send request after page reload in order for user to stay logged in
   useEffect(() => {
     setAuthChecked(false);
     const user = getCookie('user');
@@ -35,19 +35,7 @@ const Root = () => {
       setAuthChecked(true);
       return;
     }
-    axios
-      .get(`/users/me`)
-      .then((res) => {
-        const { user } = res.data.data;
-        setAuth(user);
-        setAuthChecked(true);
-      })
-      .catch((err) => {
-        console.log('Cannot retrieve authorization data');
-      })
-      .finally(() => {
-        setAuthChecked(true);
-      });
+    refreshUserData();
   }, []);
 
   return (
@@ -69,7 +57,9 @@ const Root = () => {
                   <Route path="/login" element={<LoginView />}></Route>
 
                   {/*Routes for logged-in users*/}
-                  <Route element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}>
+                  <Route
+                    element={<PrivateRoutes permittedRoles={['user', 'librarian', 'admin']} />}
+                  >
                     <Route path="/book/:id" element={<BookDetailsView />}></Route>
                     <Route path="/books" element={<BooksView />}></Route>
                     <Route path="/settings" element={<SettingsView />}></Route>

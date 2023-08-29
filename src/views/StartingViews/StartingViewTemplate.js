@@ -16,7 +16,7 @@ const StartingViewTemplate = styled.div`
 
   main {
     flex-grow: 40;
-    max-width: 680px;
+    max-width: 42rem;
     padding: 5rem;
     display: flex;
     flex-direction: column;

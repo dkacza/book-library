@@ -35,9 +35,7 @@ const FileInput = ({handleImageSelection, setFile, file, ...props}) => {
   return (
     <StyledFileInput className={props.className}>
       <input type="file" onChange={e => handleImageSelection(e)} />
-      <p className="selected-info">
-        {file ? file.name : 'Default photo will be applied'}
-      </p>
+      <p className="selected-info">{file ? file.name : 'Default photo will be applied'}</p>
       <BorderlessButton
         onClick={e => {
           e.preventDefault();

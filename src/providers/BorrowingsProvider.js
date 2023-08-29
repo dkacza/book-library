@@ -34,18 +34,14 @@ export const BorrowingsProvider = ({children}) => {
   const {width, height} = useWindowDimensions();
   const [authorizedHistory, setAuthorizedHistory] = useState(false);
 
-  const [borrowingsListStatus, setBorrowingsListStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [borrowingsListStatus, setBorrowingsListStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetBorrowingsListStatus = () => {
     setBorrowingsListStatus(providerHelpers.INITIAL_STATUS);
   };
   const fetchLoggedInUsersBorrowings = page => {
     unsetBorrowingsListStatus();
     axios
-      .get(
-        `users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`,
-      )
+      .get(`users/me/history?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then(res => {
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
@@ -59,11 +55,8 @@ export const BorrowingsProvider = ({children}) => {
         );
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
-        providerHelpers.setErrorStatus(
-          setBorrowingsListStatus,
-          errorMsgResponse,
-        );
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        providerHelpers.setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
       });
   };
   const fetchAllBorrowings = page => {
@@ -83,17 +76,12 @@ export const BorrowingsProvider = ({children}) => {
         );
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
-        providerHelpers.setErrorStatus(
-          setBorrowingsListStatus,
-          errorMsgResponse,
-        );
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        providerHelpers.setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
       });
   };
 
-  const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [borrowingByIdStatus, setBorrowingByIdStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetBorrowingByIdStatus = () => {
     setBorrowingByIdStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -101,22 +89,16 @@ export const BorrowingsProvider = ({children}) => {
     unsetBorrowingByIdStatus();
     let borrowing = history.find(borrowing => borrowing._id === borrowingId);
     if (borrowing) {
-      providerHelpers.setSuccessStatus(
-        setBorrowingByIdStatus,
-        'Borrowing found',
-      );
+      providerHelpers.setSuccessStatus(setBorrowingByIdStatus, 'Borrowing found');
       return borrowing;
     }
     try {
       const response = await axios.get(`/rentals/${borrowingId}`);
       const borrowing = processBorrowing(response.data.data.rental);
-      providerHelpers.setSuccessStatus(
-        setBorrowingByIdStatus,
-        'Borrowing fetched successfully',
-      );
+      providerHelpers.setSuccessStatus(setBorrowingByIdStatus, 'Borrowing fetched successfully');
       return borrowing;
     } catch (err) {
-      const errorMsgResponse = err.response.data.message;
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
       providerHelpers.setErrorStatus(setBorrowingByIdStatus, errorMsgResponse);
       return {};
     }
@@ -134,17 +116,11 @@ export const BorrowingsProvider = ({children}) => {
       const response = await axios.patch(`/rentals/${borrowingId}`, {
         currentStatus: 'returned',
       });
-      providerHelpers.setSuccessStatus(
-        setReturnedBorrowingStatus,
-        'Book successfully returned',
-      );
+      providerHelpers.setSuccessStatus(setReturnedBorrowingStatus, 'Book successfully returned');
       return processBorrowing(response.data.data.rental);
     } catch (err) {
-      const errorMsgResponse = err.response.data.message;
-      providerHelpers.setErrorStatus(
-        setReturnedBorrowingStatus,
-        errorMsgResponse,
-      );
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+      providerHelpers.setErrorStatus(setReturnedBorrowingStatus, errorMsgResponse);
       return {};
     }
   };
@@ -161,17 +137,11 @@ export const BorrowingsProvider = ({children}) => {
         user: userId,
         book: bookId,
       });
-      providerHelpers.setSuccessStatus(
-        setCreateBorrowingStatus,
-        'Borrowing successfully indexed',
-      );
+      providerHelpers.setSuccessStatus(setCreateBorrowingStatus, 'Borrowing successfully indexed');
       return processBorrowing(response.data.data.rental);
     } catch (err) {
-      const errorMsgResponse = err.response.data.message;
-      providerHelpers.setErrorStatus(
-        setCreateBorrowingStatus,
-        errorMsgResponse,
-      );
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+      providerHelpers.setErrorStatus(setCreateBorrowingStatus, errorMsgResponse);
       return {};
     }
   };

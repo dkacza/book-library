@@ -18,10 +18,7 @@ const InputWithIcon = React.forwardRef(
     };
 
     return (
-      <StyledInputWithIcon
-        {...props}
-        className={`${props.className} ${error ? 'error' : ''}`}
-      >
+      <StyledInputWithIcon {...props} className={`${props.className} ${error ? 'error' : ''}`}>
         <div className="icon-wrapper">
           <Icon />
         </div>

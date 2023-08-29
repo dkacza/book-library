@@ -27,9 +27,7 @@ export const UsersProvider = ({children}) => {
   const [limitPerPage, setLimitPerPage] = useState(LIMIT_1080P);
   const {width, height} = useWindowDimensions();
 
-  const [allUsersStatus, setAllUsersStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [allUsersStatus, setAllUsersStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetAllUsersStatus = () => {
     setAllUsersStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -44,20 +42,15 @@ export const UsersProvider = ({children}) => {
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        providerHelpers.setSuccessStatus(
-          setAllUsersStatus,
-          'Successfully fetched users',
-        );
+        providerHelpers.setSuccessStatus(setAllUsersStatus, 'Successfully fetched users');
       })
       .catch(err => {
-        const errorMsgResponse = err?.response?.data?.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setAllUsersStatus, errorMsgResponse);
       });
   };
 
-  const [userByIdStatus, setUserByIdStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [userByIdStatus, setUserByIdStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetUserByIdStatus = () => {
     setUserByIdStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -65,29 +58,21 @@ export const UsersProvider = ({children}) => {
     unsetUserByIdStatus();
     let user = users.find(user => user._id === id);
     if (user) {
-      providerHelpers.setSuccessStatus(
-        setUserByIdStatus,
-        'User successfully selected',
-      );
+      providerHelpers.setSuccessStatus(setUserByIdStatus, 'User successfully selected');
       return user;
     }
     try {
       const userResponse = await axios.get(`users/${id}`);
-      providerHelpers.setSuccessStatus(
-        setUserByIdStatus,
-        'User successfully fetched',
-      );
+      providerHelpers.setSuccessStatus(setUserByIdStatus, 'User successfully fetched');
       return processUser(userResponse.data.data.user);
     } catch (err) {
-      const errorMsgResponse = err.response.data.message;
+      const errorMsgResponse = err?.response?.data?.message || 'Connection error';
       providerHelpers.setErrorStatus(setUserByIdStatus, errorMsgResponse);
       return {};
     }
   };
 
-  const [personalDataStatus, setPersonalDataStatus] = useState(
-    providerHelpers.INITIAL_STATUS,
-  );
+  const [personalDataStatus, setPersonalDataStatus] = useState(providerHelpers.INITIAL_STATUS);
   const unsetPersonalDataStatus = () => {
     setPersonalDataStatus(providerHelpers.INITIAL_STATUS);
   };
@@ -98,13 +83,10 @@ export const UsersProvider = ({children}) => {
       .then(res => {
         const updatedUserResponse = res.data.data.user;
         setAuth(processUser(updatedUserResponse));
-        providerHelpers.setSuccessStatus(
-          setPersonalDataStatus,
-          'Successfully updated users data',
-        );
+        providerHelpers.setSuccessStatus(setPersonalDataStatus, 'Successfully updated users data');
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setPersonalDataStatus, errorMsgResponse);
       });
   };
@@ -128,11 +110,8 @@ export const UsersProvider = ({children}) => {
         );
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
-        providerHelpers.setErrorStatus(
-          setAuthenticationDataStatus,
-          errorMsgResponse,
-        );
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        providerHelpers.setErrorStatus(setAuthenticationDataStatus, errorMsgResponse);
       });
   };
 
@@ -153,13 +132,10 @@ export const UsersProvider = ({children}) => {
           }
         }
         setUsers(updatedUsers);
-        providerHelpers.setSuccessStatus(
-          setRoleStatus,
-          'User successfully promoted',
-        );
+        providerHelpers.setSuccessStatus(setRoleStatus, 'User successfully promoted');
       })
       .catch(err => {
-        const errorMsgResponse = err.response.data.message;
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setRoleStatus, errorMsgResponse);
       });
   };
