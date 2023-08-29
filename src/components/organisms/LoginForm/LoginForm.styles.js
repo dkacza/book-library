@@ -25,9 +25,11 @@ export const StyledForm = styled.form`
     height: 4rem;
 
     p.error {
-      color: ${({ theme }) => theme.colors.error1};
+      color: ${({theme}) => theme.colors.error1};
       font-weight: bold;
       font-size: 1.25rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 `;

@@ -57,6 +57,7 @@ export const BorrowingsProvider = ({children}) => {
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
+        setHistory([]);
       });
   };
   const fetchAllBorrowings = page => {
@@ -78,6 +79,7 @@ export const BorrowingsProvider = ({children}) => {
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setBorrowingsListStatus, errorMsgResponse);
+        setHistory([]);
       });
   };
 
@@ -166,6 +168,7 @@ export const BorrowingsProvider = ({children}) => {
   // Get the new book data (no query applied)
   useEffect(() => {
     if (auth.role === 'user') {
+      console.log('fetching logged in user');
       setAuthorizedHistory(false);
       fetchLoggedInUsersBorrowings(currentPage);
     } else if (auth.role === 'librarian' || auth.role === 'admin') {

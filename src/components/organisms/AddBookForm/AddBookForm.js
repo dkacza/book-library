@@ -8,12 +8,23 @@ import StyledAddBookForm from 'components/organisms/AddBookForm/AddBookForm.styl
 import FileInput from 'components/atoms/FileInput';
 import isEmptyObject from 'utils/isEmptyObject';
 
-const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection, file, setFile, successMsg }) => {
+const AddBookForm = ({
+  submitWithPrevent,
+  register,
+  errors,
+  handleImageSelection,
+  file,
+  setFile,
+  successMsg,
+}) => {
   return (
-    <StyledAddBookForm onSubmit={(e) => submitWithPrevent(e)}>
+    <StyledAddBookForm onSubmit={e => submitWithPrevent(e)}>
       <div className="title">
         <p className="label">Title</p>
-        <UnderlinedInput {...register('title', { required: true })} className={errors?.title ? 'error' : ''} />
+        <UnderlinedInput
+          {...register('title', {required: true})}
+          className={errors?.title ? 'error' : ''}
+        />
       </div>
 
       <div className="authors">
@@ -21,7 +32,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <UnderlinedInput
           {...register('authors', {
             required: true,
-            validate: (val) => validationRegexes.authorsNamesRegex.test(val),
+            validate: val => validationRegexes.authorsNamesRegex.test(val),
           })}
           className={errors?.authors ? 'error' : ''}
         />
@@ -32,7 +43,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <p className="label">Publication year</p>
         <UnderlinedInput
           type="date"
-          {...register('publicationDate', { required: true })}
+          {...register('publicationDate', {required: true})}
           className={errors?.publicationDate ? 'error' : ''}
         />
       </div>
@@ -41,7 +52,10 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <p className="label">ISBN</p>
         <UnderlinedInput
           type="number"
-          {...register('isbn', { required: true, validate: (val) => validationRegexes.isbnRegex.test(val) })}
+          {...register('isbn', {
+            required: true,
+            validate: val => validationRegexes.isbnRegex.test(val),
+          })}
           className={errors?.isbn ? 'error' : ''}
         />
       </div>
@@ -51,7 +65,7 @@ const AddBookForm = ({ submitWithPrevent, register, errors, handleImageSelection
         <select
           name="genre"
           id="genre"
-          {...register('genre', { required: true })}
+          {...register('genre', {required: true})}
           className={errors?.genre ? 'error' : ''}
         >
           <option value="fiction">Fiction</option>

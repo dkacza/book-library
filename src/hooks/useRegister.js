@@ -1,28 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import AuthContext from 'providers/AuthProvider';
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 
 const useRegister = () => {
-  const { setAuth, sendSignupRequest, signupStatus, unsetSignupStatus } = useContext(AuthContext);
+  const {sendSignupRequest, signupStatus, unsetSignupStatus} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [navigate, setNavigate] = useState(false);
   const [registerError, setRegisterError] = useState({});
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    formState: { errors },
-  } = useForm();
+  const {register, handleSubmit, setFocus} = useForm();
 
   // Send signup request when form is successfully submitted
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     setIsLoading(true);
     setRegisterError({});
     sendSignupRequest(data);
   };
 
   // Set an appropriate error message
-  const onError = (err) => {
+  const onError = err => {
     console.log(err);
     let formValidationMessage = '';
 
@@ -43,6 +38,7 @@ const useRegister = () => {
     });
   };
 
+  // If signup status changes, update the error messages and if there is a success, set navigation
   useEffect(() => {
     if (signupStatus.success) {
       setNavigate(true);
@@ -59,7 +55,7 @@ const useRegister = () => {
 
   // Mount event listeners and set focuses
   useEffect(() => {
-    const listener = (e) => {
+    const listener = e => {
       if (e.code !== 'Enter') return;
       e.preventDefault();
       handleSubmit(onSubmit, onError)();
@@ -71,7 +67,7 @@ const useRegister = () => {
     };
   }, []);
 
-  const handleRegister = (e) => {
+  const handleRegister = e => {
     e.preventDefault();
     return handleSubmit(onSubmit, onError)();
   };

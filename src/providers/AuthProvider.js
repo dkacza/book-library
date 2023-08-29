@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) => {
         providerHelpers.setSuccessStatus(setLoginStatus, 'Successfully logged in.');
       })
       .catch(err => {
-        const errorMsgResponse = err?.response?.data || 'Connection error';
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setLoginStatus, errorMsgResponse);
       });
   };
@@ -60,7 +60,7 @@ export const AuthProvider = ({children}) => {
         providerHelpers.setSuccessStatus(setSignupStatus, 'User successfully signed up');
       })
       .catch(err => {
-        const errorMsgResponse = err?.response?.data || 'Connection error';
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setSignupStatus, errorMsgResponse);
       });
   };

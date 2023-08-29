@@ -69,13 +69,11 @@ export const StyledInputWithIcon = styled.div`
   &.error {
     border: 0.25rem solid ${({theme}) => theme.colors.error2};
     border-bottom: 0.4rem solid ${({theme}) => theme.colors.error2};
-
-    .icon-wrapper {
+    svg {
+      color: ${({theme}) => theme.colors.error1};
+    }
+    .icon-wrapper:nth-child(1) {
       border-right: 0.25rem solid ${({theme}) => theme.colors.error2};
-
-      svg {
-        color: ${({theme}) => theme.colors.error1};
-      }
     }
   }
 `;
