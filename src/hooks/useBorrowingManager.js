@@ -50,7 +50,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     setSelectedUser(modifiedSelectedUser);
     updateArrayWithNewUser(modifiedSelectedUser);
 
-    getBooksFromProvider();
+    getBooksFromProvider().then();
   };
 
   const handleBookReturn = async (e, borrowingId) => {
@@ -103,6 +103,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     unsetCreateBorrowingStatus();
     unsetReturnedBorrowingStatus();
     unsetSearchedBookStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [returnSelected]);
 
   // Get the borrowed books data when component mounts or user changes
@@ -113,6 +114,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
       const borrowings = await Promise.all(promises);
       setCurrentBorrowings(borrowings);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUser]);
 
   return {

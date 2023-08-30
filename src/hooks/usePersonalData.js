@@ -51,6 +51,7 @@ const usePersonalData = () => {
     reset();
     setFormValues();
     unsetPersonalDataStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateSelected]);
 
   // Set new messages when status from data context changes
@@ -62,6 +63,7 @@ const usePersonalData = () => {
     setPersonalDataSuccess({
       message: personalDataStatus?.success,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personalDataStatus]);
 
   return {

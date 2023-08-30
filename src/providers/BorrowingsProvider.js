@@ -176,6 +176,7 @@ export const BorrowingsProvider = ({children}) => {
       setAuthorizedHistory(true);
       fetchAllBorrowings(currentPage);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, limitPerPage, historyQuery, currentPage]);
 
   return (

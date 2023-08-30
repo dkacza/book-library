@@ -73,6 +73,7 @@ const useHistory = initialFormValues => {
       formError: errors,
       dataProviderError: borrowingsListStatus.error,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, borrowingsListStatus.error]);
 
   return {

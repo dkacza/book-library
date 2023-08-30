@@ -67,6 +67,7 @@ const useUsers = initialFormValues => {
   // The query is also modified by manage borrowings view, so it needs to be unset
   useEffect(() => {
     setUsersQuery('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const useUsers = initialFormValues => {
       formError: errors,
       dataProviderError: allUsersStatus.error,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, allUsersStatus.error]);
 
   return {

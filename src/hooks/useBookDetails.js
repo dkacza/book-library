@@ -89,14 +89,19 @@ const useBookDetails = () => {
   };
 
   // Get book details on component load
-  useEffect(getBookDetails, [id, books]);
+  useEffect(
+    getBookDetails,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [id, books],
+  );
 
   // Set placeholder values
   useEffect(() => {
     if (book) setFormValues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [book]);
 
-  // When errors appear or dissapear set new external error message
+  // When errors appear or disappear set new external error message
   useEffect(() => {
     const newDataProviderError =
       bookByIdStatus.error || updateBookStatus.error
@@ -107,6 +112,7 @@ const useBookDetails = () => {
       formError: '',
       dataProviderError: newDataProviderError,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, bookByIdStatus.error, updateBookStatus.error]);
 
   // When book status is updated, clear form errors

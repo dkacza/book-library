@@ -167,9 +167,12 @@ export const UsersProvider = ({children}) => {
   useEffect(() => {
     if (!(auth.role === 'admin' || auth.role === 'librarian')) return;
     fetchAllUsers(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, limitPerPage, usersQuery, currentPage]);
 
-  useEffect(() => {setUsersQuery('')}, [auth])
+  useEffect(() => {
+    setUsersQuery('');
+  }, [auth]);
 
   return (
     <UsersContext.Provider

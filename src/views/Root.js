@@ -35,6 +35,7 @@ const Root = () => {
       return;
     }
     refreshUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

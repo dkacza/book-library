@@ -114,7 +114,7 @@ export const BookProvider = ({children}) => {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(res => {
+      .then(() => {
         providerHelpers.setSuccessStatus(setPostBookStatus, 'Book successfully created');
       })
       .catch(err => {
@@ -161,9 +161,12 @@ export const BookProvider = ({children}) => {
     if (!isEmptyObject(auth)) {
       fetchAllBooks(currentPage);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limitPerPage, bookQuery, currentPage, auth]);
 
-  useEffect(() => {setBookQuery('')}, [auth])
+  useEffect(() => {
+    setBookQuery('');
+  }, [auth]);
 
   return (
     <BookContext.Provider

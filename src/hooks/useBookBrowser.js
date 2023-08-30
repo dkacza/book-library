@@ -80,6 +80,7 @@ const useBookBrowser = initialFormValues => {
       formError: errors,
       dataProviderError: allBooksStatus.error,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, allBooksStatus.error]);
 
   return {

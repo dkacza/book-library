@@ -52,6 +52,7 @@ const useLogin = () => {
       setRedirectionMessage('');
       setRedirectionError('');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // If data provider status changes, update the error messages and if there is a success, set navigation
@@ -67,6 +68,7 @@ const useLogin = () => {
       dataProviderError: loginStatus.error,
     });
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus]);
 
   const handleLoginSubmit = e => {

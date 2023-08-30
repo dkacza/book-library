@@ -9,6 +9,7 @@ const useDebounce = (callback, delay, dependencies) => {
   useEffect(reset, [...dependencies, reset]);
 
   // Clear the timer at first render
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(clear, []);
 };
 export default useDebounce;

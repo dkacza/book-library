@@ -26,6 +26,7 @@ const useUserDetails = () => {
       const userDetails = await getUserById(id);
       setUser(userDetails);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, auth, users]);
 
   // When providers statuses change, set new error message
@@ -40,6 +41,7 @@ const useUserDetails = () => {
   // Clear providers statuses on initial load
   useEffect(() => {
     unsetRoleStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {user, auth, handlePromotion, redirectToMyProfile, userDetailsError};

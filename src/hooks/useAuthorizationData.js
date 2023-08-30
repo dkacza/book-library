@@ -46,10 +46,12 @@ const useAuthorizationData = () => {
       return;
     }
     unsetAuthenticationDataStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateSelected]);
   // Unset every message on component load
   useEffect(() => {
     unsetAuthenticationDataStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Display success or error message when password request is done
@@ -66,6 +68,7 @@ const useAuthorizationData = () => {
       reset();
       setUpdateSelected(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticationDataStatus]);
 
   return {

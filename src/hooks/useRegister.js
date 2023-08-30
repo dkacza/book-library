@@ -19,7 +19,7 @@ const useRegister = () => {
   // Set an appropriate error message
   const onError = err => {
     console.log(err);
-    let formValidationMessage = '';
+    let formValidationMessage;
 
     formValidationMessage = 'Make sure, that values you have passed are in correct form.';
     for (const [, value] of Object.entries(err)) {
@@ -51,6 +51,7 @@ const useRegister = () => {
       dataProviderError: signupStatus.error,
     });
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signupStatus]);
 
   // Mount event listeners and set focuses
@@ -65,6 +66,7 @@ const useRegister = () => {
     return () => {
       document.removeEventListener('keydown', listener);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRegister = e => {
