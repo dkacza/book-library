@@ -53,7 +53,7 @@ const Root = () => {
                   <Route path="/" element={<Navigate to={auth ? '/books' : '/login'} />}></Route>
 
                   {/*Publicly available routes*/}
-                  <Route path="/reset-password" element={<ResetPasswordView />}></Route>
+                  <Route path="/reset-password/:token" element={<ResetPasswordView />}></Route>
                   <Route path="/forgot-password" element={<ForgotPasswordView />}></Route>
                   <Route path="/register" element={<RegisterView />}></Route>
                   <Route path="/login" element={<LoginView />}></Route>

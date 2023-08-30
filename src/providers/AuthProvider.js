@@ -74,7 +74,7 @@ export const AuthProvider = ({children}) => {
     axios
       .post('/users/forgotPassword', requestBody)
       .then(res => {
-        providerHelpers.setSuccessStatus(setForgotPasswordStatus, 'We have send a link to the provided email.')
+        providerHelpers.setSuccessStatus(setForgotPasswordStatus, 'Check your mailbox. We have just sent the link.')
       })
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
