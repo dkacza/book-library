@@ -65,6 +65,22 @@ export const AuthProvider = ({children}) => {
       });
   };
 
+  const [forgotPasswordStatus, setForgotPasswordStatus] = useState(providerHelpers.INITIAL_STATUS);
+  const unsetForgotPasswordStatus = () => {
+    setForgotPasswordStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const sendForgotPasswordRequest = requestBody => {
+    unsetForgotPasswordStatus();
+    axios
+      .post('/users/forgotPassword', requestBody)
+      .then(res => {
+        providerHelpers.setSuccessStatus(setForgotPasswordStatus, 'We have send a link to the provided email.')
+      })
+      .catch(err => {
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        providerHelpers.setErrorStatus(setForgotPasswordStatus, errorMsgResponse);
+      });
+  };
   const refreshUserData = () => {
     axios
       .get(`/users/me`)
@@ -109,6 +125,10 @@ export const AuthProvider = ({children}) => {
         refreshUserData,
         authChecked,
         setAuthChecked,
+
+        sendForgotPasswordRequest,
+        forgotPasswordStatus,
+        unsetForgotPasswordStatus,
       }}
     >
       {children}

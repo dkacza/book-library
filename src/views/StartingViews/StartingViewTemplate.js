@@ -11,18 +11,19 @@ const StartingViewTemplate = styled.div`
   overflow: hidden;
 
   aside {
-    flex-grow: 80;
+    flex-grow: 2;
   }
 
   main {
-    flex-grow: 40;
+    flex-grow: 1;
     min-width: 30rem;
+    max-width: 33.33vw;
     padding: 5rem;
     display: flex;
     flex-direction: column;
 
     ${Title} {
-      max-width: calc(100% - 5rem);
+      max-width: 20rem
     }
   }
   ${FloatingMessage} {

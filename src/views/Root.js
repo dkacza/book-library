@@ -22,6 +22,7 @@ import UserDetailsView from 'views/MainViews/UserDetailsView/UserDetailsView';
 import {BookProvider} from 'providers/BookProvider';
 import {UsersProvider} from 'providers/UsersProvider';
 import {BorrowingsProvider} from 'providers/BorrowingsProvider';
+import ForgotPasswordView from 'views/StartingViews/ForgotPasswordView';
 
 const Root = () => {
   const {auth, refreshUserData, authChecked, setAuthChecked} = useContext(AuthContext);
@@ -53,6 +54,7 @@ const Root = () => {
 
                   {/*Publicly available routes*/}
                   <Route path="/reset-password" element={<ResetPasswordView />}></Route>
+                  <Route path="/forgot-password" element={<ForgotPasswordView />}></Route>
                   <Route path="/register" element={<RegisterView />}></Route>
                   <Route path="/login" element={<LoginView />}></Route>
 

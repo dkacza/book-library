@@ -36,7 +36,7 @@ const LoginForm = ({...props}) => {
         error={loginError?.formError?.password}
       />
 
-      <StyledLink to="/reset-password">Forgot the password?</StyledLink>
+      <StyledLink to="/forgot-password">Forgot the password?</StyledLink>
 
       <SubmitButton type="submit">sign in</SubmitButton>
 
