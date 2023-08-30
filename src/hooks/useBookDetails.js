@@ -89,14 +89,14 @@ const useBookDetails = () => {
   };
 
   // Get book details on component load
-  useEffect(getBookDetails, [id, books]);
+  useEffect(getBookDetails, [id, books, getBookById]);
 
   // Set placeholder values
   useEffect(() => {
     if (book) setFormValues();
-  }, [book]);
+  }, [book, setFormValues]);
 
-  // When errors appear or dissapear set new external error message
+  // When errors appears or disappears set new external error message
   useEffect(() => {
     const newDataProviderError =
       bookByIdStatus.error || updateBookStatus.error

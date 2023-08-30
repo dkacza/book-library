@@ -14,11 +14,11 @@ export const AuthProvider = ({children}) => {
   const sendLogoutRequest = () => {
     axios
       .get('/users/logout')
-      .then(res => {
+      .then(() => {
         setRedirectionMessage('Successfully logged out');
       })
-      .catch(err => {
-        setRedirectionError('Error occured while logging out');
+      .catch(() => {
+        setRedirectionError('Error occurred while logging out');
       });
     setCookie('user', 'LOGGED_OUT', 1);
     setAuth({});
@@ -73,7 +73,7 @@ export const AuthProvider = ({children}) => {
         setAuth(user);
         setAuthChecked(true);
       })
-      .catch(err => {
+      .catch(() => {
         alert('Connection error. Cannot retrieve data from the server.');
       })
       .finally(() => {

@@ -114,7 +114,7 @@ export const BookProvider = ({children}) => {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(res => {
+      .then(() => {
         providerHelpers.setSuccessStatus(setPostBookStatus, 'Book successfully created');
       })
       .catch(err => {

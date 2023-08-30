@@ -19,7 +19,7 @@ const useRegister = () => {
   // Set an appropriate error message
   const onError = err => {
     console.log(err);
-    let formValidationMessage = '';
+    let formValidationMessage;
 
     formValidationMessage = 'Make sure, that values you have passed are in correct form.';
     for (const [, value] of Object.entries(err)) {

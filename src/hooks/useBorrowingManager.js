@@ -50,7 +50,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     setSelectedUser(modifiedSelectedUser);
     updateArrayWithNewUser(modifiedSelectedUser);
 
-    getBooksFromProvider();
+    getBooksFromProvider().then();
   };
 
   const handleBookReturn = async (e, borrowingId) => {

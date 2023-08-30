@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import BorderlessButton from 'components/atoms/BorderlessButton';
-import Returns from 'components/organisms/Returns/Returns';
-import Borrowings from 'components/organisms/Borrowings/Borrowings';
 import UserData from 'components/organisms/UserData/UserData';
-import Title from 'components/atoms/Title';
-import Captions from 'components/molecules/Captions/Captions';
 
 const StyledBorrowingActions = styled.div`
   height: 100%;

@@ -55,7 +55,7 @@ const useAddBook = () => {
       });
       reset();
     }
-  }, [postBookStatus]);
+  }, [postBookStatus, errors, reset]);
 
   // Clear success and error messages on page load
   useEffect(() => {

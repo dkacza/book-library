@@ -46,11 +46,11 @@ const useAuthorizationData = () => {
       return;
     }
     unsetAuthenticationDataStatus();
-  }, [updateSelected]);
+  }, [unsetAuthenticationDataStatus, updateSelected]);
   // Unset every message on component load
   useEffect(() => {
     unsetAuthenticationDataStatus();
-  }, []);
+  }, [unsetAuthenticationDataStatus]);
 
   // Display success or error message when password request is done
   // Close the update mode if successfully updated the password
