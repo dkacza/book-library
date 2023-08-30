@@ -1,27 +1,27 @@
 import {useParams} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import AuthContext from 'providers/AuthProvider';
 
 const useResetPassword = () => {
   const {token} = useParams();
   const [resetPasswordError, setResetPasswordError] = useState({});
-  const [resetPasswordSuccess, setResetPasswordSuccess] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [passwordAlreadyReset, setPasswordAlreadyReset] = useState(false);
-
+  const [passwordSuccessfullyReset, setPasswordSuccessfullyReset] = useState(false);
+  const {sendResetPasswordRequest, resetPasswordStatus, unsetResetPasswordStatus} =
+    useContext(AuthContext);
   const {register, handleSubmit} = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     setIsLoading(true);
     setResetPasswordError({});
-    console.log('submit');
-    setPasswordAlreadyReset(true);
+    sendResetPasswordRequest({password: data.newPassword}, token);
   };
-  const onError = (err) => {
+  const onError = err => {
     console.log(err);
     setResetPasswordError({
       ...resetPasswordError,
       formError: err,
-    })
+    });
   };
 
   const submitWithPrevent = e => {
@@ -29,6 +29,21 @@ const useResetPassword = () => {
     handleSubmit(onSubmit, onError)();
   };
 
-  return {register, submitWithPrevent, resetPasswordSuccess, resetPasswordError, passwordAlreadyReset}
+  useEffect(() => {
+    if (resetPasswordStatus.success) {
+      setPasswordSuccessfullyReset(true);
+      unsetResetPasswordStatus();
+      setIsLoading(false);
+      return;
+    }
+    setResetPasswordError({
+      ...resetPasswordError,
+      dataProviderError: resetPasswordStatus.error,
+    });
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetPasswordStatus]);
+
+  return {register, submitWithPrevent, resetPasswordError, passwordSuccessfullyReset, isLoading};
 };
 export default useResetPassword;

@@ -7,13 +7,14 @@ const StyledResetPasswordForm = styled.form`
   ${InputWithIcon} {
     margin-bottom: 1.5rem;
   }
-  
+
   ${SubmitButton} {
     width: 100%;
     margin: 2.5rem 0;
   }
   div.error-container {
     height: 2rem;
+    margin-top: 2rem;
   }
   p.error-msg {
     font-weight: bold;

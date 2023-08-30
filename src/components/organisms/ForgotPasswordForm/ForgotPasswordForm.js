@@ -8,7 +8,6 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 import LoadingDots from 'components/atoms/LoadingDots';
 import useForgotPassword from 'hooks/useForgotPassword';
 
-
 const ForgotPasswordForm = () => {
   const {firstRequestSent, emailTimeoutPresent, register, submitWithPrevent} = useForgotPassword();
   return (

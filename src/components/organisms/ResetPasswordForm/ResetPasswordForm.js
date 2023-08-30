@@ -8,18 +8,14 @@ import styled from 'styled-components';
 import validationRegexes from 'utils/validationRegexes';
 import useResetPassword from 'hooks/useResetPassword';
 import LoadingDots from 'components/atoms/LoadingDots';
+import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const ResetPasswordForm = () => {
-  const {
-    register,
-    submitWithPrevent,
-    resetPasswordError,
-    isLoading,
-    passwordAlreadyReset,
-  } = useResetPassword();
+  const {register, submitWithPrevent, resetPasswordError, passwordSuccessfullyReset, isLoading} =
+    useResetPassword();
   return (
     <StyledResetPasswordForm onSubmit={submitWithPrevent}>
-      {!passwordAlreadyReset ? (
+      {!passwordSuccessfullyReset ? (
         <>
           <InputWithIcon
             type={'password'}
@@ -46,6 +42,9 @@ const ResetPasswordForm = () => {
             })}
             className={resetPasswordError?.formError?.confirmPassword ? `error` : ''}
           />
+          <p className="password-info">
+            Password should contain at least 8 characters, including letters and digits.
+          </p>
         </>
       ) : (
         ''
@@ -61,8 +60,10 @@ const ResetPasswordForm = () => {
         )}
       </div>
 
-      {!passwordAlreadyReset ? (
-        <SubmitButton className="submit-button">Reset password</SubmitButton>
+      {!passwordSuccessfullyReset ? (
+        <SubmitButton className="submit-button" type="submit">
+          Reset password
+        </SubmitButton>
       ) : (
         <p className="success-msg">Password has been successfully reset.</p>
       )}

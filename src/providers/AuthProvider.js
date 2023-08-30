@@ -73,14 +73,35 @@ export const AuthProvider = ({children}) => {
     unsetForgotPasswordStatus();
     axios
       .post('/users/forgotPassword', requestBody)
-      .then(res => {
-        providerHelpers.setSuccessStatus(setForgotPasswordStatus, 'Check your mailbox. We have just sent the link.')
+      .then(() => {
+        providerHelpers.setSuccessStatus(
+          setForgotPasswordStatus,
+          'Check your mailbox. We have just sent the link.',
+        );
       })
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setForgotPasswordStatus, errorMsgResponse);
       });
   };
+
+  const [resetPasswordStatus, setResetPasswordStatus] = useState(providerHelpers.INITIAL_STATUS);
+  const unsetResetPasswordStatus = () => {
+    setResetPasswordStatus(providerHelpers.INITIAL_STATUS);
+  };
+  const sendResetPasswordRequest = (requestBody, token) => {
+    unsetResetPasswordStatus();
+    axios
+      .post(`/users/resetPassword/${token}`, requestBody)
+      .then(() => {
+        providerHelpers.setSuccessStatus(setResetPasswordStatus, 'Password successfully reset.');
+      })
+      .catch(err => {
+        const errorMsgResponse = err?.response?.data?.message || 'Connection error';
+        providerHelpers.setErrorStatus(setResetPasswordStatus, errorMsgResponse);
+      });
+  };
+
   const refreshUserData = () => {
     axios
       .get(`/users/me`)
@@ -129,6 +150,10 @@ export const AuthProvider = ({children}) => {
         sendForgotPasswordRequest,
         forgotPasswordStatus,
         unsetForgotPasswordStatus,
+
+        sendResetPasswordRequest,
+        resetPasswordStatus,
+        unsetResetPasswordStatus,
       }}
     >
       {children}

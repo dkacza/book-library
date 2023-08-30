@@ -23,7 +23,7 @@ const StartingViewTemplate = styled.div`
     flex-direction: column;
 
     ${Title} {
-      max-width: 20rem
+      max-width: 20rem;
     }
   }
   ${FloatingMessage} {
