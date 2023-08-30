@@ -12,7 +12,7 @@ const StyledBookTextData = styled.div`
   .label {
     font-weight: bold;
     font-size: 1.75rem;
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
   }
 
   .data {
@@ -39,18 +39,17 @@ const StyledBookTextData = styled.div`
   }
 
   .available {
-    color: ${({ theme }) => theme.colors.accept3};
+    color: ${({theme}) => theme.colors.accept3};
   }
 
   .borrowed {
-    color: ${({ theme }) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error2};
   }
   p.error-msg {
     margin-top: 2rem;
     font-weight: bold;
     color: ${({theme}) => theme.colors.error2};
   }
-
 
   @media (max-width: 1300px) {
     & > div {
@@ -73,6 +72,5 @@ const StyledBookTextData = styled.div`
       font-size: 0.75rem;
     }
   }
-
 `;
 export default StyledBookTextData;

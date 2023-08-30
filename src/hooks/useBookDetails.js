@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {useContext, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import authProvider from 'providers/AuthProvider';
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import BookContext from 'providers/BookProvider';
 
 const buildRequestBody = (data, book, file) => {
@@ -10,7 +10,7 @@ const buildRequestBody = (data, book, file) => {
     if (data[key] === book[key]) continue;
 
     if (key === 'authors') {
-      requestBody[key] = val.split(',').map((author) => ({ name: author }));
+      requestBody[key] = val.split(',').map(author => ({name: author}));
       continue;
     }
     requestBody[key] = val;
@@ -20,13 +20,20 @@ const buildRequestBody = (data, book, file) => {
 };
 
 const useBookDetails = () => {
-  const { auth } = useContext(authProvider);
-  const { id } = useParams();
+  const {auth} = useContext(authProvider);
+  const {id} = useParams();
 
-  const { books, getBookById, patchBookDetails, bookByIdStatus, updateBookStatus, unsetUpdateBookStatus } = useContext(BookContext);
+  const {
+    books,
+    getBookById,
+    patchBookDetails,
+    bookByIdStatus,
+    updateBookStatus,
+    unsetUpdateBookStatus,
+  } = useContext(BookContext);
   const {
     register,
-    formState: { errors },
+    formState: {errors},
     handleSubmit,
     getValues,
     setValue,
@@ -37,51 +44,48 @@ const useBookDetails = () => {
   const [file, setFile] = useState();
   const [bookDetailsError, setBookDetailsError] = useState();
 
-  const onSubmit = async (data) => {
-
+  const onSubmit = async data => {
     const requestBody = buildRequestBody(data, book, file);
     patchBookDetails(id, requestBody);
-
   };
-  const onError = (err) => {
+  const onError = err => {
     setBookDetailsError({
       ...bookDetailsError,
       formError: err,
     });
   };
-  const handleSave = (e) => {
+  const handleSave = e => {
     e.preventDefault();
     const formValues = getValues();
     handleSubmit(onSubmit, onError)(formValues);
   };
-  const handleSelectUpdate = (e) => {
+  const handleSelectUpdate = e => {
     e.preventDefault();
     reset();
     if (book) setFormValues();
     setUpdateSelected(true);
   };
-  const handleDiscard = (e) => {
+  const handleDiscard = e => {
     unsetUpdateBookStatus();
     e.preventDefault();
     reset();
     setUpdateSelected(false);
   };
-  const handleImageSelection = (e) => {
+  const handleImageSelection = e => {
     setFile(e.target.files[0]);
   };
   const setFormValues = () => {
     setValue('title', book.title);
-    setValue('authors', book.authors?.map((author) => author.name)?.join(', '));
+    setValue('authors', book.authors?.map(author => author.name)?.join(', '));
     setValue('publicationDate', book.publicationDate?.split('-')[0]);
     setValue('isbn', book.isbn);
     setValue('description', book.description);
   };
   const getBookDetails = () => {
-    const getBookFromProvider = async () => {
+    (async () => {
       const bookDetails = await getBookById(id);
       setBook(bookDetails);
-    };
-    getBookFromProvider();
+    })();
   };
 
   // Get book details on component load
@@ -95,7 +99,9 @@ const useBookDetails = () => {
   // When errors appear or dissapear set new external error message
   useEffect(() => {
     const newDataProviderError =
-      bookByIdStatus.error || updateBookStatus.error ? bookByIdStatus.error + '\n' + updateBookStatus.error : '';
+      bookByIdStatus.error || updateBookStatus.error
+        ? bookByIdStatus.error + '\n' + updateBookStatus.error
+        : '';
     setBookDetailsError({
       ...bookDetailsError,
       formError: '',

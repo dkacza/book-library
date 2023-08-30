@@ -6,8 +6,8 @@ const TableViewTemplate = styled.section`
   column-gap: 2.5rem;
   grid-template-rows: 85% 15%;
   max-height: 100%;
-  
-  @media(max-width: 1300px) {
+
+  @media (max-width: 1300px) {
     column-gap: 0.75rem;
   }
 `;

@@ -6,9 +6,9 @@ import StyledBookFilters from 'components/organisms/BookFilters/BookFilters.styl
 import OutlinedInput from 'components/atoms/OutlinedInput';
 import styled from 'styled-components';
 import isEmptyObject from 'utils/isEmptyObject';
-import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as SearchIcon} from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 
-const BookFilters = ({ register, onSubmit, errors, ...props }) => {
+const BookFilters = ({register, onSubmit, errors, ...props}) => {
   return (
     <StyledBookFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
@@ -24,6 +24,7 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
         <div className="release-year-input">
           <OutlinedInput
             id="date-from-input"
+            name="yearFrom"
             placeholder="from"
             type="number"
             {...register('yearFrom', {
@@ -34,8 +35,9 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
           <p>-</p>
           <OutlinedInput
             id="date-to-input"
-            name="date-to"
+            name="yearTo"
             placeholder="to"
+            type="number"
             {...register('yearTo', {
               validate: (val, formValues) => val >= formValues.yearFrom || !formValues.yearFrom,
             })}
@@ -45,10 +47,15 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
       </div>
       <div className="genre-filter">
         <p className="label">Genre:</p>
-        <LabeledCheckbox id="fiction" label="Fiction literature" name="fiction" {...register('genre.fiction')} />
+        <LabeledCheckbox
+          id="fiction"
+          label="Fiction literature"
+          name="fiction"
+          {...register('genre.fiction')}
+        />
         <LabeledCheckbox
           id="non-fiction"
-          name="non-fiction"
+          name="nonFiction"
           label="Non-fiction literature"
           {...register('genre.nonFiction')}
         />
@@ -58,19 +65,33 @@ const BookFilters = ({ register, onSubmit, errors, ...props }) => {
           label="Scientific literature"
           {...register('genre.scientific')}
         />
-        <LabeledCheckbox id="children" label="Children literature" name="children" {...register('genre.children')} />
-        <LabeledCheckbox id="poetry" label="Poetry and drama" name="poetry" {...register('genre.poetry')} />
+        <LabeledCheckbox
+          id="children"
+          label="Children literature"
+          name="children"
+          {...register('genre.children')}
+        />
+        <LabeledCheckbox
+          id="poetry"
+          label="Poetry and drama"
+          name="poetry"
+          {...register('genre.poetry')}
+        />
       </div>
       <div className="availability-filter">
         <p className="label">Availability:</p>
         <LabeledCheckbox
-          id="available"
-          name="available"
+          id="available-only"
+          name="availableOnly"
           label="Display only available books"
           {...register('availableOnly')}
         />
       </div>
-      {!isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly</p> : ''}
+      {!isEmptyObject(errors) ? (
+        <p className="error-msg">Please fill the filter form correctly</p>
+      ) : (
+        ''
+      )}
       <SubmitButton type="submit">Apply filters</SubmitButton>
     </StyledBookFilters>
   );

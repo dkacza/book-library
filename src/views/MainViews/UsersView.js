@@ -1,4 +1,4 @@
-import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
+import {MainViewTemplate} from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import useUsers from 'hooks/useUsers';
@@ -23,8 +23,16 @@ const INITIAL_FORM_VALUES = {
 };
 
 const UsersView = () => {
-  const { users, paginationData, register, handlePageChange, handleClearFields, handleRecordSelect, submitWithPrevent, userListError } =
-    useUsers(INITIAL_FORM_VALUES);
+  const {
+    users,
+    paginationData,
+    register,
+    handlePageChange,
+    handleClearFields,
+    handleRecordSelect,
+    submitWithPrevent,
+    userListError,
+  } = useUsers(INITIAL_FORM_VALUES);
 
   return (
     <MainViewTemplate>
@@ -45,14 +53,22 @@ const UsersView = () => {
           )}
 
           <UserFilters
-            onSubmit={(e) => submitWithPrevent(e)}
+            onSubmit={e => submitWithPrevent(e)}
             register={register}
             errors={userListError?.formError}
             handleClearFields={handleClearFields}
           />
-          {users.length > 0 ? <Pagination paginationData={paginationData} handlePageChange={handlePageChange} /> : ''}
+          {users.length > 0 ? (
+            <Pagination paginationData={paginationData} handlePageChange={handlePageChange} />
+          ) : (
+            ''
+          )}
         </TableViewTemplate>
-        {userListError?.dataProviderError ? <FloatingErrorMessage error={userListError.dataProviderError} /> : ''}
+        {userListError?.dataProviderError ? (
+          <FloatingErrorMessage error={userListError.dataProviderError} />
+        ) : (
+          ''
+        )}
       </main>
     </MainViewTemplate>
   );

@@ -8,7 +8,7 @@ const StyledUserData = styled.div`
 
   .not-eligible {
     font-weight: bold;
-    color: ${({ theme }) => theme.colors.error2}
+    color: ${({theme}) => theme.colors.error2};
   }
 
   ${Title} {
@@ -16,7 +16,7 @@ const StyledUserData = styled.div`
   }
 
   margin-bottom: 2rem;
-  @media(max-height: 800px) {
+  @media (max-height: 800px) {
     ${Title}.user-name {
       font-size: 2rem;
       margin-bottom: 0;

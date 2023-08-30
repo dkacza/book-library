@@ -22,7 +22,7 @@ const StyledHistoryFilters = styled.form`
 
   .label {
     font-size: 1.2rem;
-    color: ${({ theme }) => theme.colors.secondary2};
+    color: ${({theme}) => theme.colors.secondary2};
     margin-bottom: 0.2rem;
   }
 
@@ -42,7 +42,7 @@ const StyledHistoryFilters = styled.form`
   }
 
   p.error-msg {
-    color: ${({ theme }) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error2};
     font-weight: bold;
     font-size: 1.25rem;
   }
@@ -89,7 +89,6 @@ const StyledHistoryFilters = styled.form`
         font-size: 1rem;
       }
     }
-    
   }
 `;
 

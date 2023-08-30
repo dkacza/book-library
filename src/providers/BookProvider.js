@@ -46,6 +46,7 @@ export const BookProvider = ({children}) => {
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setAllBooksStatus, errorMsgResponse);
+        setBooks([]);
       });
   };
 
@@ -161,6 +162,8 @@ export const BookProvider = ({children}) => {
       fetchAllBooks(currentPage);
     }
   }, [limitPerPage, bookQuery, currentPage, auth]);
+
+  useEffect(() => {setBookQuery('')}, [auth])
 
   return (
     <BookContext.Provider

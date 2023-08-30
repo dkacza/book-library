@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import BorrowingsContext from 'providers/BorrowingsProvider';
 
-const buildQuery = (data) => {
+const buildQuery = data => {
   let query = '';
 
   if (data.startDateFrom) query += `startDate[gte]=${data.startDateFrom}&`;
@@ -22,18 +22,24 @@ const buildQuery = (data) => {
   return query.substring(0, query.length - 1);
 };
 
-const useHistory = (initialFormValues) => {
+const useHistory = initialFormValues => {
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({ defaultValues: initialFormValues });
-  const { history, borrowingsListStatus, paginationData, authorizedHistory, setHistoryQuery, setCurrentPage } =
-    useContext(BorrowingsContext);
+    formState: {errors},
+  } = useForm({defaultValues: initialFormValues});
+  const {
+    history,
+    borrowingsListStatus,
+    paginationData,
+    authorizedHistory,
+    setHistoryQuery,
+    setCurrentPage,
+  } = useContext(BorrowingsContext);
   const [historyError, setHistoryError] = useState({});
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     const query = buildQuery(data);
     setHistoryQuery(query);
     setHistoryError({
@@ -41,22 +47,22 @@ const useHistory = (initialFormValues) => {
       formError: '',
     });
   };
-  const onError = (err) => {
+  const onError = err => {
     setHistoryError({
       ...historyError,
       formError: err,
     });
   };
-  const submitWithPrevent = (e) => {
+  const submitWithPrevent = e => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
   };
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     if (newPage > paginationData.totalPages || newPage < 1) return;
     setCurrentPage(newPage);
   };
-  const handleClearFields = (fieldNames) => {
-    fieldNames.forEach((field) => {
+  const handleClearFields = fieldNames => {
+    fieldNames.forEach(field => {
       setValue(field, null);
     });
   };

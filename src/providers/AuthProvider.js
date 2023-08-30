@@ -74,7 +74,7 @@ export const AuthProvider = ({children}) => {
         setAuthChecked(true);
       })
       .catch(err => {
-        alert('Connection error. Cannot retrieve authorization data');
+        alert('Connection error. Cannot retrieve data from the server.');
       })
       .finally(() => {
         setAuthChecked(true);

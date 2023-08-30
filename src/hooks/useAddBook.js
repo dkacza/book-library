@@ -1,14 +1,13 @@
-import { useForm } from 'react-hook-form';
-import { useContext, useEffect, useState } from 'react';
+import {useForm} from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
 import BookContext from 'providers/BookProvider';
 
 const buildRequestBody = (data, file) => {
-  const newAuthors = data.authors.split(',').map((author) => ({ name: author }));
+  const newAuthors = data.authors.split(',').map(author => ({name: author}));
   const requestBody = {
     ...data,
     authors: newAuthors,
   };
-  console.log(file);
   if (file) requestBody.bookCoverPhoto = file;
 
   return requestBody;
@@ -17,30 +16,30 @@ const buildRequestBody = (data, file) => {
 const useAddBook = () => {
   const {
     register,
-    formState: { errors },
+    formState: {errors},
     handleSubmit,
     reset,
   } = useForm();
   const [file, setFile] = useState();
-  const { postBook, postBookStatus } = useContext(BookContext);
+  const {postBook, postBookStatus} = useContext(BookContext);
   const [addBookError, setAddBookError] = useState();
   const [addBookSuccess, setAddBookSuccess] = useState();
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     const requestBody = buildRequestBody(data, file);
     postBook(requestBody);
   };
-  const onError = (err) => {
+  const onError = err => {
     setAddBookError({
       ...addBookError,
       formError: err,
     });
   };
-  const submitWithPrevent = (e) => {
+  const submitWithPrevent = e => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
   };
-  const handleImageSelection = (e) => {
+  const handleImageSelection = e => {
     setFile(e.target.files[0]);
   };
 
@@ -64,6 +63,15 @@ const useAddBook = () => {
     setAddBookSuccess({});
   }, []);
 
-  return { submitWithPrevent, register, errors, file, setFile, handleImageSelection, addBookError, addBookSuccess };
+  return {
+    submitWithPrevent,
+    register,
+    errors,
+    file,
+    setFile,
+    handleImageSelection,
+    addBookError,
+    addBookSuccess,
+  };
 };
 export default useAddBook;

@@ -6,7 +6,7 @@ import UnderlinedInput from 'components/atoms/UnderlinedInput';
 const StyledUserDataLine = styled.div`
   display: flex;
   font-size: 2rem;
-  color: ${({ theme }) => theme.colors.secondary2};
+  color: ${({theme}) => theme.colors.secondary2};
 
   p:nth-child(1) {
     width: 32rem;
@@ -33,7 +33,20 @@ const StyledUserDataLine = styled.div`
 `;
 
 const UserDataLine = React.forwardRef(
-  ({ data, label, updateSelected, register, placeholder, fieldName, error, validationFunction, ...props }, ref) => {
+  (
+    {
+      data,
+      label,
+      updateSelected,
+      register,
+      placeholder,
+      fieldName,
+      error,
+      validationFunction,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <StyledUserDataLine className={props.className}>
         <p className="label">{label}</p>
@@ -43,7 +56,7 @@ const UserDataLine = React.forwardRef(
             name={fieldName}
             placeholder={placeholder}
             ref={ref}
-            {...register(fieldName, { validate: validationFunction })}
+            {...register(fieldName, {validate: validationFunction})}
             className={error ? 'error' : ''}
           />
         ) : (

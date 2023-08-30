@@ -29,7 +29,7 @@ const StyledBorrowingActions = styled.div`
   justify-content: flex-start;
 
   .action-container {
-    border: 6px solid ${({ theme }) => theme.colors.primary3};
+    border: 6px solid ${({theme}) => theme.colors.primary3};
     border-radius: 0 0.5rem 0.5rem 0.5rem;
     box-shadow: 0 0 0.25rem 0 rgba(0, 0, 0, 0.25);
     overflow: hidden;

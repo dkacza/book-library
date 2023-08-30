@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import AuthContext from 'providers/AuthProvider';
 import UsersContext from 'providers/UsersProvider';
 
 const usePersonalData = () => {
-  const { auth } = useContext(AuthContext);
+  const {auth} = useContext(AuthContext);
   const [updateSelected, setUpdateSelected] = useState(false);
   const {
     register,
@@ -12,9 +12,9 @@ const usePersonalData = () => {
     getValues,
     setValue,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
-  const { patchPersonalData, personalDataStatus, unsetPersonalDataStatus } = useContext(UsersContext);
+  const {patchPersonalData, personalDataStatus, unsetPersonalDataStatus} = useContext(UsersContext);
   const [personalDataError, setPersonalDataError] = useState({});
   const [personalDataSuccess, setPersonalDataSuccess] = useState({});
 
@@ -24,24 +24,23 @@ const usePersonalData = () => {
     setValue('email', auth.email);
     setValue('phoneNumber', auth.phoneNumber);
   };
-
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     patchPersonalData(data);
     reset();
     setUpdateSelected(false);
   };
-  const onError = (err) => {
+  const onError = err => {
     setPersonalDataError({
       ...personalDataError,
       formError: err,
     });
   };
-  const handleSave = (e) => {
+  const handleSave = e => {
     e.preventDefault();
     const formData = getValues();
     handleSubmit(onSubmit, onError)(formData);
   };
-  const handleDiscard = (e) => {
+  const handleDiscard = e => {
     e.preventDefault();
     reset();
     setUpdateSelected(false);

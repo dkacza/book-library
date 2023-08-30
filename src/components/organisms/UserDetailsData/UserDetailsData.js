@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const UserDetailsData = ({ user }) => {
+const UserDetailsData = ({user}) => {
   return (
     <>
       <div className="first-name">

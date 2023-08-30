@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import UserDataLine from 'components/organisms/UserDataLine';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import StyledPersonalData from 'components/organisms/PersonalData/PersonalData.styles';
@@ -9,7 +9,7 @@ import AuthContext from 'providers/AuthProvider';
 import usePersonalData from 'hooks/usePersonalData';
 
 const PersonalData = () => {
-  const { auth } = useContext(AuthContext);
+  const {auth} = useContext(AuthContext);
   const {
     updateSelected,
     setUpdateSelected,
@@ -29,7 +29,7 @@ const PersonalData = () => {
         placeholder={'first name'}
         fieldName={'firstName'}
         canBeUpdated={true}
-        validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
+        validationFunction={val => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
         error={personalDataError.formError?.firstName}
       />
@@ -40,7 +40,7 @@ const PersonalData = () => {
         placeholder={'last name'}
         fieldName={'lastName'}
         canBeUpdated={true}
-        validationFunction={(val) => validationRegexes.nameRegex.test(val) || val === undefined}
+        validationFunction={val => validationRegexes.nameRegex.test(val) || val === undefined}
         register={register}
         error={personalDataError.formError?.lastName}
       />
@@ -51,7 +51,7 @@ const PersonalData = () => {
         placeholder={'email address'}
         fieldName={'email'}
         canBeUpdated={true}
-        validationFunction={(val) => validationRegexes.emailRegex.test(val) || val === undefined}
+        validationFunction={val => validationRegexes.emailRegex.test(val) || val === undefined}
         register={register}
         error={personalDataError.formError?.email}
       />
@@ -62,17 +62,25 @@ const PersonalData = () => {
         placeholder={'phone number'}
         fieldName={'phoneNumber'}
         canBeUpdated={true}
-        validationFunction={(val) => validationRegexes.phoneRegex.test(val) || val === undefined}
+        validationFunction={val => validationRegexes.phoneRegex.test(val) || val === undefined}
         register={register}
         error={personalDataError.formError?.phoneNumber}
       />
-      <UserDataLine data={auth.registrationDate.substring(0, 10)} label={'Registration date:'} updateSelected={false} />
+      <UserDataLine
+        data={auth.registrationDate.substring(0, 10)}
+        label={'Registration date:'}
+        updateSelected={false}
+      />
       {!isEmptyObject(personalDataError?.formError) ? (
         <p className="error-msg">Please provide the updated data in correct form</p>
       ) : (
         ''
       )}
-      {!isEmptyObject(personalDataSuccess) ? <p className="success-msg">{personalDataSuccess.message}</p> : ''}
+      {!isEmptyObject(personalDataSuccess) ? (
+        <p className="success-msg">{personalDataSuccess.message}</p>
+      ) : (
+        ''
+      )}
       {!isEmptyObject(personalDataError?.dataProviderError) ? (
         <p className="error-msg">{personalDataError.dataProviderError}</p>
       ) : (
@@ -87,7 +95,9 @@ const PersonalData = () => {
           </BorderlessButton>{' '}
         </>
       ) : (
-        <BorderlessButton onClick={() => setUpdateSelected(true)}>Change personal data</BorderlessButton>
+        <BorderlessButton onClick={() => setUpdateSelected(true)}>
+          Change personal data
+        </BorderlessButton>
       )}
     </StyledPersonalData>
   );

@@ -1,4 +1,4 @@
-import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
+import {MainViewTemplate} from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
 import Table from 'components/organisms/Table/Table';
@@ -23,11 +23,18 @@ const INITIAL_FORM_VALUES = {
 };
 
 const BooksView = () => {
-  const { paginationData, books, register, handlePageChange, handleRecordSelect, submitWithPrevent, bookBrowserError } =
-    useBookBrowser(INITIAL_FORM_VALUES);
-  const processedBooks = books.map((book) => ({
+  const {
+    paginationData,
+    books,
+    register,
+    handlePageChange,
+    handleRecordSelect,
+    submitWithPrevent,
+    bookBrowserError,
+  } = useBookBrowser(INITIAL_FORM_VALUES);
+  const processedBooks = books.map(book => ({
     ...book,
-    authors: book.authors.map((author) => author.name).join(', '),
+    authors: book.authors.map(author => author.name).join(', '),
   }));
 
   return (
@@ -50,16 +57,23 @@ const BooksView = () => {
 
           <BookFilters
             errors={bookBrowserError?.formError}
-            onSubmit={(e) => submitWithPrevent(e)}
+            onSubmit={e => submitWithPrevent(e)}
             register={register}
           />
           {books.length > 0 ? (
-            <Pagination paginationData={paginationData} handlePageChange={handlePageChange}></Pagination>
+            <Pagination
+              paginationData={paginationData}
+              handlePageChange={handlePageChange}
+            ></Pagination>
           ) : (
             ''
           )}
         </TableViewTemplate>
-        {bookBrowserError?.dataProviderError ? <FloatingErrorMessage error={bookBrowserError.dataProviderError} /> : ''}
+        {bookBrowserError?.dataProviderError ? (
+          <FloatingErrorMessage error={bookBrowserError.dataProviderError} />
+        ) : (
+          ''
+        )}
       </main>
     </MainViewTemplate>
   );

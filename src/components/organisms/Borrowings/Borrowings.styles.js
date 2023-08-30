@@ -37,12 +37,12 @@ const StyledBorrowings = styled.div`
     }
 
     &::-webkit-scrollbar-thumb {
-      background: ${({ theme }) => theme.colors.secondary1};
+      background: ${({theme}) => theme.colors.secondary1};
       border-radius: 0.25rem;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: ${({ theme }) => theme.colors.secondary2};
+      background: ${({theme}) => theme.colors.secondary2};
     }
 
     &::-webkit-scrollbar-corner {
@@ -54,7 +54,7 @@ const StyledBorrowings = styled.div`
       position: sticky;
       top: 0;
       left: 0;
-      background-color: ${({ theme }) => theme.colors.primary1};
+      background-color: ${({theme}) => theme.colors.primary1};
       font-weight: bold;
       font-size: 1.25rem;
       // Prevent the text showing through the top border
@@ -64,13 +64,13 @@ const StyledBorrowings = styled.div`
     li {
       display: flex;
       flex-direction: row;
-      border-bottom: 1px solid ${({ theme }) => theme.colors.secondary1};
+      border-bottom: 1px solid ${({theme}) => theme.colors.secondary1};
       align-items: center;
+      width: calc(100% - 3rem);
 
       ${SquareTileButton} {
         margin-top: 0.5rem;
         margin-bottom: 0.75rem;
-        margin-right: 1rem;
       }
     }
     p:nth-child(1) {
@@ -89,7 +89,7 @@ const StyledBorrowings = styled.div`
       background-color: ${({theme}) => theme.colors.error1};
       color: ${({theme}) => theme.colors.primary1};
     }
-   }
+  }
 `;
 
 export default StyledBorrowings;

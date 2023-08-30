@@ -18,12 +18,12 @@ const StyledTable = styled.table`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.secondary1};
+    background: ${({theme}) => theme.colors.secondary1};
     border-radius: 0.25rem;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.secondary2};
+    background: ${({theme}) => theme.colors.secondary2};
   }
 
   &::-webkit-scrollbar-corner {
@@ -33,7 +33,7 @@ const StyledTable = styled.table`
   th {
     font-size: 2rem;
     text-align: left;
-    color: ${({ theme }) => theme.colors.secondary2};
+    color: ${({theme}) => theme.colors.secondary2};
     font-family: 'Raleway', sans-serif;
     padding-right: 2rem;
   }
@@ -43,15 +43,17 @@ const StyledTable = styled.table`
   }
 
   // Table proportions
-  ${(props) => {
+  ${props => {
     return props.$columnproportions.map((columnSize, index) => {
-      return `th:nth-child(${index + 1}), td:nth-child(${index + 1}) {width: ${columnSize * 100}%;}`
-    })
+      return `th:nth-child(${index + 1}), td:nth-child(${index + 1}) {width: ${
+        columnSize * 100
+      }%;}`;
+    });
   }}
   thead {
     position: sticky;
     top: 0;
-    background-color: ${({ theme }) => theme.colors.primary1};
+    background-color: ${({theme}) => theme.colors.primary1};
   }
 
   td {
@@ -60,18 +62,17 @@ const StyledTable = styled.table`
     padding: 0.75rem 2rem 0.75rem 0;
   }
 
-
   tr {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.secondary1};
+    border-bottom: 1px solid ${({theme}) => theme.colors.secondary1};
     margin: 0 1rem;
   }
 
   tr.active {
-    color: ${({ theme }) => theme.colors.accept3};
+    color: ${({theme}) => theme.colors.accept3};
   }
 
   tr.lost {
-    color: ${({ theme }) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error2};
   }
 
   thead tr:nth-child(1) {
@@ -99,7 +100,6 @@ const StyledTable = styled.table`
     }
   }
 
-
   @media (max-width: 1280px) {
     td {
       font-size: 0.75rem;
@@ -113,8 +113,6 @@ const StyledTable = styled.table`
     }
   }
   @media (max-width: 1100px) {
-    
-
     th.long {
       font-size: 1rem;
     }

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import StyledTable from 'components/organisms/Table/Table.styles';
 import styled from 'styled-components';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 
-const Table = ({ columnNames, columnCodes, data, columnproportions, actionOnSelect, ...props }) => {
+const Table = ({columnNames, columnCodes, data, columnproportions, actionOnSelect, ...props}) => {
   const [route, setRoute] = useState('');
 
   useEffect(() => {
@@ -11,7 +11,6 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, actionOnSele
   }, []);
   const selectableClass = actionOnSelect ? 'selectable' : '';
   actionOnSelect = actionOnSelect || (() => {});
-
 
   return (
     <>
@@ -29,10 +28,15 @@ const Table = ({ columnNames, columnCodes, data, columnproportions, actionOnSele
           </tr>
         </thead>
         <tbody>
-          {data.map((record) => {
+          {data.map(record => {
             return (
-              <tr key={record._id} className={record.currentStatus} id={record._id} onClick={(e) => actionOnSelect(e, setRoute)}>
-                {columnCodes.map((name) => {
+              <tr
+                key={record._id}
+                className={record.currentStatus}
+                id={record._id}
+                onClick={e => actionOnSelect(e, setRoute)}
+              >
+                {columnCodes.map(name => {
                   return (
                     <td key={`${record._id}-${name}`}>
                       {record[name] ? (record[name] === true ? 'Yes' : record[name]) : 'No'}

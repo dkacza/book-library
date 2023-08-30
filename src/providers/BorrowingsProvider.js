@@ -168,10 +168,11 @@ export const BorrowingsProvider = ({children}) => {
   // Get the new book data (no query applied)
   useEffect(() => {
     if (auth.role === 'user') {
-      console.log('fetching logged in user');
       setAuthorizedHistory(false);
+      setHistoryQuery('');
       fetchLoggedInUsersBorrowings(currentPage);
     } else if (auth.role === 'librarian' || auth.role === 'admin') {
+      setHistoryQuery('');
       setAuthorizedHistory(true);
       fetchAllBorrowings(currentPage);
     }

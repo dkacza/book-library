@@ -47,6 +47,7 @@ export const UsersProvider = ({children}) => {
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
         providerHelpers.setErrorStatus(setAllUsersStatus, errorMsgResponse);
+        setUsers([]);
       });
   };
 
@@ -167,6 +168,8 @@ export const UsersProvider = ({children}) => {
     if (!(auth.role === 'admin' || auth.role === 'librarian')) return;
     fetchAllUsers(currentPage);
   }, [auth, limitPerPage, usersQuery, currentPage]);
+
+  useEffect(() => {setUsersQuery('')}, [auth])
 
   return (
     <UsersContext.Provider

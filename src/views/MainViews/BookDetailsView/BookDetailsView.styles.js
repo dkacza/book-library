@@ -13,7 +13,7 @@ const StyledContentSection = styled.section`
     flex-direction: row;
     overflow: hidden;
     width: 100%;
-    
+
     ${BookImage} {
       margin-right: 2rem;
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
-import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
+import {MainViewTemplate} from 'views/MainViews/MainViewTemplate';
 import BookTextData from 'components/organisms/BookTextData/BookTextData';
 import BookImage from 'components/molecules/BookImage/BookImage';
 import StyledContentSection from 'views/MainViews/BookDetailsView/BookDetailsView.styles';
@@ -55,7 +55,11 @@ const BookDetailsView = () => {
             handleDiscard={handleDiscard}
           />
         </StyledContentSection>
-        {bookDetailsError?.dataProviderError ? <FloatingErrorMessage error={bookDetailsError.dataProviderError} /> : ''}
+        {bookDetailsError?.dataProviderError ? (
+          <FloatingErrorMessage error={bookDetailsError.dataProviderError} />
+        ) : (
+          ''
+        )}
       </main>
     </MainViewTemplate>
   );

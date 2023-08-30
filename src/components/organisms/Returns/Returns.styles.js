@@ -14,12 +14,12 @@ const StyledReturns = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.secondary1};
+    background: ${({theme}) => theme.colors.secondary1};
     border-radius: 0.25rem;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.secondary2};
+    background: ${({theme}) => theme.colors.secondary2};
   }
 
   &::-webkit-scrollbar-corner {
@@ -60,7 +60,7 @@ const StyledReturns = styled.div`
   p:nth-child(3) {
     width: 8rem;
   }
-  
+
   ${SquareTileButton} {
     margin: 0 0.75rem 0.75rem 2rem;
   }

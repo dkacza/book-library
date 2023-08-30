@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Logo from 'components/molecules/Logo/Logo';
 import img from 'assets/images/aside-photo-compressed.webp';
 
-
 const StyledAsidePhoto = styled.aside`
   display: flex;
   flex-direction: column;

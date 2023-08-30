@@ -31,7 +31,7 @@ const StyledForm = styled.form`
     height: 4rem;
 
     p.error {
-      color: ${({ theme }) => theme.colors.error1};
+      color: ${({theme}) => theme.colors.error1};
       font-weight: bold;
       font-size: 1.25rem;
     }
@@ -54,15 +54,13 @@ const StyledForm = styled.form`
       margin-top: 0.75rem;
       margin-bottom: 1rem;
       height: 2.5rem;
-      
 
       p.error {
-        color: ${({ theme }) => theme.colors.error1};
+        color: ${({theme}) => theme.colors.error1};
         font-weight: bold;
         font-size: 1rem;
         text-overflow: ellipsis;
         overflow: hidden;
-        
       }
     }
   }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { MainViewTemplate } from 'views/MainViews/MainViewTemplate';
+import {MainViewTemplate} from 'views/MainViews/MainViewTemplate';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import Title from 'components/atoms/Title';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import StyledContentSection from 'views/MainViews/UserDetailsView/UserDetailsView.styles';
 import StyledLink from 'components/atoms/StyledLink';
 import UserDetailsData from 'components/organisms/UserDetailsData/UserDetailsData';
@@ -11,7 +11,7 @@ import useUserDetails from 'hooks/useUserDetails';
 import FloatingMessage from 'components/molecules/FloatingMessage/FloatingMessage';
 
 const UserDetailsView = () => {
-  const { user, auth, handlePromotion, redirectToMyProfile, userDetailsError } = useUserDetails();
+  const {user, auth, handlePromotion, redirectToMyProfile, userDetailsError} = useUserDetails();
 
   return (
     <MainViewTemplate>
@@ -25,7 +25,11 @@ const UserDetailsView = () => {
           <StyledLink to={'/users'}>Back to the users list</StyledLink>
           {redirectToMyProfile ? <Navigate to="/settings" /> : ''}
         </StyledContentSection>
-        {userDetailsError?.dataProviderError ? <FloatingMessage error={userDetailsError.dataProviderError} /> : ''}
+        {userDetailsError?.dataProviderError ? (
+          <FloatingMessage error={userDetailsError.dataProviderError} />
+        ) : (
+          ''
+        )}
       </main>
     </MainViewTemplate>
   );

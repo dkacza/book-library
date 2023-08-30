@@ -16,7 +16,7 @@ const StyledContentSection = styled.section`
   .label {
     font-weight: bold;
     font-size: 1.75rem;
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
   }
 
   .data {
@@ -35,28 +35,27 @@ const StyledContentSection = styled.section`
       .role-label {
         font-weight: bold;
         font-size: 1.25rem;
-        color: ${({ theme }) => theme.colors.secondary1};
+        color: ${({theme}) => theme.colors.secondary1};
       }
     }
   }
-
 
   ${BorderlessButton} {
     font-size: 1.25rem;
 
     &.demote {
-      color: ${({ theme }) => theme.colors.error2};
+      color: ${({theme}) => theme.colors.error2};
     }
   }
 
   ${StyledLink} {
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
     font-size: 1.25rem;
   }
 
   p.error-msg {
     font-weight: bold;
-    color: ${({ theme }) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error2};
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
@@ -81,7 +80,7 @@ const StyledContentSection = styled.section`
     }
 
     ${StyledLink} {
-      color: ${({ theme }) => theme.colors.secondary1};
+      color: ${({theme}) => theme.colors.secondary1};
       font-size: 1rem;
     }
   }

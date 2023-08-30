@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import BookContext from 'providers/BookProvider';
-const buildQuery = (data) => {
+const buildQuery = data => {
   let queryString = '';
 
-  const { genre } = data;
+  const {genre} = data;
   let genreString = 'genre=';
   let emptyGenre = true;
   let fullGenre = true;
@@ -35,34 +35,35 @@ const buildQuery = (data) => {
   return queryString.substring(0, queryString.length - 1);
 };
 
-const useBookBrowser = (initialFormValues) => {
+const useBookBrowser = initialFormValues => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({ defaultValues: initialFormValues });
-  const { books, allBooksStatus, paginationData, setBookQuery, setCurrentPage } = useContext(BookContext);
+    formState: {errors},
+  } = useForm({defaultValues: initialFormValues});
+  const {books, allBooksStatus, paginationData, setBookQuery, setCurrentPage} =
+    useContext(BookContext);
   const [bookBrowserError, setBookBrowserError] = useState({});
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     const newQuery = buildQuery(data);
     setBookQuery(newQuery);
     setBookBrowserError({
       ...bookBrowserError,
       formError: '',
-    })
+    });
   };
-  const onError = (err) => {
+  const onError = err => {
     setBookBrowserError({
       ...bookBrowserError,
       formError: err,
     });
   };
-  const submitWithPrevent = (e) => {
+  const submitWithPrevent = e => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
   };
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     if (newPage > paginationData.totalPages || newPage < 1) return;
     setCurrentPage(newPage);
   };

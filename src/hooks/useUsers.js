@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import UsersContext from 'providers/UsersProvider';
 
-const buildQuery = (data) => {
+const buildQuery = data => {
   let query = '';
 
   if (data.registrationDateFrom) query += `registrationDate[gte]=${data.registrationDateFrom}&`;
@@ -19,16 +19,18 @@ const buildQuery = (data) => {
   return query.substring(0, query.length - 1);
 };
 
-const useUsers = (initialFormValues) => {
+const useUsers = initialFormValues => {
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({ defaultValues: initialFormValues });
-  const { users, allUsersStatus, paginationData, setUsersQuery, setCurrentPage } = useContext(UsersContext);
+    formState: {errors},
+  } = useForm({defaultValues: initialFormValues});
+  const {users, allUsersStatus, paginationData, setUsersQuery, setCurrentPage} =
+    useContext(UsersContext);
   const [userListError, setUserListError] = useState('');
-  const onSubmit = (data) => {
+
+  const onSubmit = data => {
     const query = buildQuery(data);
     setUsersQuery(query);
     setUserListError({
@@ -36,27 +38,25 @@ const useUsers = (initialFormValues) => {
       formError: '',
     });
   };
-  const onError = (err) => {
+  const onError = err => {
     setUserListError({
       ...userListError,
       formError: err,
     });
   };
-  const submitWithPrevent = (e) => {
+  const submitWithPrevent = e => {
     e.preventDefault();
     handleSubmit(onSubmit, onError)();
   };
-
-  const handleClearFields = (fieldNames) => {
-    fieldNames.forEach((field) => {
+  const handleClearFields = fieldNames => {
+    fieldNames.forEach(field => {
       setValue(field, null);
     });
   };
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     if (newPage > paginationData.totalPages || newPage < 1) return;
     setCurrentPage(newPage);
   };
-
   const handleRecordSelect = (e, setRoute) => {
     e.preventDefault();
     const id = e.currentTarget.id;
@@ -67,7 +67,7 @@ const useUsers = (initialFormValues) => {
   // The query is also modified by manage borrowings view, so it needs to be unset
   useEffect(() => {
     setUsersQuery('');
-  }, [])
+  }, []);
 
   useEffect(() => {
     setUserListError({

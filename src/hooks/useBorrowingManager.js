@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import useDebounce from 'hooks/useDebounce';
 import BookContext from 'providers/BookProvider';
 import BorrowingsContext from 'providers/BorrowingsProvider';
@@ -14,7 +14,7 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
   const [borrowingManagerError, setBorrowingManagerError] = useState('');
   const [borrowingManagerSuccess, setBorrowingManagerSuccess] = useState('');
 
-  const { searchForBook, searchedBookStatus, unsetSearchedBookStatus } = useContext(BookContext);
+  const {searchForBook, searchedBookStatus, unsetSearchedBookStatus} = useContext(BookContext);
   const {
     getBorrowingById,
     borrowingByIdStatus,
@@ -48,8 +48,6 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
     };
     modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
-
-    // TODO replace the all users array
     updateArrayWithNewUser(modifiedSelectedUser);
 
     getBooksFromProvider();
@@ -57,17 +55,17 @@ const UseBorrowingManager = (selectedUser, setSelectedUser) => {
 
   const handleBookReturn = async (e, borrowingId) => {
     e.preventDefault();
-    const result = await patchBorrowingAsReturned(borrowingId, selectedUser._id);
+    await patchBorrowingAsReturned(borrowingId, selectedUser._id);
     const modifiedSelectedUser = {
       ...selectedUser,
-      rentals: selectedUser.rentals.filter((rentalId) => rentalId !== borrowingId),
+      rentals: selectedUser.rentals.filter(rentalId => rentalId !== borrowingId),
     };
     modifiedSelectedUser.eligible = modifiedSelectedUser.rentals.length < 3;
     setSelectedUser(modifiedSelectedUser);
 
     updateArrayWithNewUser(modifiedSelectedUser);
   };
-  const handleQueryChange = (e) => {
+  const handleQueryChange = e => {
     e.preventDefault();
     if (!e.target.value) {
       setBooksSearchResult(undefined);

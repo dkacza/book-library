@@ -15,7 +15,6 @@ const AddBookForm = ({
   handleImageSelection,
   file,
   setFile,
-  successMsg,
 }) => {
   return (
     <StyledAddBookForm onSubmit={e => submitWithPrevent(e)}>

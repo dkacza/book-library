@@ -1,5 +1,5 @@
 // https://www.youtube.com/watch?v=0c6znExIqRw&ab_channel=WebDevSimplified
-import { useCallback, useEffect, useRef } from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 const useTimeout = (callback, delay) => {
   const callbackRef = useRef(callback);
@@ -27,6 +27,6 @@ const useTimeout = (callback, delay) => {
     set();
   }, [clear, set]);
 
-  return {reset, clear}
+  return {reset, clear};
 };
 export default useTimeout;

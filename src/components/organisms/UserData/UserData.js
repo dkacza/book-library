@@ -3,7 +3,7 @@ import Title from 'components/atoms/Title';
 import StyledUserData from 'components/organisms/UserData/UserData.styles';
 import styled from 'styled-components';
 
-const UserData = ({ selectedUser, ...props }) => {
+const UserData = ({selectedUser, ...props}) => {
   return (
     <StyledUserData className={props.className}>
       <Title className="user-name">
@@ -11,7 +11,11 @@ const UserData = ({ selectedUser, ...props }) => {
       </Title>
       <p>{selectedUser.email}</p>
       <p>{selectedUser.phoneNumber}</p>
-      {!selectedUser.eligible ? <p className="not-eligible">User is not eligible to rent any more books</p> : ''}
+      {!selectedUser.eligible ? (
+        <p className="not-eligible">User is not eligible to rent any more books</p>
+      ) : (
+        ''
+      )}
     </StyledUserData>
   );
 };

@@ -16,8 +16,8 @@ const StyledUserSelection = styled.div`
     margin-bottom: 2rem;
     color: ${({theme}) => theme.colors.secondary1};
   }
-  
-  @media(max-height: 800px) {
+
+  @media (max-height: 800px) {
     ${InputWithIcon} {
       height: 2.5rem;
       max-width: 24rem;

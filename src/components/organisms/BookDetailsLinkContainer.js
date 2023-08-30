@@ -1,18 +1,18 @@
 import BorderlessButton from 'components/atoms/BorderlessButton';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import StyledLink from 'components/atoms/StyledLink';
 
 const StyledBookDetailsLinkContainer = styled.div`
   .discard {
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
   }
 
   * {
     margin-right: 1rem;
   }
 `;
-const checkEditingAuthorization = (role) => role === 'admin' || role === 'librarian';
+const checkEditingAuthorization = role => role === 'admin' || role === 'librarian';
 
 const BookDetailsLinkContainer = ({
   auth,
@@ -31,7 +31,9 @@ const BookDetailsLinkContainer = ({
   return (
     <StyledBookDetailsLinkContainer className={props.className}>
       {authorizedToEdit && !updateSelected ? (
-        <BorderlessButton onClick={(e) => handleSelectUpdate(e)}>Update book details</BorderlessButton>
+        <BorderlessButton onClick={e => handleSelectUpdate(e)}>
+          Update book details
+        </BorderlessButton>
       ) : (
         ''
       )}
@@ -42,7 +44,7 @@ const BookDetailsLinkContainer = ({
       ) : (
         ''
       )}
-      {updateSelected ? <BorderlessButton onClick={(e) => handleSave(e)}>Save</BorderlessButton> : ''}
+      {updateSelected ? <BorderlessButton onClick={e => handleSave(e)}>Save</BorderlessButton> : ''}
       {updateSelected ? (
         <BorderlessButton className="discard" onClick={handleDiscard}>
           Discard

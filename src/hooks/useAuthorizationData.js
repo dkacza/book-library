@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useContext, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 import UsersContext from 'providers/UsersProvider';
 
 const useAuthorizationData = () => {
@@ -11,27 +11,28 @@ const useAuthorizationData = () => {
     handleSubmit,
     getValues,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
 
-  const { patchAuthenticationData, authenticationDataStatus, unsetAuthenticationDataStatus } = useContext(UsersContext);
+  const {patchAuthenticationData, authenticationDataStatus, unsetAuthenticationDataStatus} =
+    useContext(UsersContext);
 
-  const handleDiscard = (e) => {
+  const handleDiscard = e => {
     e.preventDefault();
     reset();
     setUpdateSelected(false);
   };
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     patchAuthenticationData(data);
     reset();
   };
-  const onError = (err) => {
+  const onError = err => {
     setAuthorizationDataError({
       ...authorizationDataError,
       formError: err,
     });
   };
-  const handleSave = (e) => {
+  const handleSave = e => {
     e.preventDefault();
     setAuthorizationDataSuccess({});
     setAuthorizationDataError({});
@@ -41,13 +42,15 @@ const useAuthorizationData = () => {
 
   // Unset messages when updating is activated
   useEffect(() => {
-    if (!updateSelected) {return}
+    if (!updateSelected) {
+      return;
+    }
     unsetAuthenticationDataStatus();
   }, [updateSelected]);
   // Unset every message on component load
   useEffect(() => {
     unsetAuthenticationDataStatus();
-  }, [])
+  }, []);
 
   // Display success or error message when password request is done
   // Close the update mode if successfully updated the password

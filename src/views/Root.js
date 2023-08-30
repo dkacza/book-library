@@ -1,6 +1,5 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
-import axios from 'api/axios';
 import {getCookie} from 'utils/cookies';
 import {ThemeProvider} from 'styled-components';
 import {theme} from 'assets/styles/theme';

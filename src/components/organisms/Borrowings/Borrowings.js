@@ -1,12 +1,19 @@
 import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import { ReactComponent as SearchIcon } from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as SearchIcon} from 'assets/icons/search_FILL0_wght600_GRAD0_opsz48.svg';
 import SquareTileButton from 'components/atoms/SquareTileButton';
-import { ReactComponent as BookBorrowIcon } from 'assets/icons/book-borrow-icon.svg';
+import {ReactComponent as BookBorrowIcon} from 'assets/icons/book-borrow-icon.svg';
 import StyledBorrowings from 'components/organisms/Borrowings/Borrowings.styles';
 import styled from 'styled-components';
 
-const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, handleBookBorrow, eligible, ...props }) => {
+const Borrowings = ({
+  bookSearchQuery,
+  handleQueryChange,
+  booksSearchResult,
+  handleBookBorrow,
+  eligible,
+  ...props
+}) => {
   return (
     <StyledBorrowings className={props.className}>
       <InputWithIcon
@@ -27,14 +34,14 @@ const Borrowings = ({ bookSearchQuery, handleQueryChange, booksSearchResult, han
               <p>Authors</p>
               <p>ISBN</p>
             </div>
-            {booksSearchResult.map((book) => (
+            {booksSearchResult.map(book => (
               <li key={book._id}>
                 <p>{book.title}</p>
-                <p>{book.authors?.map((author) => author.name)?.join(', ')}</p>
+                <p>{book.authors?.map(author => author.name)?.join(', ')}</p>
                 <p>{book.isbn}</p>
                 <SquareTileButton
                   className={eligible ? 'eligible' : 'not-eligible'}
-                  onClick={(e) => {
+                  onClick={e => {
                     if (!eligible) return;
                     handleBookBorrow(e, book._id);
                   }}

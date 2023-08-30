@@ -5,7 +5,7 @@ import UnderlinedInput from 'components/atoms/UnderlinedInput';
 
 const StyledPersonalData = styled.div`
   margin-top: 3rem;
-  
+
   ${UserDataLine} {
     margin-bottom: 1.25rem;
     max-height: 2rem;
@@ -31,7 +31,7 @@ const StyledPersonalData = styled.div`
     color: ${({theme}) => theme.colors.accept3};
     margin-bottom: 1rem;
   }
-  @media(max-width: 1600px) {
+  @media (max-width: 1600px) {
     ${UserDataLine} {
       font-size: 1.5rem;
       p:nth-child(1) {
@@ -45,7 +45,7 @@ const StyledPersonalData = styled.div`
       font-size: 1.25rem;
     }
   }
-  @media(max-width: 1300px) {
+  @media (max-width: 1300px) {
     margin-top: 0;
     ${UserDataLine} {
       font-size: 1.25rem;
@@ -54,7 +54,6 @@ const StyledPersonalData = styled.div`
         font-size: 1.25rem;
       }
     }
-    
   }
 `;
 export default StyledPersonalData;

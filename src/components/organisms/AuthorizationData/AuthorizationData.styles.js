@@ -16,7 +16,7 @@ const StyledAuthorizationData = styled.div`
   }
 
   ${BorderlessButton}.discard {
-    color: ${({ theme }) => theme.colors.primary3}
+    color: ${({theme}) => theme.colors.primary3};
   }
 
   ${InputWithIcon} {
@@ -60,11 +60,13 @@ const StyledAuthorizationData = styled.div`
         font-size: 1rem;
       }
     }
-    p.password-info, p.error-msg, p.success-msg {
+    p.password-info,
+    p.error-msg,
+    p.success-msg {
       margin-bottom: 0.5rem;
     }
   }
-  @media(max-width: 1300px) {
+  @media (max-width: 1300px) {
     ${UserDataLine} {
       font-size: 1.25rem;
       margin-bottom: 0.75rem;

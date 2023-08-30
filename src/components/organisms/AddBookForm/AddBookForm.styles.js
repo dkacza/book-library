@@ -9,12 +9,12 @@ const StyledAddBookForm = styled.form`
   grid-template-columns: 50% 50%;
   grid-template-rows: repeat(5, 6rem) 1fr;
   grid-template-areas:
-  "title photo-input"
-  "authors photo-input"
-  "publication-date description"
-  "isbn ."
-  "genre ."
-  "submission-wrapper .";
+    'title photo-input'
+    'authors photo-input'
+    'publication-date description'
+    'isbn .'
+    'genre .'
+    'submission-wrapper .';
   margin-top: 3rem;
 
   .title {
@@ -22,23 +22,23 @@ const StyledAddBookForm = styled.form`
   }
 
   .authors {
-    grid-area: authors
+    grid-area: authors;
   }
 
   .publication-date {
-    grid-area: publication-date
+    grid-area: publication-date;
   }
 
   .isbn {
-    grid-area: isbn
+    grid-area: isbn;
   }
 
   .genre {
-    grid-area: genre
+    grid-area: genre;
   }
 
   .description {
-    grid-area: description
+    grid-area: description;
   }
 
   .photo-input {
@@ -47,12 +47,12 @@ const StyledAddBookForm = styled.form`
     ${BorderlessButton} {
       margin-top: 0.5rem;
       font-size: 0.8rem;
-      color: ${({ theme }) => theme.colors.secondary1};
+      color: ${({theme}) => theme.colors.secondary1};
     }
   }
 
   .submission-wrapper {
-    grid-area: submission-wrapper
+    grid-area: submission-wrapper;
   }
 
   ${SubmitButton} {
@@ -64,13 +64,13 @@ const StyledAddBookForm = styled.form`
   .error-msg {
     font-size: 1.25rem;
     font-weight: bold;
-    color: ${({ theme }) => theme.colors.error2};
+    color: ${({theme}) => theme.colors.error2};
   }
 
   .label {
     font-weight: bold;
     font-size: 1.5rem;
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
     margin-bottom: 0.25rem;
   }
 
@@ -81,23 +81,23 @@ const StyledAddBookForm = styled.form`
 
   .hint {
     font-size: 0.75rem;
-    color: ${({ theme }) => theme.colors.secondary1};
+    color: ${({theme}) => theme.colors.secondary1};
   }
 
   select {
     background: none;
-    border: 2px solid ${({ theme }) => theme.colors.primary3};
-    color: ${({ theme }) => theme.colors.secondary2};
+    border: 2px solid ${({theme}) => theme.colors.primary3};
+    color: ${({theme}) => theme.colors.secondary2};
     border-radius: 0.25rem;
     height: 2rem;
     padding: 0 0.25rem;
     cursor: pointer;
-    
+
     &:focus {
-      border: 2px solid ${({ theme }) => theme.colors.primary3};
+      border: 2px solid ${({theme}) => theme.colors.primary3};
     }
   }
-  @media(max-height: 800px) {
+  @media (max-height: 800px) {
     grid-template-columns: 50% 50%;
     grid-template-rows: repeat(5, 5rem) 1fr;
     ${SubmitButton} {

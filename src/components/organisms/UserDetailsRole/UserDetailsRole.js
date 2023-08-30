@@ -2,7 +2,7 @@ import BorderlessButton from 'components/atoms/BorderlessButton';
 import React from 'react';
 import styled from 'styled-components';
 
-const UserDetailsRole = ({ user, auth, handlePromotion, ...props }) => {
+const UserDetailsRole = ({user, auth, handlePromotion, ...props}) => {
   return (
     <div className={props.className}>
       <div className="current-role">
@@ -13,12 +13,16 @@ const UserDetailsRole = ({ user, auth, handlePromotion, ...props }) => {
         <div className="promotion">
           <p className="role-label">Change user role</p>
           {user?.role !== 'librarian' && user?.role !== 'admin' ? (
-            <BorderlessButton onClick={() => handlePromotion('librarian')}>Promote to librarian</BorderlessButton>
+            <BorderlessButton onClick={() => handlePromotion('librarian')}>
+              Promote to librarian
+            </BorderlessButton>
           ) : (
             ''
           )}
           {user?.role !== 'admin' ? (
-            <BorderlessButton onClick={() => handlePromotion('admin')}>Promote to admin</BorderlessButton>
+            <BorderlessButton onClick={() => handlePromotion('admin')}>
+              Promote to admin
+            </BorderlessButton>
           ) : (
             ''
           )}

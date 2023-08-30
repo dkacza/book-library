@@ -1,7 +1,7 @@
 import React from 'react';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import { ReactComponent as PasswordIcon } from 'assets/icons/lock_FILL0_wght600_GRAD0_opsz48.svg';
-import { ReactComponent as PasswordConfirmIcon } from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as PasswordIcon} from 'assets/icons/lock_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as PasswordConfirmIcon} from 'assets/icons/task_alt_FILL0_wght600_GRAD0_opsz48.svg';
 import SubmitButton from 'components/atoms/SubmitButton';
 import StyledResetPassword from 'components/organisms/ResetPasswordForm/ResetPasswordForm.styles';
 import styled from 'styled-components';

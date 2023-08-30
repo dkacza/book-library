@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import InputWithIcon from 'components/molecules/InputWithIcon/InputWithIcon';
-import { ReactComponent as UserIcon } from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
-import { ReactComponent as BookIcon } from 'assets/icons/book_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as UserIcon} from 'assets/icons/account_circle_FILL0_wght600_GRAD0_opsz48.svg';
+import {ReactComponent as BookIcon} from 'assets/icons/book_FILL0_wght600_GRAD0_opsz48.svg';
 import BorderlessButton from 'components/atoms/BorderlessButton';
 import LabeledCheckbox from 'components/molecules/LabeledCheckbox/LabeledCheckbox';
 import SubmitButton from 'components/atoms/SubmitButton';
@@ -10,7 +10,14 @@ import OutlinedInput from 'components/atoms/OutlinedInput';
 import isEmptyObject from 'utils/isEmptyObject';
 import React from 'react';
 
-const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClearFields, errors, ...props }) => {
+const HistoryFilters = ({
+  onSubmit,
+  register,
+  authorizedHistoryView,
+  handleClearFields,
+  errors,
+  ...props
+}) => {
   return (
     <StyledHistoryFilters className={props.className} onSubmit={onSubmit}>
       <InputWithIcon
@@ -40,7 +47,8 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('startDateFrom', {
-                validate: (val, formValues) => val <= formValues.startDateTo || !formValues.startDateTo,
+                validate: (val, formValues) =>
+                  val <= formValues.startDateTo || !formValues.startDateTo,
               })}
               className={errors?.startDateFrom ? 'error' : ''}
             />
@@ -48,12 +56,15 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('startDateTo', {
-                validate: (val, formValues) => val >= formValues.startDateFrom || !formValues.startDateFrom,
+                validate: (val, formValues) =>
+                  val >= formValues.startDateFrom || !formValues.startDateFrom,
               })}
               className={errors?.startDateTo ? 'error' : ''}
             />
           </div>
-          <BorderlessButton onClick={() => handleClearFields(['startDateFrom', 'startDateTo'])}>clear</BorderlessButton>
+          <BorderlessButton onClick={() => handleClearFields(['startDateFrom', 'startDateTo'])}>
+            clear
+          </BorderlessButton>
         </div>
 
         <div className="return-date-filter date-filter">
@@ -62,7 +73,8 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('returnDateFrom', {
-                validate: (val, formValues) => val <= formValues.returnDateTo || !formValues.returnDateTo,
+                validate: (val, formValues) =>
+                  val <= formValues.returnDateTo || !formValues.returnDateTo,
               })}
               className={errors?.returnDateFrom ? 'error' : ''}
             />
@@ -70,7 +82,8 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
             <OutlinedInput
               type="date"
               {...register('returnDateTo', {
-                validate: (val, formValues) => val >= formValues.returnDateFrom || !formValues.returnDateFrom,
+                validate: (val, formValues) =>
+                  val >= formValues.returnDateFrom || !formValues.returnDateFrom,
               })}
               className={errors?.returnDateTo ? 'error' : ''}
             />
@@ -84,10 +97,19 @@ const HistoryFilters = ({ onSubmit, register, authorizedHistoryView, handleClear
       <div className="status-filter">
         <p className="label">Status: </p>
         <LabeledCheckbox label="Active" id="active" name="active" {...register('status.active')} />
-        <LabeledCheckbox label="Returned" id="returned" name="returned" {...register('status.returned')} />
+        <LabeledCheckbox
+          label="Returned"
+          id="returned"
+          name="returned"
+          {...register('status.returned')}
+        />
         <LabeledCheckbox label="Lost" id="lost" name="lost" {...register('status.lost')} />
       </div>
-      {!isEmptyObject(errors) ? <p className="error-msg">Please fill the filter form correctly</p> : ''}
+      {!isEmptyObject(errors) ? (
+        <p className="error-msg">Please fill the filter form correctly</p>
+      ) : (
+        ''
+      )}
       <SubmitButton type="submit">Apply filters</SubmitButton>
     </StyledHistoryFilters>
   );
