@@ -1,5 +1,3 @@
-
-
 const processFormState = formState => {
   const formFields = [];
 

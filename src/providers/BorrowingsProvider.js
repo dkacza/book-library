@@ -56,9 +56,7 @@ export const BorrowingsProvider = ({children}) => {
         const paginationResponse = res.data.data.pagination;
         setPaginationData(paginationResponse);
 
-        providerHelpers.setSuccessStatus(
-          setBorrowingsListStatus,
-        );
+        providerHelpers.setSuccessStatus(setBorrowingsListStatus);
       })
       .catch(err => {
         const errorMsgResponse = err?.response?.data?.message || 'Connection error';
@@ -71,7 +69,7 @@ export const BorrowingsProvider = ({children}) => {
     axios
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then(res => {
-        console.log('fetched authorized borrowings')
+        console.log('fetched authorized borrowings');
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
 
@@ -186,7 +184,7 @@ export const BorrowingsProvider = ({children}) => {
 
   useEffect(() => {
     setHistoryQuery('');
-  }, [auth])
+  }, [auth]);
 
   return (
     <BorrowingsContext.Provider
