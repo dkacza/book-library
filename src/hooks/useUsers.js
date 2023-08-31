@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import UsersContext from 'providers/UsersProvider';
+import processFormState from 'utils/processFormState';
 
 const buildQuery = data => {
   let query = '';
@@ -19,15 +20,22 @@ const buildQuery = data => {
   return query.substring(0, query.length - 1);
 };
 
-const useUsers = initialFormValues => {
+const useUsers = () => {
+  const {
+    users,
+    allUsersStatus,
+    paginationData,
+    setUsersQuery,
+    setCurrentPage,
+    usersFormState,
+    setUsersFormState,
+  } = useContext(UsersContext);
   const {
     register,
     handleSubmit,
     setValue,
     formState: {errors},
-  } = useForm({defaultValues: initialFormValues});
-  const {users, allUsersStatus, paginationData, setUsersQuery, setCurrentPage} =
-    useContext(UsersContext);
+  } = useForm({defaultValues: usersFormState});
   const [userListError, setUserListError] = useState('');
 
   const onSubmit = data => {
@@ -37,6 +45,7 @@ const useUsers = initialFormValues => {
       ...userListError,
       formError: '',
     });
+    setUsersFormState(data);
   };
   const onError = err => {
     setUserListError({
@@ -69,6 +78,15 @@ const useUsers = initialFormValues => {
     setUsersQuery('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // When component mounts set the values corresponding to those stored in provider
+  useEffect(() => {
+    const fieldList = processFormState(usersFormState);
+    fieldList.forEach(field => {
+      setValue(...field);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usersFormState]);
 
   useEffect(() => {
     setUserListError({

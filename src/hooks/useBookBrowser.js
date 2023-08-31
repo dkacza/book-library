@@ -36,16 +36,22 @@ const buildQuery = data => {
   return queryString.substring(0, queryString.length - 1);
 };
 
-const useBookBrowser = initialFormValues => {
+const useBookBrowser = () => {
+  const {
+    books,
+    allBooksStatus,
+    paginationData,
+    setBookQuery,
+    setCurrentPage,
+    bookFormState,
+    setBookFormState,
+  } = useContext(BookContext);
   const {
     register,
     handleSubmit,
-    getValues,
     setValue,
     formState: {errors},
-  } = useForm({defaultValues: initialFormValues});
-  const {books, allBooksStatus, paginationData, setBookQuery, setCurrentPage, bookFormState, setBookFormState} =
-    useContext(BookContext);
+  } = useForm({defaultValues: bookFormState});
   const [bookBrowserError, setBookBrowserError] = useState({});
 
   const onSubmit = data => {
@@ -92,8 +98,9 @@ const useBookBrowser = initialFormValues => {
     const fieldList = processFormState(bookFormState);
     fieldList.forEach(field => {
       setValue(...field);
-    })
-  }, [bookFormState])
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookFormState]);
 
   return {
     paginationData,

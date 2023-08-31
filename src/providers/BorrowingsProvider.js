@@ -38,6 +38,13 @@ export const BorrowingsProvider = ({children}) => {
   const unsetBorrowingsListStatus = () => {
     setBorrowingsListStatus(providerHelpers.INITIAL_STATUS);
   };
+  const [historyFormState, setHistoryFormState] = useState({
+    status: {
+      active: true,
+      returned: true,
+      lost: true,
+    },
+  });
   const fetchLoggedInUsersBorrowings = page => {
     unsetBorrowingsListStatus();
     axios
@@ -51,7 +58,6 @@ export const BorrowingsProvider = ({children}) => {
 
         providerHelpers.setSuccessStatus(
           setBorrowingsListStatus,
-          'Borrowings successfully fetched',
         );
       })
       .catch(err => {
@@ -65,6 +71,7 @@ export const BorrowingsProvider = ({children}) => {
     axios
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then(res => {
+        console.log('fetched authorized borrowings')
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
 
@@ -169,15 +176,17 @@ export const BorrowingsProvider = ({children}) => {
   useEffect(() => {
     if (auth.role === 'user') {
       setAuthorizedHistory(false);
-      setHistoryQuery('');
       fetchLoggedInUsersBorrowings(currentPage);
     } else if (auth.role === 'librarian' || auth.role === 'admin') {
-      setHistoryQuery('');
       setAuthorizedHistory(true);
       fetchAllBorrowings(currentPage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth, limitPerPage, historyQuery, currentPage]);
+  }, [auth, historyQuery, paginationData]);
+
+  useEffect(() => {
+    setHistoryQuery('');
+  }, [auth])
 
   return (
     <BorrowingsContext.Provider
@@ -191,6 +200,8 @@ export const BorrowingsProvider = ({children}) => {
         history,
         borrowingsListStatus,
         unsetBorrowingsListStatus,
+        historyFormState,
+        setHistoryFormState,
 
         getBorrowingById,
         borrowingByIdStatus,

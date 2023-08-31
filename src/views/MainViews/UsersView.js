@@ -12,15 +12,6 @@ import FloatingErrorMessage from 'components/molecules/FloatingMessage/FloatingM
 const columnNames = ['Full name', 'Email address', 'Registration', 'Role', 'Eligible'];
 const columnCodes = ['fullName', 'email', 'registrationDate', 'role', 'eligible'];
 const columnProportions = [0.3, 0.3, 0.2, 0.1, 0.1];
-const INITIAL_FORM_VALUES = {
-  registrationDateFrom: undefined,
-  registrationDateTo: undefined,
-  role: {
-    user: true,
-    librarian: true,
-    admin: true,
-  },
-};
 
 const UsersView = () => {
   const {
@@ -32,7 +23,7 @@ const UsersView = () => {
     handleRecordSelect,
     submitWithPrevent,
     userListError,
-  } = useUsers(INITIAL_FORM_VALUES);
+  } = useUsers();
 
   return (
     <MainViewTemplate>

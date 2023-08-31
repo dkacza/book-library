@@ -19,17 +19,6 @@ const columnCodes = [
   'currentStatus',
 ];
 const columnProportions = [0.3, 0.15, 0.15, 0.15, 0.15, 0.1];
-const INITIAL_FORM_VALUES = {
-  startDateFrom: undefined,
-  startDateTo: undefined,
-  returnDateFrom: undefined,
-  returnDateTo: undefined,
-  status: {
-    active: true,
-    returned: true,
-    lost: true,
-  },
-};
 
 const HistoryView = () => {
   const {
@@ -41,7 +30,7 @@ const HistoryView = () => {
     handleClearFields,
     submitWithPrevent,
     historyError,
-  } = useHistory(INITIAL_FORM_VALUES);
+  } = useHistory();
 
   return (
     <MainViewTemplate>

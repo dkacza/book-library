@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import BorrowingsContext from 'providers/BorrowingsProvider';
+import processFormState from 'utils/processFormState';
 
 const buildQuery = data => {
   let query = '';
@@ -22,13 +23,7 @@ const buildQuery = data => {
   return query.substring(0, query.length - 1);
 };
 
-const useHistory = initialFormValues => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: {errors},
-  } = useForm({defaultValues: initialFormValues});
+const useHistory = () => {
   const {
     history,
     borrowingsListStatus,
@@ -36,7 +31,15 @@ const useHistory = initialFormValues => {
     authorizedHistory,
     setHistoryQuery,
     setCurrentPage,
+    historyFormState,
+    setHistoryFormState,
   } = useContext(BorrowingsContext);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: {errors},
+  } = useForm({defaultValues: historyFormState});
   const [historyError, setHistoryError] = useState({});
 
   const onSubmit = data => {
@@ -46,6 +49,7 @@ const useHistory = initialFormValues => {
       ...historyError,
       formError: '',
     });
+    setHistoryFormState(data);
   };
   const onError = err => {
     setHistoryError({
@@ -75,6 +79,15 @@ const useHistory = initialFormValues => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, borrowingsListStatus.error]);
+
+  // When component mounts set the values corresponding to those stored in provider
+  useEffect(() => {
+    const fieldList = processFormState(historyFormState);
+    fieldList.forEach(field => {
+      setValue(...field);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [historyFormState]);
 
   return {
     authorizedHistory,

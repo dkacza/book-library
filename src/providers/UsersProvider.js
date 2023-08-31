@@ -31,6 +31,13 @@ export const UsersProvider = ({children}) => {
   const unsetAllUsersStatus = () => {
     setAllUsersStatus(providerHelpers.INITIAL_STATUS);
   };
+  const [usersFormState, setUsersFormState] = useState({
+    role: {
+      user: true,
+      librarian: true,
+      admin: true,
+    },
+  });
   const fetchAllUsers = page => {
     unsetAllUsersStatus();
     axios
@@ -185,6 +192,8 @@ export const UsersProvider = ({children}) => {
         users,
         allUsersStatus,
         unsetAllUsersStatus,
+        usersFormState,
+        setUsersFormState,
 
         getUserById,
         userByIdStatus,

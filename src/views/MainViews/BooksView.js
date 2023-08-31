@@ -12,8 +12,6 @@ import TableViewTemplate from 'views/MainViews/TableViewTemplate';
 const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'currentStatus'];
 const columnProportions = [0.3, 0.3, 0.25, 0.15];
-const INITIAL_FORM_VALUES = {
-};
 
 const BooksView = () => {
   const {
@@ -24,7 +22,7 @@ const BooksView = () => {
     handleRecordSelect,
     submitWithPrevent,
     bookBrowserError,
-  } = useBookBrowser(INITIAL_FORM_VALUES);
+  } = useBookBrowser();
   const processedBooks = books.map(book => ({
     ...book,
     authors: book.authors.map(author => author.name).join(', '),
