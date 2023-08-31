@@ -15,7 +15,7 @@ const ResetPasswordView = () => {
       <main>
         <Title>Reset Password</Title>
         <ResetPasswordForm />
-        <StyledLink to={'/'}>Return to main page</StyledLink>
+        <StyledLink to={'/'}>Continue</StyledLink>
         {resetPasswordError?.dataProviderError ? (
           <FloatingMessage error={resetPasswordError?.dataProviderError} />
         ) : (
