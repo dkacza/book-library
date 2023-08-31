@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import BookContext from 'providers/BookProvider';
+import processFormState from 'utils/processFormState';
 const buildQuery = data => {
   let queryString = '';
 
@@ -39,9 +40,11 @@ const useBookBrowser = initialFormValues => {
   const {
     register,
     handleSubmit,
+    getValues,
+    setValue,
     formState: {errors},
   } = useForm({defaultValues: initialFormValues});
-  const {books, allBooksStatus, paginationData, setBookQuery, setCurrentPage} =
+  const {books, allBooksStatus, paginationData, setBookQuery, setCurrentPage, bookFormState, setBookFormState} =
     useContext(BookContext);
   const [bookBrowserError, setBookBrowserError] = useState({});
 
@@ -52,6 +55,7 @@ const useBookBrowser = initialFormValues => {
       ...bookBrowserError,
       formError: '',
     });
+    setBookFormState(data);
   };
   const onError = err => {
     setBookBrowserError({
@@ -82,6 +86,14 @@ const useBookBrowser = initialFormValues => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, allBooksStatus.error]);
+
+  // When component mounts set the values corresponding to those stored in provider
+  useEffect(() => {
+    const fieldList = processFormState(bookFormState);
+    fieldList.forEach(field => {
+      setValue(...field);
+    })
+  }, [bookFormState])
 
   return {
     paginationData,

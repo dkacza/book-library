@@ -13,13 +13,6 @@ const columnNames = ['Title', 'Authors', 'ISBN', 'Status'];
 const columnCodes = ['title', 'authors', 'isbn', 'currentStatus'];
 const columnProportions = [0.3, 0.3, 0.25, 0.15];
 const INITIAL_FORM_VALUES = {
-  genre: {
-    fiction: true,
-    nonFiction: true,
-    scientific: true,
-    children: true,
-    poetry: true,
-  },
 };
 
 const BooksView = () => {

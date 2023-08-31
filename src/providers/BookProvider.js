@@ -30,6 +30,15 @@ export const BookProvider = ({children}) => {
   const unsetAllBookStatus = () => {
     setAllBooksStatus(providerHelpers.INITIAL_STATUS);
   };
+  const [bookFormState, setBookFormState] = useState({
+    genre: {
+      fiction: true,
+      nonFiction: true,
+      scientific: true,
+      children: true,
+      poetry: true,
+    },
+  });
   const fetchAllBooks = page => {
     unsetAllBookStatus();
     axios
@@ -179,6 +188,8 @@ export const BookProvider = ({children}) => {
         books,
         allBooksStatus,
         unsetAllBookStatus,
+        bookFormState,
+        setBookFormState,
 
         getBookById,
         bookByIdStatus,
