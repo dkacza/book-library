@@ -1,13 +1,18 @@
 # Book Library
 
 Live demo:
+<br>
 https://book-library-mern-app.netlify.app/
-Login in with `example@test.com` and `pass1234` to check it out!
+<br>
+*Login in with `example@test.com` and `pass1234` to check it out!*
 
 ### General description
 This is a fullstack web application built on top of a REST API I have written before.
 It's a website dedicated for a fictional library.
-It can be used for browsing data about books, borrowing them to the users and many other activities, which are mentioned in the repository for the server-side:
+It can be used for browsing data about books, borrowing them to the users and many other activities, which are mentioned in the repository for the server-side.
+
+*Backend repository*
+<br>
 https://github.com/dkacza/library-api
 
 ### Technical details
