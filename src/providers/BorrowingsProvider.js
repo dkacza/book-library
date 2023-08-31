@@ -69,7 +69,6 @@ export const BorrowingsProvider = ({children}) => {
     axios
       .get(`rentals?page=${page}&limit=${limitPerPage}&${historyQuery}`)
       .then(res => {
-        console.log('fetched authorized borrowings');
         const historyResponse = res.data.data.rentals;
         setHistory(historyResponse.map(processBorrowing));
 
@@ -180,7 +179,7 @@ export const BorrowingsProvider = ({children}) => {
       fetchAllBorrowings(currentPage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth, historyQuery, paginationData]);
+  }, [auth, historyQuery, currentPage]);
 
   useEffect(() => {
     setHistoryQuery('');
