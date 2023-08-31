@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = 'https://book-library-api-cmj4.onrender.com';
+export const API_URL = 'https://book-library-api-1g5j.onrender.com';
 
 export default axios.create({
   baseURL: `${API_URL}/api/v1`,
