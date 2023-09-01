@@ -17,7 +17,7 @@ https://github.com/dkacza/library-api
 
 ### Technical details
 The application uses React.js on the client-side and Express.js with MongoDB on the server-side. It was designed and prototyped with Figma.
-Throughout the development I have used many 3rd party npm packages for better development experience. like styled components, react router or react use form.
+Throughout the development I have used many 3rd party npm packages for better development experience, like styled components, react router or react use form.
 I have equipped this application with a complex validation and error handling mechanisms in order to prevent unauthorized access or corruption of data.
 
 ### Screenshots
@@ -28,7 +28,9 @@ I have equipped this application with a complex validation and error handling me
 ### How to run it?
 I encourage you to try my app through a live demo, but you can also set it up locally on your machine.
 1. Clone the repository and run `npm install` inside the folder.
-2. Update the API preset. (optional)
-    If you want the application to send request to localhost instead of externally deployed backend, then you have to update `API_URL` variable inside the `src/api/axios.js`.
-    Update it according to your needs.
+2. Set up the backend *(optional)*
+    <br>
+    If you want to use a locally running backend instead of the remotely hosted one you have to change the `API_URL` variable inside the `src/api/axios.js` file. Just uncomment the line with localhost address.
+    <br>
+    To see how to run the backend locally, refer to the instructions posted in its repository.  
 3. Run `npm run start` and you're good to go!
