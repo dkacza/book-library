@@ -16,7 +16,7 @@ const Returns = ({currentBorrowings, handleBookReturn, ...props}) => {
           </div>
           {currentBorrowings.map(borrowing => (
             <li key={borrowing._id} className={borrowing.currentStatus}>
-              <p className="title">{borrowing.title}</p>
+              <p className="title">{borrowing.title || borrowing.book.title}</p>
               <p className="start-date">{borrowing.startDate}</p>
               <p className="expiration-date">{borrowing.expirationDate}</p>
               <SquareTileButton
