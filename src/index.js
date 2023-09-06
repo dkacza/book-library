@@ -5,8 +5,9 @@ import {AuthProvider} from 'providers/AuthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // TODO - add strict mode
-  <AuthProvider>
-    <Root />
-  </AuthProvider>,
+  <React.StrictMode>
+    <AuthProvider>
+      <Root />
+    </AuthProvider>,
+  </React.StrictMode>
 );
