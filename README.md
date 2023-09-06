@@ -5,6 +5,10 @@ Live demo:
 https://book-library-mern-app.netlify.app/
 <br>
 *Login in with `example@test.com` and `pass1234` to check it out!*
+<br>
+*Keep in mind that due to the limitations of the Render free plan on which the API is running, the performance might be significantly lowered.*
+<br>
+*For best performance use locally deployed API*
 
 ### General description
 This is a fullstack web application built on top of a REST API I have written before.
